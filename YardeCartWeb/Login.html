@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        .auto-style1
+        {
+            font-size: x-large;
+        }
+        #Text1
+        {
+            width: 385px;
+            height: 36px;
+            margin-top: 7px;
+        }
+        .auto-style2
+        {
+            font-size: small;
+        }
+        #userPass
+        {
+            width: 354px;
+        }
+        #userName
+        {
+            width: 372px;
+        }
+        #Submit1
+        {
+            width: 106px;
+        }
+    </style>
+
+    
+    <script src="js/jquery.js" type="text/javascript"></script>
+
+    <script src="js/JSon.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-2.0.3.js"></script>
+    <script src="Scripts/jquery-2.0.3.min.js"></script>
+     <script type="text/javascript">
+
+         var Type;
+         var Url;
+         var Data;
+         var ContentType;
+         var DataType;
+         var ProcessData;
+         var method;
+         //Generic function to call AXMX/WCF  Service
+         function CallService() {
+             $.ajax({
+                 type: Type, //GET or POST or PUT or DELETE verb
+                 url: Url, // Location of the service
+                 data: Data, //Data sent to server
+                 contentType: ContentType, // content type sent to server
+                 dataType: DataType, //Expected data format from server
+                 processdata: ProcessData, //True or False
+                 dataFilter: function (data, type) {
+                     // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
+                     return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
+                 },
+
+                 success: function (msg) {//On Successfull service call
+                     ServiceSucceeded(msg);
+                 },
+                 error: ServiceFailed// When Service call fails
+             });
+         }
+
+         function ServiceFailed(result) {
+             alert('Service call failed: ' + result.status + '' + result.statusText);
+             Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
+         }
+
+
+         function GetEmployee() {
+
+             var msg2 = { "Employee_id": "Rajaramna" };
+             var objectAsJson = JSON.stringify(msg2);
+            
+             Type = "POST";
+             Url = "http://localhost/YardeCartServiceApp/Employees";
+             Data = objectAsJson;
+             ContentType = "application/json;charset=utf-8";
+             DataType = "json"; ProcessData = false;
+             method = "GetEmployee12";
+             CallService();
+         }
+
+
+         function AddRegistration() {
+
+             var msg2 = {"UserName":"Raj","UserPassword":"pass" };
+             var objectAsJson = JSON.stringify(msg2);
+
+             Type = "POST";
+             Url = "http://localhost/YardeCartServiceApp/AddRegistration";
+             Data = objectAsJson;
+             ContentType = "application/json;charset=utf-8";
+             DataType = "json"; ProcessData = false;
+             method = "GetEmployee12";
+             CallService();
+         }
+
+
+         function CreateEmployee() {
+             Type = "PUT";
+             Url = "Service1/Employees/0";
+
+             var msg2 = { "Employeename": "Denny", "Designation": "engg.", "Address": "vadodara", "Email": "pr@ab.com" };
+
+             Data = "Rajaraman String";
+
+
+             ContentType = "application/json; charset=utf-8";
+             DataType = "";
+             ProcessData = true;
+             method = "CreateEmployee";
+             CallService();
+         }
+
+
+         function ServiceSucceeded(result) {
+             debugger;
+             alert("Success");
+             if (DataType == "json") {
+                 alert(method);
+                 if (method == "ConfirmRegistration") {
+                     //resultObject = result.GetEmployee12Result;
+                     resultObject = result;
+                     var string = resultObject.Employeename + " \n " + resultObject.Designation + " \n " + resultObject.Address + " \n " + resultObject.Email;
+                     alert(string);
+                 }
+                 else {
+                     resultObject = result.GetEmployeeResult;
+
+                     var string = result.Employeename + " \n " + result.Designation + " \n " + result.Address + " \n " + result.Email;
+                     alert(string);
+                 }
+
+             }
+         }
+
+         function ServiceFailed(xhr) {
+             alert(xhr.responseText);
+             if (xhr.responseText) {
+                 var err = xhr.responseText;
+                 //if (err)
+                 //    //error(err);
+                 //else
+                     //error({ Message: "Unknown server error." })
+             }
+             return;
+         }
+
+         $(document).ready(
+         function () {
+             //WCFJSON();
+             AddRegistration();
+            // GetEmployee();
+         }
+         );
+
+    </script>
+</head>
+<body>
+
+    <div style="height: 246px; width: 391px">
+        <div class="auto-style1" style="height: 33px; width: 384px">
+            <strong>Login</strong>
+        </div>
+        <div class="auto-style1" style="height: 33px; width: 384px">
+            <strong><span class="auto-style2">User Name</span></strong>
+        </div>
+        <div>
+                <input id="userName" type="text" /></div>
+
+
+     <div class="auto-style1" style="height: 33px; width: 384px">
+            <strong><span class="auto-style2">Password</span></strong>
+        </div>
+        <div>
+                <input id="userPass" type="text" /><input id="Submit1" type="submit" value="Login" /><br />
+                Result.<div style="height: 77px">
+                    <input id="Text1" type="text" /></div>
+        </div>
+    </div>
+
+</body>
+</html>
