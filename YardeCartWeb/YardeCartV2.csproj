@@ -83,6 +83,8 @@
     <Content Include="Login.html" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="PostAd.html" />
+    <Content Include="Register.html" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />

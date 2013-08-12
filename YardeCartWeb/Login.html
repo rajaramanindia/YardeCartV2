@@ -88,13 +88,13 @@
          }
 
 
-         function AddRegistration() {
+         function LoginUsers() {
 
              var msg2 = {"UserName":"Raj","UserPassword":"pass" };
              var objectAsJson = JSON.stringify(msg2);
 
              Type = "POST";
-             Url = "http://localhost/YardeCartServiceApp/AddRegistration";
+             Url = "http://localhost/YardeCartServiceApp/LoginUser";
              Data = objectAsJson;
              ContentType = "application/json;charset=utf-8";
              DataType = "json"; ProcessData = false;
@@ -156,7 +156,7 @@
          $(document).ready(
          function () {
              //WCFJSON();
-             AddRegistration();
+             //AddRegistration();
             // GetEmployee();
          }
          );
@@ -173,16 +173,19 @@
             <strong><span class="auto-style2">User Name</span></strong>
         </div>
         <div>
-                <input id="userName" type="text" /></div>
+                <input id="txtUsername" type="text" /></div>
 
 
      <div class="auto-style1" style="height: 33px; width: 384px">
             <strong><span class="auto-style2">Password</span></strong>
         </div>
         <div>
-                <input id="userPass" type="text" /><input id="Submit1" type="submit" value="Login" /><br />
-                Result.<div style="height: 77px">
-                    <input id="Text1" type="text" /></div>
+            <input id="txtUserpassword" type="text" /><br/><br/>
+            <input id="btnLogin" type="submit" value="Login" /><br />
+        </div>
+        
+     <div  style="height: 15px; width: 384px">
+            <a href="Register.html">Create an account</a> 
         </div>
     </div>
 

@@ -54,11 +54,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdPostDetails.cs" />
+    <Compile Include="AdStatusDetails.cs" />
     <Compile Include="BankDetails.cs" />
-    <Compile Include="Interface\YardeCartServices.cs" />
+    <Compile Include="CategoryDetails.cs" />
+    <Compile Include="ChargeDetails.cs" />
+    <Compile Include="Interface\IYardeCartServices.cs" />
     <Compile Include="LoginDetails.cs" />
     <Compile Include="UserDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UtilityClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
