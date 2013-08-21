@@ -1,0 +1,101 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Yarde.master.cs" Inherits="YardeCartV2.Yarde" %>
+
+<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="">
+<!--<![endif]-->
+<head>
+<link href='http://fonts.googleapis.com/css?family=Cabin|Ubuntu|Open+Sans' rel='stylesheet' type='text/css'>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YARDeCART</title>
+<link href="css/boilerplate.css" rel="stylesheet" type="text/css">
+<link href="css/newYardStyle.css" rel="stylesheet" type="text/css">
+<!-- 
+To learn more about the conditional comments around the html tags at the top of the file:
+paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+
+Do the following if you're using your customized build of modernizr (http://www.modernizr.com/):
+* insert the link to your js here
+* remove the link below to the html5shiv
+* add the "no-js" class to the html tags at the top
+* you can also remove the link to respond.min.js if you included the MQ Polyfill in your modernizr build 
+-->
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script src="Scripts/respond.min.js"></script>
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
+
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <div class="gridContainer clearfix">
+
+        <div id="HeaderSection">
+                      
+        <div id="TopLinks"><strong><label id="welcomeMessage" runat="server">Welcome Guest</label></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="Register.html" class="">Register</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="Login.html" class="">Sign In</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <div id="HeaderLogo"><a href="Contact.aspx"><span>YARD</span>eCART</a></div>
+        <%--<div id="HeaderLogo"><a href="index.html"><img src="YardeCartLogo.jpg" alt="Logo"></a></div>--%>
+        <div id="HeaderSearch">
+        <input name="SearchString" id="SearchBox" type="text" value="Search String" size="25">&nbsp;&nbsp;&nbsp;
+        <input name="SearchPlace" id="Text1" type="text" value="Place"  size="12">&nbsp;&nbsp;&nbsp;
+        <input name="SearchButton" id="SearchButton" type="button" value="Search Ad"></div>
+        <div id="HeaderPost"><input name="PostButton" id="PostButton" type="button" value="Post Ad" onclick=""></div>
+      </div>
+  
+        <div id="MainSection">
+            <div id="MainCategory">
+            <br>
+            <strong><label id="currentLocation" runat="server"> / Current Location:</label></strong>
+	        <small style="color:#C03;">&nbsp;&nbsp;&nbsp;[Change]</small>
+            <br>
+            <hr>
+            <%--<strong>Category</strong><br>
+            Electronics & Technology<br>
+            Camera Accessories<br>
+            Cameras - Digicams<br>
+            Computer Peripherals<br>
+            Fax, EPABX, Office Equipment<br>
+            Inverters, UPS & Generators<br>
+            IPods, MP3 Players<br>
+            Laptops - Desktops - Tablets<br>
+            <hr>
+	        <strong>Sale Type</strong><br>
+	        Security Equipment - Products<br>
+            Tools - Machinery - Industrial<br>
+            TV - DVD - Multimedia<br>
+            Video Games - Consoles<br>
+            <hr>
+	        <strong>Sale Days</strong><br>
+	        Monday<br>
+	        Tuesday<br>
+	        Wednesday<br>
+            Thursday<br>
+            Friday<br>
+            Saturday<br>
+            Sunday<br>
+            <hr>
+            <strong>Others</strong><br>
+	        Everything Else<br>
+            Home & Lifestyle<br><br>--%>
+            </div>
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        
+            </asp:ContentPlaceHolder>
+        </div>
+
+        <div id="FooterSection">Copyright 2013, All Rights Reserved.</div>
+
+    </div>
+</body>
+</html>

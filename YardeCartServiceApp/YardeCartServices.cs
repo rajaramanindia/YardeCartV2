@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
+using System.Runtime.Serialization;
 using System.Web;
 using YardeCartCommon.Interface;
 using YardeCartCommon;
+using YardeCartData;
 using YardeCartDataAccess;
 
 namespace YardeCartServiceApp
@@ -94,7 +97,7 @@ namespace YardeCartServiceApp
             }
         }
 
-        public int LoginUser(LoginDetails loginDetails)
+        public string LoginUser(LoginDetails loginDetails)
         {
             try
             {
@@ -103,18 +106,25 @@ namespace YardeCartServiceApp
                 objDALComponent.SqlCommandText = "ValidateUser";
                 object y = objDALComponent.SelectRecordValue();
                 if (int.Parse(y.ToString()) > 0)
-                    return int.Parse(y.ToString());
+                    return y.ToString();
                 else
-                    return 0;
+                    return null;
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+               return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
+
+          //System.Web.Script.Serialization.JavaScriptSerializer serializer =
+          //     new System.Web.Script.Serialization.JavaScriptSerializer();
+          //  List<Dictionary<string, object>> rows =
+          //     new List<Dictionary<string, object>>();
+          //  Dictionary<string, object> row = null;
+// string s = { "Exception":"","":""};
         }
 
         public int LoginAdmin(LoginDetails loginDetails)
@@ -273,21 +283,21 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable AvailableUser(string strUsername)
+        public string AvailableUser(UserDetails userDetails)
         {
             try
             {
-                objDALComponent.SetParameters("@Username", SqlDbType.VarChar, 50, strUsername);
+                objDALComponent.SetParameters("@Username", SqlDbType.VarChar, 50, userDetails.UserName);
                 objDALComponent.SqlCommandText = "[AvailableUser]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
         }
 
@@ -534,20 +544,20 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable GetAllAdDetails()
+        public string GetAllAdDetails()
         {
             try
             {
                 objDALComponent.SqlCommandText = "[GetAllAdDetails]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
         }
 
@@ -604,6 +614,25 @@ namespace YardeCartServiceApp
             catch (Exception ex)
             {
                 throw new ApplicationException("Error=" + ex.Message.ToString());
+            }
+
+        }
+
+        public string SearchAdsByCategory(int intcategoryId)
+        {
+            try
+            {
+                objDALComponent.SetParameters("@categoryId", SqlDbType.Int, 4, intcategoryId);
+                objDALComponent.SqlCommandText = "[SearchAdsByCategory]";
+                return GetJson(objDALComponent.SelectRecord());
+            }
+            catch (SqlException sqlEx)
+            {
+                return sqlEx.Message.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
             }
 
         }
@@ -708,54 +737,54 @@ namespace YardeCartServiceApp
 
         #region .. CITY, STATE & COUNTRY ..
 
-        public DataTable SelectAllCity()
+        public string SelectAllCity()
         {
             try
             {
                 objDALComponent.SqlCommandText = "SelectCity";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
         }
 
-        public DataTable SelectAllState()
+        public string SelectAllState()
         {
             try
             {
                 objDALComponent.SqlCommandText = "SelectState";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
         }
 
-        public DataTable SelectAllCountry()
+        public string SelectAllCountry()
         {
             try
             {
                 objDALComponent.SqlCommandText = "SelectCountry";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
         }
 
@@ -816,12 +845,12 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable SelectAllCategory()
+        public string SelectAllCategory()
         {
             try
             {
                 objDALComponent.SqlCommandText = "SelectCategory";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
@@ -1012,5 +1041,58 @@ namespace YardeCartServiceApp
 
         #endregion
 
+        #region .. COMMON FUNCTION ..
+
+        public string SendMailtoUser(UserDetails userDetails)
+        {
+            try
+            {
+                string mUname = ConfigurationManager.AppSettings["mailUsername"].ToString();
+                string mPwd = ConfigurationManager.AppSettings["mailPassword"].ToString();
+                string mFrom = "";
+                string mTo = userDetails.Email;
+                string mCC = "";
+
+                string mSubject = "YardeCart Activation mail";
+                string serverPath = ConfigurationManager.AppSettings["ApplicationPath"].ToString() + "/ActivateUser.html?uid=" + UtilityClass.Encrypt(userDetails.UserId.ToString()).ToString();
+                string mMsg = "<html><body><form id='form1' runat='server'><div>" +
+                "Dear " + userDetails.UserName + ",<br /><br />Thank you for registering at the YardeCart." +
+                "Before we can activate your account one last step must be taken to complete your registration." +
+                "<br /><br />Please note - you must complete this last step to become a registered member. You will only need to visit this URL once to activate your account." +
+                "<br /><br />To complete your registration, please visit this URL:<br />" +
+                "<a href='" + serverPath + "' runat='server' >" + serverPath + "</a>" +
+                "<br /><br /><br /><br />All the best,<br />YardeCart.</div></form></body></html>";
+
+                UtilityClass.SendMail(mUname, mPwd, mFrom, mTo, mCC, mSubject, mMsg, true);
+
+                return "true";
+            }
+            catch (SystemException ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
+
+        public static string GetJson(DataTable dt)
+        {
+            System.Web.Script.Serialization.JavaScriptSerializer serializer =
+               new System.Web.Script.Serialization.JavaScriptSerializer();
+            List<Dictionary<string, object>> rows =
+               new List<Dictionary<string, object>>();
+            Dictionary<string, object> row = null;
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                row = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    row.Add(col.ColumnName, dr[col]);
+                }
+                rows.Add(row);
+            }
+            return serializer.Serialize(rows);
+        }
+
+        #endregion
     }
 }

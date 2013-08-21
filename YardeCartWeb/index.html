@@ -1,0 +1,270 @@
+﻿<!doctype html>
+<!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
+<!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
+<!--[if IE 8]>    <html class="ie8 oldie"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="">
+<!--<![endif]-->
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Cabin|Ubuntu|Open+Sans' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YARDeCART</title>
+    <link href="css/boilerplate.css" rel="stylesheet" type="text/css">
+    <link href="css/newYardStyle.css" rel="stylesheet" type="text/css">
+    <!-- 
+    To learn more about the conditional comments around the html tags at the top of the file:
+    paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+
+    Do the following if you're using your customized build of modernizr (http://www.modernizr.com/):
+    * insert the link to your js here
+    * remove the link below to the html5shiv
+    * add the "no-js" class to the html tags at the top
+    * you can also remove the link to respond.min.js if you included the MQ Polyfill in your modernizr build 
+    -->
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="js/jquery.js" type="text/javascript"></script>
+    <script src="js/JSon.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-2.0.3.js"></script>
+    <script src="Scripts/jquery-2.0.3.min.js"></script>
+    <script src="Scripts/respond.min.js"></script>
+</head>
+<body>
+<div class="gridContainer clearfix">
+  <div id="HeaderSection">
+    <div id="TopLinks"><strong>Welcome Guest</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="Register.html" class="">Register</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="Login.html" class="">Sign In</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div id="HeaderLogo"><a href="index.html"><img src="YardeCartLogo.jpg" alt="Logo"></a></div>
+    <div id="HeaderSearch">
+    <input name="SearchString" id="SearchBox" type="text" value="Search String" size="25">&nbsp;&nbsp;&nbsp;
+    <input name="SearchPlace" id="Text1" type="text" value="Place"  size="12">&nbsp;&nbsp;&nbsp;
+    <input name="SearchButton" id="SearchButton" type="button" value="Search Ad"></div>
+    <div id="HeaderPost"><input name="PostButton" id="PostButton" type="button" value="Post Ad" onclick=""></div>
+  </div>
+  
+  <div id="MainSection">
+    <div id="MainCategory">
+    <br>
+    <strong>Los Angeles, CA</strong>
+	<small style="color:#C03;">&nbsp;&nbsp;&nbsp;[Change]</small>
+    <br>
+    <hr>
+    <!--<strong>Category</strong><br>
+    Electronics & Technology<br>
+    Camera Accessories<br>
+    Cameras - Digicams<br>
+    Computer Peripherals<br>
+    Fax, EPABX, Office Equipment<br>
+    Inverters, UPS & Generators<br>
+    IPods, MP3 Players<br>
+    Laptops - Desktops - Tablets<br>
+    <hr>
+	<strong>Sale Type</strong><br>
+	Security Equipment - Products<br>
+    Tools - Machinery - Industrial<br>
+    TV - DVD - Multimedia<br>
+    Video Games - Consoles<br>
+    <hr>
+	<strong>Sale Days</strong><br>
+	Monday<br>
+	Tuesday<br>
+	Wednesday<br>
+    Thursday<br>
+    Friday<br>
+    Saturday<br>
+    Sunday<br>
+    <hr>
+    <strong>Others</strong><br>
+	Everything Else<br>
+    Home & Lifestyle<br><br>-->
+    </div>
+    <div id="MainItem">
+      <div id="SortItem">First Prev 1 2 3 4 5 6 7 8 9 Next Last&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort by &nbsp;
+        <input name="TimePostedButton" id="SortButton" type="button" value="Time Posted">&nbsp;<input name="SearchButton" id="Button1" type="button" value="Sale Date">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+      <div id="HighlightItem">
+        <div id="HighlightItemHeading">List Heading</div>
+        
+               
+      	<div id="HighlightItem2" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        <!--<div id="Div1" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        <div id="Div2" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        <div id="Div3" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        <div id="Div4" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        <div id="Div5" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        <div id="Div6" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        <div id="Div7" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        <div id="Div8" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        <div id="Div9" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        <div id="Div10" style="padding:3px">
+        	<div><strong>Item Name</strong></div>
+        	<div><img src="images/car1.jpg"></div>
+        	<div style="font-size:12px">description of the item description of the item description of the item description of the item</div> 
+        	<div><strong>$136.00</strong></div>
+        </div>
+        -->
+        
+      </div>
+    </div>
+</div>
+  
+  <div id="FooterSection">Copyright 2013, All Rights Reserved.</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+
+    var Type;
+    var Url;
+    var Data;
+    var ContentType;
+    var DataType;
+    var ProcessData;
+    var method;
+    //Generic function to call AXMX/WCF  Service
+    function CallService() {
+        $.ajax({
+            type: Type, //GET or POST or PUT or DELETE verb
+            url: Url, // Location of the service
+            data: Data, //Data sent to server
+            contentType: ContentType, // content type sent to server
+            dataType: DataType, //Expected data format from server
+            processdata: ProcessData, //True or False
+            dataFilter: function (data, type) {
+                // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
+                return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
+            },
+
+            success: function (msg) {//On Successfull service call
+                ServiceSucceeded(msg);
+            },
+            error: ServiceFailed// When Service call fails
+        });
+    }
+
+    function ServiceFailed(result) {
+        alert('Service call failed: ' + result.status + '' + result.statusText);
+        Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
+    }
+
+
+
+    function GetAllAdDetails() {
+        Type = "POST";
+        Url = "http://localhost:1098/GetAllAdDetails";
+        ContentType = "application/json;charset=utf-8";
+        DataType = "json"; ProcessData = false;
+        method = "GetAllAdDetails";
+        CallService();
+    }
+
+    function SelectAllCategory() {
+        Type = "POST";
+        Url = "http://localhost:1098/SelectAllCategory";
+        ContentType = "application/json;charset=utf-8";
+        DataType = "json"; ProcessData = false;
+        method = "SelectAllCategory";
+        CallService();
+    }
+
+    
+
+
+    function ServiceSucceeded(result) {
+        if (DataType == "json") {
+             if (method == "GetAllAdDetails") {
+                 resultObject = result;
+                var obj = jQuery.parseJSON(result);
+                for (var i = 0; i < obj.length; i++) {
+
+                    $("<div id='HighlightItem2'>" +
+                        "<div><strong>" + obj[i].AdPostTitle + "</strong></div>" +
+                        "<div><img src=" + obj[i].ImagePath + " ></div>" +
+                        "<div style='font-size:12px'>" + obj[i].CategoryName + "</div>" +
+                        "<div><strong> $ " + parseFloat(obj[i].Price) + "</strong></div>"
+                    ).attr("style", "padding:3px").appendTo("#HighlightItemHeading");
+                }
+                SelectAllCategory();
+             }
+             else if (method == "SelectAllCategory") {
+                 resultObject = result;
+                 var obj = jQuery.parseJSON(result);
+                 $("<strong>Category</strong>").appendTo("#MainCategory");
+                 for (var i = 0; i < obj.length; i++) {
+
+                     $("<br><a href='index.html'>" + obj[i].CategoryName+"</a>").appendTo("#MainCategory");
+                 }
+             }
+        }
+    }
+
+    function ServiceFailed(xhr) {
+        alert(xhr.responseText);
+        if (xhr.responseText) {
+            var err = xhr.responseText;
+        }
+        return;
+    }
+
+    $(document).ready(
+    function () {
+        //debugger;
+        GetAllAdDetails();
+    }
+    );
+
+    </script>

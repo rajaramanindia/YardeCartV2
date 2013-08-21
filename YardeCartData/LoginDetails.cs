@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace YardeCartData
 {
-    public class Class1
+    public class LoginDetails
     {
+
+       public string UserName { set; get; }
+
+       public string UserPassword { get; set; }
+
     }
 }

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Data;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using YardeCartData;
+using YardeCartDataAccess;
 
 namespace YardeCartCommon.Interface
 {
@@ -20,7 +22,7 @@ namespace YardeCartCommon.Interface
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "LoginUser")]
-        int LoginUser(LoginDetails loginDetails);
+        string LoginUser(LoginDetails loginDetails);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "AddRegistration")]
@@ -64,7 +66,7 @@ namespace YardeCartCommon.Interface
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "AvailableUser")]
-        DataTable AvailableUser(string strUsername);
+        string AvailableUser(UserDetails userDetails);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "AvailableMail")]
@@ -124,7 +126,7 @@ namespace YardeCartCommon.Interface
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAllAdDetails")]
-        DataTable GetAllAdDetails();
+        string GetAllAdDetails();
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByAdtitle")]
@@ -137,6 +139,10 @@ namespace YardeCartCommon.Interface
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByKeyword")]
         DataTable SearchAdsByKeyword(string strKeyword);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByCategory")]
+        string SearchAdsByCategory(int intcategoryId);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectReportsByDate")]
@@ -164,15 +170,15 @@ namespace YardeCartCommon.Interface
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCity")]
-        DataTable SelectAllCity();
+        string SelectAllCity();
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllState")]
-        DataTable SelectAllState();
+        string SelectAllState();
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCountry")]
-        DataTable SelectAllCountry();
+        string SelectAllCountry();
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectCityByName")]
@@ -192,7 +198,7 @@ namespace YardeCartCommon.Interface
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCategory")]
-        DataTable SelectAllCategory();
+        string SelectAllCategory();
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "AddCategory")]
@@ -236,6 +242,13 @@ namespace YardeCartCommon.Interface
 
         #endregion
 
+        #region .. COMMON FUNCTION ..
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SendMailtoUser")]
+        string SendMailtoUser(UserDetails userDetails);
+
+        #endregion
 
     }
 }

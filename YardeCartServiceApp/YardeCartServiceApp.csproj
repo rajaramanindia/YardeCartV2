@@ -87,6 +87,14 @@
       <Project>{1decb830-9356-47d6-ad50-98ac5f3487f6}</Project>
       <Name>YardeCartCommon</Name>
     </ProjectReference>
+    <ProjectReference Include="..\YardeCartDataAccess\YardeCartDataAccess.csproj">
+      <Project>{4c3b1d09-d3af-4571-b50c-89cbc0c4c0b4}</Project>
+      <Name>YardeCartDataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YardeCartData\YardeCartData.csproj">
+      <Project>{fa8a9954-12fa-4b3c-b7d4-db8eb8895282}</Project>
+      <Name>YardeCartData</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
