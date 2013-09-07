@@ -60,7 +60,8 @@
         Register&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="Login.html" class="">Sign In</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         Help&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        Contact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
     <div id="HeaderLogo"><img src="YardeCartLogo.jpg" alt="Logo"></div>
     <div id="HeaderSearch">
     <input name="SearchString" id="SearchBox" type="text" value="Search String" size="25">&nbsp;&nbsp;&nbsp;
@@ -87,7 +88,7 @@
         </div>
         <div>
             <input id="txtUserpassword" type="password" /><br/><br/>
-            <input id="btnLogin" type="submit" value="Login" /><br />
+            <input id="btnLogin" type="button" value="Login" /><br />
         </div>
         
      <div  style="height: 15px; width: 384px">
@@ -110,6 +111,7 @@
     var DataType;
     var ProcessData;
     var method;
+    var userId;
     //Generic function to call AXMX/WCF  Service
     function CallService() {
         $.ajax({
@@ -136,28 +138,16 @@
         Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
     }
 
-    function GetEmployee() {
-
-        var msg2 = { "Employee_id": "Rajaramna" };
-        var objectAsJson = JSON.stringify(msg2);
-
-        Type = "POST";
-        Url = "http://localhost/YardeCartServiceApp/Employees";
-        Data = objectAsJson;
-        ContentType = "application/json;charset=utf-8";
-        DataType = "json"; ProcessData = false;
-        method = "GetEmployee12";
-        CallService();
-    }
-
-
     function LoginUsers() {
 
         var msg2 = { "UserName": $("#txtUsername").val(), "UserPassword": $("#txtUserpassword").val() };
         var objectAsJson = JSON.stringify(msg2);
 
         Type = "POST";
-        Url = "http://localhost:1098/LoginUser";
+        if($("#txtUsername").val()=="admin")
+            Url = "http://localhost:1098/LoginAdmin";
+        else
+            Url = "http://localhost:1098/LoginUser";
         Data = objectAsJson;
         ContentType = "application/json;charset=utf-8";
         DataType = "json"; ProcessData = false;
@@ -165,56 +155,36 @@
         CallService();
     }
 
-
-    function CreateEmployee() {
-        Type = "PUT";
-        Url = "Service1/Employees/0";
-
-        var msg2 = { "Employeename": "Denny", "Designation": "engg.", "Address": "vadodara", "Email": "pr@ab.com" };
-
-        Data = "Rajaraman String";
-
-
-        ContentType = "application/json; charset=utf-8";
-        DataType = "";
-        ProcessData = true;
-        method = "CreateEmployee";
-        CallService();
-    }
-
-
     function ServiceSucceeded(result) {
         if (DataType == "json") {
             if (method == "LoginUser") {
+                debugger;
                 resultObject = result;
                 if (resultObject.length > 10) {
                     alert(resultObject);
                 }
                 else {
+                    $.ajax({
+                        url: 'SetSession.ashx?uid=' + resultObject,
+                        //data: { "uid": resultObject },
+                        processData: false,
+                        contentType: false,
+                        type: 'POST',
+                        success: function (data) {
+                            //debugger;
+                            //alert(data);
+                        },
+                        error: function (errorData) {
+                            alert("ERR ON  " + errorData);
+                        }
+                    });
                     window.location.href = "index.html";
-                    $.sessi
                 }
             }
             else {
-                resultObject = result.GetEmployeeResult;
-
-                var string = result.Employeename + " \n " + result.Designation + " \n " + result.Address + " \n " + result.Email;
-                alert(string);
             }
 
         }
-    }
-
-    function ServiceFailed(xhr) {
-        alert(xhr.responseText);
-        if (xhr.responseText) {
-            var err = xhr.responseText;
-            //if (err)
-            //    //error(err);
-            //else
-            //error({ Message: "Unknown server error." })
-        }
-        return;
     }
 
     $(document).ready(

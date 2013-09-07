@@ -14,11 +14,11 @@ namespace YardeCartData
 
         public int ChargeType { set; get; }
 
-        public float AmountOrPercent { set; get; }
+        public string AmountOrPercent { set; get; }
 
         public int CreatedBy { set; get; }
 
-        public DateTime CreatedOn { set; get; }
+        public string CreatedOn { set; get; }
         
     }
 }

@@ -32,4 +32,9 @@ namespace YardeCartData
         public int UserBlocked { get; set; }
         public int UserDeleted { get; set; }
     }
+
+    public class UserAct
+    {
+        public string strUserid { get; set; }
+    }
 }

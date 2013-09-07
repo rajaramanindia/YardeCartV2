@@ -84,7 +84,17 @@ hr {
 	margin-left: 0;
 	width: 100%;
 	display: block;
+  /*  border:1px solid #72021c; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:16px;font-family:'Ubuntu', sans-serif; padding: 12px 12px 12px 12px; text-decoration:none; display:inline-block;font-weight:normal; color: #FFFFFF;
+ background-color: #a90329; margin-top: 10px;
+    width: 20%;
+    background-image: linear-gradient(to bottom, #a90329, #6d0019);
+    */
 }
+#HeaderLogo:hover{
+ /*border:1px solid #450111;
+ background-color: #77021d; background-image: linear-gradient(to bottom, #77021d, #3a000d);*/
+}
+
 #HeaderSearch {
 	clear: none;
 	float: left;
@@ -103,7 +113,7 @@ hr {
 	clear: both;
 	float: left;
 	margin-left: 0;
-	width: 100%;
+	width: 76%;
 	display: block;
 }
 #MainItem {
@@ -391,6 +401,11 @@ border:1px solid #1c1c1c; -webkit-border-radius: 3px; -moz-border-radius: 3px;bo
  background-color:#f2f2f2; margin-top: 10px;
     background-image: linear-gradient(to bottom, #f2f2f2, #ffffff);
 }
+#SearchBoxPlace{
+border:1px solid #1c1c1c; -webkit-border-radius: 3px; -moz-border-radius: 3px;border-radius: 3px;font-size:16px;font-family:'Ubuntu', sans-serif; padding: 12px 12px 12px 12px; text-decoration:none; display:inline-block; color: #000000;
+ background-color:#f2f2f2; margin-top: 10px;
+    background-image: linear-gradient(to bottom, #f2f2f2, #ffffff);
+}
 #MainCategory{
 	clear: both;
 	float: left;
@@ -479,4 +494,40 @@ border:1px solid #72021c; -webkit-border-radius: 3px; -moz-border-radius: 3px;bo
  margin-top:5px;
  margin-bottom:5px;
 }
+}
+
+/* button style */
+.YardButton {
+height:35px;
+clear: both;
+border-style:solid;
+background-color:darkgreen;
+font-weight:bold;
+color:white;
+border-width:1px; 
+box-decoration-break:clone;
+}
+/* horizontal menu css */
+
+.horizontalcssmenu ul
+{
+    float:right;
+padding:0;
+margin:0;
+list-style-type:none;
+}
+.horizontalcssmenu ul a
+{
+width:5em;
+text-decoration:none;
+color:black;
+padding:0.2em 0.6em;
+}
+.horizontalcssmenu ul a:hover 
+{
+    background-color:#ff3300;
+}
+.horizontalcssmenu li 
+{
+    display:inline;
 }

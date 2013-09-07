@@ -42,6 +42,7 @@
     <Compile Include="AdPostDetails.cs" />
     <Compile Include="AdStatusDetails.cs" />
     <Compile Include="BankDetails.cs" />
+    <Compile Include="CartDetails.cs" />
     <Compile Include="CategoryDetails.cs" />
     <Compile Include="ChargeDetails.cs" />
     <Compile Include="LoginDetails.cs" />

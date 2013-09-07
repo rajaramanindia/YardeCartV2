@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        .auto-style1 {
+            width: 750px;
+        }
+    </style>
+    <link href='http://fonts.googleapis.com/css?family=Cabin|Ubuntu|Open+Sans' rel='stylesheet' type='text/css'>
+    <link href="css/boilerplate.css" rel="stylesheet" type="text/css">
+    <link href="css/newYardStyle.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="Scripts/JSon.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.js"></script>
+    <script type="text/javascript" src="Scripts/jquery-2.0.3.js"></script>
+    <script type="text/javascript" src="Scripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="Scripts/respond.min.js"></script>
+    <link href="css/flexslider.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="Scripts/jquery.flexslider.js"></script>
+    <script type="text/javascript" src="Scripts/mediaelement-and-player.min.js"></script>
+    <link rel="stylesheet" href="css/mediaelementplayer.css" />
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //debugger;
+            GetAdDetails(105,30);
+            InitializeImageSlider();
+        });
+        function InitializeImageSlider() {
+            $('.flexslider').flexslider({
+                animation: "slide",
+                controlNav: true,
+                directionNav: true,
+                itemWidth: "100%",
+                itemHeight: 400,
+                width: 500
+            });
+        }
+
+
+        var Type;
+        var Url;
+        var Data;
+        var ContentType;
+        var DataType;
+        var ProcessData;
+        var method;
+        //Generic function to call AXMX/WCF  Service
+        function CallService() {
+            $.ajax({
+                type: Type, //GET or POST or PUT or DELETE verb
+                url: Url, // Location of the service
+                data: Data, //Data sent to server
+                contentType: ContentType, // content type sent to server
+                dataType: DataType, //Expected data format from server
+                processdata: ProcessData, //True or False
+                async: false,
+                dataFilter: function (data, type) {
+                    // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
+                    return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
+                },
+
+                success: function (msg) {//On Successfull service call
+                    ServiceSucceeded(msg);
+                },
+                error: ServiceFailed// When Service call fails
+            });
+        }
+
+        function ServiceFailed(result) {
+            alert('Service call failed: ' + result.status + '' + result.statusText);
+            Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
+        }
+        function GetAdDetails(adId, userId) {
+            var msg = { "AdPostId": adId, "UserId": userId };
+            var objectAsJson = JSON.stringify(msg);
+
+            Type = "POST";
+            Data = objectAsJson;
+            Url = "http://localhost:1098/GetAdDetails";
+            ContentType = "application/json;charset=utf-8";
+            DataType = "json"; ProcessData = false;
+            method = "GetAdDetails";
+            CallService();
+        }
+        function ServiceSucceeded(result) {
+            if (DataType == "json") {
+                if (method == "GetAdDetails") {
+                    //debugger;
+                    resultObject = result;
+                    var obj = window.JSON.parse(result);
+
+                    //For Image slider  
+                    var sImagePath = obj[0].ImagePath.split(':');
+                    var s="";
+                    for (var i = 0; i < sImagePath.length; i++) {
+                        s += "<li><img src='" + sImagePath[i] + "' /></li>";
+                    }
+                    $("<ul class='slides'>" + s + "</ul>").appendTo("#divImageSlider");
+
+                    //For Date Format 
+                    var MyDate_String_Value = obj[0].AdTillDate;//"/Date(1224043200000)/"
+                    var value = new Date
+                                (
+                                     parseInt(MyDate_String_Value.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                    var dat = MonthName(value.getMonth()) + " " + value.getDate() + ", " + value.getFullYear();
+
+                    $("#divAdTitle").text(obj[0].AdPostTitle);
+                    $("<span>" + obj[0].Description + "</span>").appendTo("#divDesc");
+                    $("<span>Category:&nbsp;&nbsp;&nbsp;" + obj[0].CategoryName + "</span><br/><span>Date Posted: " + dat + "</span>").appendTo("#divCategory");
+                    //debugger;
+                    var p = obj[0].Price;
+                    var sPrice = "$ " + p.toFixed(2);
+                    $("<span>" + sPrice + "</span>").appendTo("#divPrice");
+
+                    // Play youtube video
+                    var V = obj[0].VideoLink;
+                    var stIndex = V.lastIndexOf("=");
+                    var endIndex = V.length;
+                    var Vname = V.substr(stIndex + 1, endIndex - 1 - stIndex);
+                    var sVideoUrl = "http://www.youtube.com/v/" + Vname;
+                    $("<object type='application/x-shockwave-flash' data='" + sVideoUrl + "' width='420' height='340'>" +
+            "<param name='movie' value='" + sVideoUrl + "' />" +
+            "<param name='wmode' value='transparent' />" +
+            "<embed src='" + sVideoUrl + "' type='application/x-shockwave-flash' wmode='transparent' allowscriptaccess='always' allowfullscreen='true' width='480'" +
+            "height='385'></embed>" +
+            "</object>").appendTo("#videoLink");
+
+                }
+            }
+        }
+
+        function MonthName(mon) {
+            if (mon == 1) return "January";
+            else if (mon == 2) return "February";
+            else if (mon == 3) return "March";
+            else if (mon == 4) return "April";
+            else if (mon == 5) return "May";
+            else if (mon == 6) return "June";
+            else if (mon == 7) return "July";
+            else if (mon == 8) return "August";
+            else if (mon == 9) return "September";
+            else if (mon == 10) return "October";
+            else if (mon == 11) return "November";
+            else if (mon == 12) return "December";
+        }
+
+    </script>
+</head>
+<body>
+    <div style="padding-top:100px;padding-left:150px;">
+        <table style="border:solid; border-color:gray;border-width:2px;">
+            <tr>
+                <td class="auto-style1">
+                </td>
+            </tr>
+            <tr>
+                <td class="auto-style1" style="height:60px;">
+                    <label id="divAdTitle" style="font-family:sans-serif;font-size:x-large;font-weight:bolder;" ></label>
+                    <label id="divDate" style="font-family:sans-serif;font-size:x-large;font-weight:bolder;" ></label>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;">
+                    <table style="width:600px;"><tr><td>
+                         <div id="divImageSlider" class="flexslider">
+                        </div>
+                               </td></tr></table>
+                       
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="auto-style1">
+                    Ad Details<br /><br />
+                    <div id="divCategory"></div>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="auto-style1">
+                    Description:<br /><br />
+                    <div id="divDesc"></div>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="auto-style1">
+                    <div id="divPrice" style="font-size:larger; width:50px;height:30px;background-color:lightgreen;"></div>
+
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="auto-style1" style="text-align:center;">
+                    <div id="videoLink"></div>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td class="auto-style1">
+
+                    &nbsp;</td>
+            </tr>
+        </table>
+        <p></p>
+    </div>
+</body>
+</html>

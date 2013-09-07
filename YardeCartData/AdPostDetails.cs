@@ -13,19 +13,19 @@ namespace YardeCartData
         public string Description { get; set; }
         public string Keywords { get; set; }
         public int UserId { get; set; }
-        public DateTime PostedDate { get; set; }
+        public string PostedDate { get; set; }
         public int CategoryId { get; set; }
         public string Price { get; set; }
         public int StateId { get; set; }
         public int CityId { get; set; }
         public int CountryId { get; set; }
         public string ZipCode { get; set; }
-        public DateTime AdTillDate { get; set; }
+        public string AdTillDate { get; set; }
         public string AdStatus { get; set; }
         public int PaidStatus { get; set; }
-        public DateTime PaidDate { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
+        public string PaidDate { get; set; }
+        public string CreatedOn { get; set; }
+        public string UpdatedOn { get; set; }
         public int AdBlocked { get; set; }
         public int AdDeleted { get; set; }
 
@@ -38,4 +38,12 @@ namespace YardeCartData
         public string ImagePath { get; set; }
         public string VideoLink { get; set; }
     }
+    public class UserAdpost
+    {
+        public int AdPostId { get; set; }
+        public int UserId { get; set; }
+
+    }
+
+
 }

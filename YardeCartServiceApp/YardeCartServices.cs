@@ -127,7 +127,7 @@ namespace YardeCartServiceApp
 // string s = { "Exception":"","":""};
         }
 
-        public int LoginAdmin(LoginDetails loginDetails)
+        public string LoginAdmin(LoginDetails loginDetails)
         {
             try
             {
@@ -136,21 +136,22 @@ namespace YardeCartServiceApp
                 objDALComponent.SqlCommandText = "ValidateAdmin";
                 object y = objDALComponent.SelectRecordValue();
                 if (int.Parse(y.ToString()) > 0)
-                    return int.Parse(y.ToString());
+                    return y.ToString();
                 else
-                    return 0;
+                    return null;
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
+
         }
 
-        public bool AddBank(BankDetails bankDetials)
+        public void AddBank(BankDetails bankDetials)
         {
             try
             {
@@ -163,7 +164,7 @@ namespace YardeCartServiceApp
                 objDALComponent.SetParameters("@idvalue", SqlDbType.Int, true);
                 objDALComponent.SqlCommandText = "CreateBankDetails";
                 object y = objDALComponent.SelectRecordValue();
-                return true;
+                //return true;
             }
             catch (SqlException sqlEx)
             {
@@ -183,26 +184,27 @@ namespace YardeCartServiceApp
         {
             try
             {
-                objDALComponent.SetParameters("@adpostId", SqlDbType.Int, 4, adpostDetails.AdPostId);
-                objDALComponent.SetParameters("@adpostTitle", SqlDbType.VarChar, 500, adpostDetails.AdPostTitle);
-                objDALComponent.SetParameters("@description", SqlDbType.VarChar, 1000, adpostDetails.Description);
-                objDALComponent.SetParameters("@keywords", SqlDbType.VarChar, 1000,adpostDetails.Keywords);
-                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, adpostDetails.UserId);
-                objDALComponent.SetParameters("@categoryId", SqlDbType.Int, 4, adpostDetails.CategoryId);
-                objDALComponent.SetParameters("@price", SqlDbType.Decimal, 9, adpostDetails.Price);
-                objDALComponent.SetParameters("@stateId", SqlDbType.Int, 4, adpostDetails.StateId);
-                objDALComponent.SetParameters("@cityId", SqlDbType.Int, 4, adpostDetails.CityId);
-                objDALComponent.SetParameters("@countryId", SqlDbType.Int, 4, adpostDetails.CountryId);
-                objDALComponent.SetParameters("@zipCode", SqlDbType.VarChar, 50, adpostDetails.ZipCode);
-                objDALComponent.SetParameters("@adtillDate", SqlDbType.SmallDateTime, 4, adpostDetails.AdTillDate);
-                objDALComponent.SetParameters("@adStatus", SqlDbType.VarChar, 50, adpostDetails.AdStatus);
-                objDALComponent.SetParameters("@paidStatus", SqlDbType.Int, 4, adpostDetails.PaidStatus);
-                objDALComponent.SetParameters("@idvalue", SqlDbType.Int, true);
+                DALComponent objDAL = new DALComponent();
+                objDAL.SetParameters("@adpostId", SqlDbType.Int, 4, adpostDetails.AdPostId);
+                objDAL.SetParameters("@adpostTitle", SqlDbType.VarChar, 500, adpostDetails.AdPostTitle);
+                objDAL.SetParameters("@description", SqlDbType.VarChar, 1000, adpostDetails.Description);
+                objDAL.SetParameters("@keywords", SqlDbType.VarChar, 1000,adpostDetails.Keywords);
+                objDAL.SetParameters("@userId", SqlDbType.Int, 4, adpostDetails.UserId);
+                objDAL.SetParameters("@categoryId", SqlDbType.Int, 4, adpostDetails.CategoryId);
+                objDAL.SetParameters("@price", SqlDbType.Decimal, 9, adpostDetails.Price);
+                objDAL.SetParameters("@stateId", SqlDbType.Int, 4, adpostDetails.StateId);
+                objDAL.SetParameters("@cityId", SqlDbType.Int, 4, adpostDetails.CityId);
+                objDAL.SetParameters("@countryId", SqlDbType.Int, 4, adpostDetails.CountryId);
+                objDAL.SetParameters("@zipCode", SqlDbType.VarChar, 50, adpostDetails.ZipCode);
+                objDAL.SetParameters("@adtillDate", SqlDbType.SmallDateTime, 4, adpostDetails.AdTillDate);
+                objDAL.SetParameters("@adStatus", SqlDbType.VarChar, 50, adpostDetails.AdStatus);
+                objDAL.SetParameters("@paidStatus", SqlDbType.Int, 4, adpostDetails.PaidStatus);
+                objDAL.SetParameters("@idvalue", SqlDbType.Int, true);
 
-                objDALComponent.SqlCommandText = "CreateAdPost";
-                int x = objDALComponent.CreateRecord();
+                objDAL.SqlCommandText = "CreateAdPost";
+                int x = objDAL.CreateRecord();
 
-                object y = objDALComponent.GetParameters("@idvalue");
+                object y = objDAL.GetParameters("@idvalue");
 
                 if (adpostDetails.AdPostId != 0)
                     return adpostDetails.AdPostId;
@@ -219,28 +221,126 @@ namespace YardeCartServiceApp
             }
         }
 
-        public void AddAdImageDetails(AdImageDetails adimageDetails)
+        public string AddAdImageDetails(AdImageDetails adimageDetails)
         {
             try
             {
-                objDALComponent.SetParameters("@imageId", SqlDbType.Int, 4, adimageDetails.ImageId);
-                objDALComponent.SetParameters("@adpostId", SqlDbType.Int, 4, adimageDetails.AdPostId);
-                objDALComponent.SetParameters("@imagePath", SqlDbType.VarChar, 1000, adimageDetails.ImagePath);
-                objDALComponent.SetParameters("@videoLink", SqlDbType.VarChar, 1000, adimageDetails.VideoLink);
-                objDALComponent.SetParameters("@idvalue", SqlDbType.Int, true);
+                /*string[] strImg = new string[5];
+                HttpPostedFile postedFile = strImg[0] as HttpPostedFile;
+                strImg = adimageDetails.ImagePath.Split(':');
+                string path = string.Empty;
+                string strImgFinalPath = "";
+                string finalPath = string.Empty;
+                string filePath = string.Empty;
+                int userId = 0;// Convert.ToInt32(Session["UserId"].ToString());
+                string sFilename = "";
+                if (FileUpload1.PostedFile != null)
+                {
+                    HttpPostedFile myFile = FileUpload1.PostedFile;
+                    int nFileLen = myFile.ContentLength;
+                    if (nFileLen != 0)
+                    {
+                        DirectoryInfo dirInfo = null;
+                        fileSavePath = "/Data/TS_" + userId + "/Images/";
+                        path = Server.MapPath("~" + fileSavePath);
+                        if (!Directory.Exists(path))
+                        {
+                            dirInfo = Directory.CreateDirectory(path);
+                        }
+                        sFilename = System.IO.Path.GetFileName(myFile.FileName);
+                        path = path + "/" + sFilename;
+                        FileUpload1.PostedFile.SaveAs(path);
 
-                objDALComponent.SqlCommandText = "CreateAdImageDetails";
-                int x = objDALComponent.CreateRecord();
+                        finalPath = Path.Combine(fileSavePath, sFilename);
+                    }
+                }
+                strImgFinalPath = finalPath;
 
-                object y = objDALComponent.GetParameters("@idvalue");
+                if (FileUpload2.PostedFile != null)
+                {
+                    HttpPostedFile myFile = FileUpload2.PostedFile;
+                    int nFileLen = myFile.ContentLength;
+                    if (nFileLen != 0)
+                    {
+                        path = Server.MapPath("~" + fileSavePath);
+                        sFilename = System.IO.Path.GetFileName(myFile.FileName);
+                        path = path + "/" + sFilename;
+                        FileUpload2.PostedFile.SaveAs(path);
+
+                        finalPath = Path.Combine(fileSavePath, sFilename);
+
+                        strImgFinalPath = strImgFinalPath + ":" + finalPath;
+                    }
+                }
+
+                if (FileUpload3.PostedFile != null)
+                {
+                    HttpPostedFile myFile = FileUpload3.PostedFile;
+                    int nFileLen = myFile.ContentLength;
+                    if (nFileLen != 0)
+                    {
+                        path = Server.MapPath("~" + fileSavePath);
+                        sFilename = System.IO.Path.GetFileName(myFile.FileName);
+                        path = path + "/" + sFilename;
+                        FileUpload3.PostedFile.SaveAs(path);
+
+                        finalPath = Path.Combine(fileSavePath, sFilename);
+                        strImgFinalPath = strImgFinalPath + ":" + finalPath;
+                    }
+                }
+
+                if (FileUpload4.PostedFile != null)
+                {
+                    HttpPostedFile myFile = FileUpload4.PostedFile;
+                    int nFileLen = myFile.ContentLength;
+                    if (nFileLen != 0)
+                    {
+                        path = Server.MapPath("~" + fileSavePath);
+                        sFilename = System.IO.Path.GetFileName(myFile.FileName);
+                        path = path + "/" + sFilename;
+                        FileUpload4.PostedFile.SaveAs(path);
+
+                        finalPath = Path.Combine(fileSavePath, sFilename);
+                        strImgFinalPath = strImgFinalPath + ":" + finalPath;
+                    }
+                }
+
+                if (FileUpload5.PostedFile != null)
+                {
+                    HttpPostedFile myFile = FileUpload5.PostedFile;
+                    int nFileLen = myFile.ContentLength;
+                    if (nFileLen != 0)
+                    {
+                        path = Server.MapPath("~" + fileSavePath);
+                        sFilename = System.IO.Path.GetFileName(myFile.FileName);
+                        path = path + "/" + sFilename;
+                        FileUpload5.PostedFile.SaveAs(path);
+
+                        finalPath = Path.Combine(fileSavePath, sFilename);
+                        strImgFinalPath = strImgFinalPath + ":" + finalPath;
+                    }
+                }*/
+                DALComponent objDAL = new DALComponent();
+                objDAL.SetParameters("@imageId", SqlDbType.Int, 4, adimageDetails.ImageId);
+                objDAL.SetParameters("@adpostId", SqlDbType.Int, 4, adimageDetails.AdPostId);
+                objDAL.SetParameters("@imagePath", SqlDbType.VarChar, 1000, adimageDetails.ImagePath);
+                objDAL.SetParameters("@videoLink", SqlDbType.VarChar, 1000, adimageDetails.VideoLink);
+                objDAL.SetParameters("@idvalue", SqlDbType.Int, true);
+
+                objDAL.SqlCommandText = "CreateAdImageDetails";
+                int x = objDAL.CreateRecord();
+
+                object y = objDAL.GetParameters("@idvalue");
+
+                return y.ToString();
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
         }
 
@@ -266,20 +366,20 @@ namespace YardeCartServiceApp
 
         #region .. SELECT USER ..
 
-        public DataTable SelectAllProfile()
+        public string SelectAllProfile()
         {
             try
             {
                 objDALComponent.SqlCommandText = "[SelectAllProfile]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
         }
 
@@ -337,12 +437,30 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable SelectProfile(int intUserId)
+        public string SelectProfile(UserDetails userDetails)
         {
             try
             {
-                objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, intUserId);
+                objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, userDetails.UserId);
                 objDALComponent.SqlCommandText = "[SelectProfile]";
+                return GetJson(objDALComponent.SelectRecord());
+            }
+            catch (SqlException sqlEx)
+            {
+                return sqlEx.Message.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
+
+        public DataTable SelectUserProfile(UserDetails userDetails)
+        {
+            try
+            {
+                objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, userDetails.UserId);
+                objDALComponent.SqlCommandText = "[SelectUserProfile]";
                 return objDALComponent.SelectRecord();
             }
             catch (SqlException sqlEx)
@@ -409,13 +527,16 @@ namespace YardeCartServiceApp
             }
         }
 
-        public void UpdateActivation(int intUserid)
+        public void UpdateActivation(UserAct userAct)
         {
             try
             {
-                objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, intUserid);
+                userAct.strUserid = userAct.strUserid.Replace(" ", "+");
+
+                int u = Convert.ToInt32(UtilityClass.Decrypt(userAct.strUserid));
+                objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, u);
                 objDALComponent.SqlCommandText = "UpdateActivation";
-                int x = objDALComponent.DeleteRecord();
+                int x = objDALComponent.UpdateRecord();
             }
             catch (SqlException sqlEx)
             {
@@ -434,7 +555,7 @@ namespace YardeCartServiceApp
                 objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, userDetails.UserId);
                 objDALComponent.SetParameters("@blockvalue", SqlDbType.Int, 4, userDetails.UserBlocked);
                 objDALComponent.SqlCommandText = "UpdateUserBlockStatus";
-                int x = objDALComponent.DeleteRecord();
+                int x = objDALComponent.UpdateRecord();
             }
             catch (SqlException sqlEx)
             {
@@ -453,7 +574,7 @@ namespace YardeCartServiceApp
                 objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, userDetails.UserId);
                 objDALComponent.SetParameters("@delvalue", SqlDbType.Int, 4, userDetails.UserDeleted);
                 objDALComponent.SqlCommandText = "UpdateUserDeleteStatus";
-                int x = objDALComponent.DeleteRecord();
+                int x = objDALComponent.UpdateRecord();
             }
             catch (SqlException sqlEx)
             {
@@ -472,7 +593,7 @@ namespace YardeCartServiceApp
                 objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, userDetails.UserId);
                 objDALComponent.SetParameters("@userpassword", SqlDbType.VarChar, 50, userDetails.UserPassword);
                 objDALComponent.SqlCommandText = "UpdateUserPassword";
-                int x = objDALComponent.DeleteRecord();
+                int x = objDALComponent.UpdateRecord();
             }
             catch (SqlException sqlEx)
             {
@@ -506,14 +627,35 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable GetAdDetails(AdPostDetails adpostDetails)
+        public string GetAdDetails(AdPostDetails adpostDetails)
         {
             try
             {
                 objDALComponent.SetParameters("@adpostId", SqlDbType.Int, 4, adpostDetails.AdPostId);
                 objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, adpostDetails.UserId);
                 objDALComponent.SqlCommandText = "[GetAdDetails]";
-                return objDALComponent.SelectRecord();
+                string s= GetJson(objDALComponent.SelectRecord());
+                return s;
+            }
+            catch (SqlException sqlEx)
+            {
+                return sqlEx.Message.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
+
+        public DataTable GetAdDetailsDT(UserAdpost adpostDetails)
+        {
+            try
+            {
+                DALComponent objDALComponent1 = new DALComponent();
+                objDALComponent1.SetParameters("@adpostId", SqlDbType.Int, 4, adpostDetails.AdPostId);
+                objDALComponent1.SetParameters("@userId", SqlDbType.Int, 4, adpostDetails.UserId);
+                objDALComponent1.SqlCommandText = "[GetAdDetails]";
+                return objDALComponent1.SelectRecord();
             }
             catch (SqlException sqlEx)
             {
@@ -561,61 +703,60 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable SearchAdsByAdtitle(string strKeyword)
+        public string SearchAdsByAdtitle(string strKeyword)
         {
             try
             {
                 objDALComponent.SetParameters("@Keyword", SqlDbType.VarChar, 200, strKeyword);
                 objDALComponent.SqlCommandText = "[SearchAdsByAdtitle]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
         
         }
 
-        public DataTable SearchAdsByUsername(string strKeyword)
+        public string SearchAdsByUsername(string strKeyword)
         {
             try
             {
                 objDALComponent.SetParameters("@Keyword", SqlDbType.VarChar, 200, strKeyword);
                 objDALComponent.SqlCommandText = "[SearchAdsByUsername]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
 
         }
 
-        public DataTable SearchAdsByKeyword(string strKeyword)
+        public string SearchAdsByKeyword(string strKeyword)
         {
             try
             {
                 objDALComponent.SetParameters("@Keyword", SqlDbType.VarChar, 200, strKeyword);
                 objDALComponent.SqlCommandText = "[SearchAdsByKeyword]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
-
         }
 
         public string SearchAdsByCategory(int intcategoryId)
@@ -828,20 +969,20 @@ namespace YardeCartServiceApp
 
         #region .. CATEGORY GROUP & CATEGORY LIST ..
 
-        public DataTable SelectAllCategoryGroup()
+        public string SelectAllCategoryGroup()
         {
             try
             {
                 objDALComponent.SqlCommandText = "SelectCategoryGroup";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
-                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+                return sqlEx.Message.ToString();
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Error=" + ex.Message.ToString());
+                return ex.Message.ToString();
             }
         }
 
@@ -851,6 +992,23 @@ namespace YardeCartServiceApp
             {
                 objDALComponent.SqlCommandText = "SelectCategory";
                 return GetJson(objDALComponent.SelectRecord());
+            }
+            catch (SqlException sqlEx)
+            {
+                return sqlEx.Message.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
+
+        public DataTable SelectAllCategoryDT()
+        {
+            try
+            {
+                objDALComponent.SqlCommandText = "SelectCategory";
+                return objDALComponent.SelectRecord();
             }
             catch (SqlException sqlEx)
             {
@@ -986,7 +1144,24 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable SelectChargeDetails()
+        public string SelectChargeDetails()
+        {
+            try
+            {
+                objDALComponent.SqlCommandText = "SelectChargeDetails";
+                return GetJson(objDALComponent.SelectRecord());
+            }
+            catch (SqlException sqlEx)
+            {
+                return sqlEx.Message.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
+
+        public DataTable SelectChargeDetailsDT()
         {
             try
             {
@@ -1041,6 +1216,136 @@ namespace YardeCartServiceApp
 
         #endregion
 
+        #region .. CART DETAILS ..
+
+        public DataTable SelectUserCartDetails(int userId)
+        {
+            try
+            {
+                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, userId);
+                objDALComponent.SqlCommandText = "SelectUserCartDetails";
+                return objDALComponent.SelectRecord();
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error=" + ex.Message.ToString());
+            }
+        }
+
+        public int CreateUserCart(CartDetails cartDetails)
+        {
+            try
+            {
+                objDALComponent.SetParameters("@cartId", SqlDbType.Int, 4, cartDetails.CartId);
+                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, cartDetails.UserId);
+                objDALComponent.SetParameters("@adpostId", SqlDbType.Int, 4, cartDetails.AdPostId);
+                objDALComponent.SetParameters("@idvalue", SqlDbType.Int, true);
+
+                objDALComponent.SqlCommandText = "CreateUserCart";
+                int x = objDALComponent.CreateRecord();
+
+                return x;
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error=" + ex.Message.ToString());
+            }
+        }
+
+        public void CartDetailDelete(CartDetails cartDetails)
+        {
+            try
+            {
+                objDALComponent.SetParameters("@cartid", SqlDbType.Int, 4, cartDetails.CartId);
+                objDALComponent.SqlCommandText = "CartDetailDelete";
+                int x = objDALComponent.DeleteRecord();
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error=" + ex.Message.ToString());
+            }
+        }
+
+        public DataTable SelectMaxID()
+        {
+            try
+            {
+                objDALComponent.SqlCommandText = "SelectMaxID";
+                return objDALComponent.SelectRecord();
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error=" + ex.Message.ToString());
+            }
+        }
+
+        public void UpdateCartStatus(CartDetails cartDetails)
+        {
+            try
+            {
+                objDALComponent.SetParameters("@adpostid", SqlDbType.Int, 4, cartDetails.AdPostId);
+                objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, cartDetails.UserId);
+                objDALComponent.SqlCommandText = "UpdateCartStatus";
+                int x = objDALComponent.DeleteRecord();
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error=" + ex.Message.ToString());
+            }
+        }
+
+        public void CreateBuyDetails(AdStatusDetails adStatusDetails)
+        {
+            try
+            {
+                objDALComponent.SetParameters("@adpostid", SqlDbType.Int, 4, adStatusDetails.AdPostId);
+                objDALComponent.SetParameters("@historyId", SqlDbType.Int, 4, adStatusDetails.HistroyId);
+                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, adStatusDetails.UserId_Buyer);
+                objDALComponent.SetParameters("@totalprice", SqlDbType.Decimal, 9, adStatusDetails.TotalPrice);
+                objDALComponent.SetParameters("@delitype", SqlDbType.Int, 4, adStatusDetails.DeliveryType);
+                objDALComponent.SetParameters("@cityId", SqlDbType.Int, 4, adStatusDetails.SaleLocationId);
+                objDALComponent.SetParameters("@currentstatus", SqlDbType.VarChar, 50, adStatusDetails.CurrentStatus);
+                objDALComponent.SetParameters("@viewcount", SqlDbType.Int, 4, adStatusDetails.ViewersCount);
+                objDALComponent.SetParameters("@chargeName", SqlDbType.VarChar, 50, adStatusDetails.ChargeName);
+                objDALComponent.SetParameters("@chargeType", SqlDbType.Int, 4, adStatusDetails.ChargeType);
+                objDALComponent.SetParameters("@chargeAmount", SqlDbType.Float, 9, adStatusDetails.ChargeAmount);
+                objDALComponent.SetParameters("@idvalue", SqlDbType.Int, true);
+
+                objDALComponent.SqlCommandText = "[CreateBuyDetails]";
+                int x = objDALComponent.CreateRecord();
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error=" + ex.Message.ToString());
+            }
+        }
+
+        #endregion
+
         #region .. COMMON FUNCTION ..
 
         public string SendMailtoUser(UserDetails userDetails)
@@ -1054,7 +1359,7 @@ namespace YardeCartServiceApp
                 string mCC = "";
 
                 string mSubject = "YardeCart Activation mail";
-                string serverPath = ConfigurationManager.AppSettings["ApplicationPath"].ToString() + "/ActivateUser.html?uid=" + UtilityClass.Encrypt(userDetails.UserId.ToString()).ToString();
+                string serverPath = ConfigurationManager.AppSettings["ApplicationPath"].ToString() + "/ActivateUser.aspx?uid=" + UtilityClass.Encrypt(userDetails.UserId.ToString()).ToString();
                 string mMsg = "<html><body><form id='form1' runat='server'><div>" +
                 "Dear " + userDetails.UserName + ",<br /><br />Thank you for registering at the YardeCart." +
                 "Before we can activate your account one last step must be taken to complete your registration." +

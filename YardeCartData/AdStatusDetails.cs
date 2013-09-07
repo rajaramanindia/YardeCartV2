@@ -16,7 +16,7 @@ namespace YardeCartData
 
         public int UserId_Buyer { set; get; }
 
-        public DateTime SaleDate { set; get; }
+        public string SaleDate { set; get; }
 
         public int SaleLocationId { set; get; }
 
@@ -24,19 +24,19 @@ namespace YardeCartData
 
         public string DeliveryName { set; get; }
 
-        public DateTime DeliveryDate { set; get; }
+        public string DeliveryDate { set; get; }
 
         public string DeliveryAddress { set; get; }
 
         public string DeliveryType { set; get; }
 
-        public decimal TotalPrice { set; get; }
+        public string TotalPrice { set; get; }
 
         public string ChargeName { set; get; }
 
         public int ChargeType { set; get; }
 
-        public float ChargeAmount { set; get; }
+        public string ChargeAmount { set; get; }
 
     }
 

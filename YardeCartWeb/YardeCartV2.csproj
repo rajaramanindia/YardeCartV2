@@ -40,6 +40,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Google.Maps, Version=0.11.1.28730, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Google.Maps.dll</HintPath>
+    </Reference>
+    <Reference Include="Hammock, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c148cfba29ed1a4d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Hammock.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -66,8 +74,27 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WorldDomination.Net.IPAddressExtensions, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\WorldDomination.Net.IPAddressExtensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="About.html" />
+    <Content Include="ActivateUser.aspx" />
+    <Content Include="BankInfo.ascx" />
+    <Content Include="BlockAdpost.ascx" />
+    <Content Include="BlockAdpost.html" />
+    <Content Include="BlockUsers.ascx" />
+    <Content Include="BlockUsers.html" />
+    <Content Include="Category.ascx" />
+    <Content Include="Category.html" />
+    <Content Include="CategoryGroup.ascx" />
+    <Content Include="CatetgoryGroup.html" />
+    <Content Include="ChangePassword.ascx" />
+    <Content Include="ChargeList.ascx" />
+    <Content Include="ChargeList.html" />
+    <Content Include="Contacts.html" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\ajax-loader.png" />
     <Content Include="Content\images\icons-18-black.png" />
@@ -81,11 +108,42 @@
     <Content Include="Content\jquery.mobile.theme-1.3.1.min.css" />
     <Content Include="css\boilerplate.css" />
     <Content Include="css\newYardStyle.css" />
+    <Content Include="DeleteAdpost.ascx" />
+    <Content Include="DeleteAdpost.html" />
+    <Content Include="DeleteUsers.ascx" />
+    <Content Include="DeleteUsers.html" />
+    <Content Include="EditAdpost.aspx" />
+    <Content Include="EditBankInfo.ascx" />
+    <Content Include="EditProfile.ascx" />
+    <Content Include="EditProfile.html" />
     <Content Include="Global.asax" />
     <Content Include="index.aspx" />
     <Content Include="index.html" />
+    <Content Include="JQGridReq\grid.locale-en.js" />
+    <Content Include="JQGridReq\jquery-1.9.0.min.js" />
+    <Content Include="JQGridReq\jquery-ui-1.9.2.custom.css" />
+    <Content Include="JQGridReq\jquery.jqGrid.js" />
+    <Content Include="JQGridReq\ui.jqgrid.css" />
+    <Content Include="js\menu_html_block.js" />
+    <Content Include="Login.aspx" />
     <Content Include="Login.html" />
+    <Content Include="Logout.aspx" />
+    <Content Include="MyAdminHome.aspx" />
+    <Content Include="MyAdposts.ascx" />
+    <Content Include="MyCart.ascx" />
+    <Content Include="MyHome.aspx" />
+    <Content Include="MyHome.html" />
+    <Content Include="MyPuchase.ascx" />
     <Content Include="packages.config" />
+    <Content Include="PostAd.aspx" />
+    <Content Include="Register.aspx" />
+    <Content Include="UserSession.ashx" />
+    <Content Include="GetSession.ashx" />
+    <Content Include="JQCategoryGroup.ashx" />
+    <Content Include="JQCategory.ashx" />
+    <Content Include="JQBlockUsers.ashx" />
+    <Content Include="JQCharge.ashx" />
+    <Content Include="JQBlockAdpost.ashx" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="PostAd.html" />
     <Content Include="Register.html" />
@@ -101,12 +159,199 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="ViewPostAd.aspx" />
+    <Content Include="ViewPostAd.html" />
+    <Content Include="ViewProfile.ascx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="WebForm1.aspx" />
     <Content Include="Yarde.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivateUser.aspx.cs">
+      <DependentUpon>ActivateUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ActivateUser.aspx.designer.cs">
+      <DependentUpon>ActivateUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BankInfo.ascx.cs">
+      <DependentUpon>BankInfo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BankInfo.ascx.designer.cs">
+      <DependentUpon>BankInfo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="BlockAdpost.ascx.cs">
+      <DependentUpon>BlockAdpost.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BlockAdpost.ascx.designer.cs">
+      <DependentUpon>BlockAdpost.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="BlockUsers.ascx.cs">
+      <DependentUpon>BlockUsers.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BlockUsers.ascx.designer.cs">
+      <DependentUpon>BlockUsers.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Category.ascx.cs">
+      <DependentUpon>Category.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Category.ascx.designer.cs">
+      <DependentUpon>Category.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CategoryGroup.ascx.cs">
+      <DependentUpon>CategoryGroup.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CategoryGroup.ascx.designer.cs">
+      <DependentUpon>CategoryGroup.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePassword.ascx.cs">
+      <DependentUpon>ChangePassword.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePassword.ascx.designer.cs">
+      <DependentUpon>ChangePassword.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ChargeList.ascx.cs">
+      <DependentUpon>ChargeList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChargeList.ascx.designer.cs">
+      <DependentUpon>ChargeList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteAdpost.ascx.cs">
+      <DependentUpon>DeleteAdpost.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteAdpost.ascx.designer.cs">
+      <DependentUpon>DeleteAdpost.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="DeleteUsers.ascx.cs">
+      <DependentUpon>DeleteUsers.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteUsers.ascx.designer.cs">
+      <DependentUpon>DeleteUsers.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditAdpost.aspx.cs">
+      <DependentUpon>EditAdpost.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditAdpost.aspx.designer.cs">
+      <DependentUpon>EditAdpost.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditBankInfo.ascx.cs">
+      <DependentUpon>EditBankInfo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditBankInfo.ascx.designer.cs">
+      <DependentUpon>EditBankInfo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="EditProfile.ascx.cs">
+      <DependentUpon>EditProfile.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditProfile.ascx.designer.cs">
+      <DependentUpon>EditProfile.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="GetSession.ashx.cs">
+      <DependentUpon>GetSession.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="JQBlockAdpost.ashx.cs">
+      <DependentUpon>JQBlockAdpost.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="JQBlockUsers.ashx.cs">
+      <DependentUpon>JQBlockUsers.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="JQCategory.ashx.cs">
+      <DependentUpon>JQCategory.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="JQCategoryGroup.ashx.cs">
+      <DependentUpon>JQCategoryGroup.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="JQCharge.ashx.cs">
+      <DependentUpon>JQCharge.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyAdminHome.aspx.cs">
+      <DependentUpon>MyAdminHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAdminHome.aspx.designer.cs">
+      <DependentUpon>MyAdminHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyAdposts.ascx.cs">
+      <DependentUpon>MyAdposts.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAdposts.ascx.designer.cs">
+      <DependentUpon>MyAdposts.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MyCart.ascx.cs">
+      <DependentUpon>MyCart.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyCart.ascx.designer.cs">
+      <DependentUpon>MyCart.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="MyHome.aspx.cs">
+      <DependentUpon>MyHome.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyHome.aspx.designer.cs">
+      <DependentUpon>MyHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyPuchase.ascx.cs">
+      <DependentUpon>MyPuchase.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyPuchase.ascx.designer.cs">
+      <DependentUpon>MyPuchase.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="PostAd.aspx.cs">
+      <DependentUpon>PostAd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PostAd.aspx.designer.cs">
+      <DependentUpon>PostAd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SetSession.ashx.cs">
+      <DependentUpon>SetSession.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="UploadFile.ashx.cs">
+      <DependentUpon>UploadFile.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="UserSession.ashx.cs">
+      <DependentUpon>UserSession.ashx</DependentUpon>
     </Compile>
     <Compile Include="index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
@@ -116,6 +361,27 @@
       <DependentUpon>index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewPostAd.aspx.cs">
+      <DependentUpon>ViewPostAd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewPostAd.aspx.designer.cs">
+      <DependentUpon>ViewPostAd.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewProfile.ascx.cs">
+      <DependentUpon>ViewProfile.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewProfile.ascx.designer.cs">
+      <DependentUpon>ViewProfile.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Yarde.Master.cs">
       <DependentUpon>Yarde.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -126,6 +392,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-2.0.3.min.map" />
+    <Content Include="UploadFile.ashx" />
+    <Content Include="SetSession.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,274 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Category.ascx.cs" Inherits="YardeCartV2.Category" %>
+    
+<div style="text-align:center; width:800px;" >
+        <table id="jQGridDemo" style="width:500px;">
+        </table>
+        <div id="jQGridDemoPager">
+        </div>
+    </div>
+      <script type="text/javascript">
+
+          var Type;
+          var Url;
+          var Data;
+          var ContentType;
+          var DataType;
+          var ProcessData;
+          var method;
+          var catGroup;
+          //Generic function to call AXMX/WCF  Service
+          function CallService() {
+              $.ajax({
+                  type: Type, //GET or POST or PUT or DELETE verb
+                  url: Url, // Location of the service
+                  data: Data, //Data sent to server
+                  contentType: ContentType, // content type sent to server
+                  dataType: DataType, //Expected data format from server
+                  processdata: ProcessData, //True or False
+                  async: false,
+                  dataFilter: function (data, type) {
+                      // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
+                      return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
+                  },
+
+                  success: function (msg) {//On Successfull service call
+                      ServiceSucceeded(msg);
+                  },
+                  error: ServiceFailed// When Service call fails
+              });
+          }
+          function ServiceFailed(result) {
+              //alert('Service call failed: ' + result.status + '' + result.statusText);
+              Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
+          }
+          function ServiceSucceeded(result) {
+              if (DataType == "json") {
+                  if (method == "SelectAllCategoryGroup") {
+                      //debugger;
+                      resultObject = result;
+                      var obj = jQuery.parseJSON(result);
+                      catGroup = obj[0].CategoryGroupId + ":" + obj[0].CategoryGroupName;
+
+                      for (var i = 1; i < obj.length; i++) {
+                          catGroup += ";" + obj[i].CategoryGroupId + ":" + obj[i].CategoryGroupName;
+                      }
+                      return catGroup;
+                  }
+              }
+          }
+          function getCategoryGroup() {
+              //debugger;
+              //var s = $.ajax({
+              //    type: "POST", //GET or POST or PUT or DELETE verb
+              //    url: "http://localhost:1098/SelectAllCategoryGroup", // Location of the service
+              //    contentType: "application/json;charset=utf-8", // content type sent to server
+              //    dataType: "json", //Expected data format from server
+              //    processdata: false, //True or False
+              //    async: false,
+              //}).responseText;
+              Type = "POST";
+              Url = "http://localhost:1098/SelectAllCategoryGroup";
+              ContentType = "application/json;charset=utf-8";
+              DataType = "json"; ProcessData = false;
+              method = "SelectAllCategoryGroup";
+              CallService();
+              var s = catGroup;
+              //alert(s);
+              //var obj = jQuery.parseJSON(s);
+              //catGroup = obj[0].CategoryGroupId + ":" + obj[0].CategoryGroupName;
+
+              //for (var i = 1; i < obj.length; i++) {
+              //    catGroup += ";" + obj[i].CategoryGroupId + ":" + obj[i].CategoryGroupName;
+              //}
+              //alert(catGroup);
+
+              //return catGroup;
+              //debugger;
+              return s;
+          }
+          $(document).ready(function () {
+              //debugger;
+              getCategoryGroup();
+          });
+
+          var mydata = grid = $("#jQGridDemo"),
+              centerForm = function ($form) {
+                  $form.closest('div.ui-jqdialog').position({
+                      my: "center",
+                      of: grid.closest('div.ui-jqgrid')
+                  });
+              };
+          jQuery("#jQGridDemo").jqGrid({
+              url: 'JQCategory.ashx',
+              datatype: "json",
+              //data: mydata,
+              colNames: ['Id', 'Category Name', 'Category Group'],
+              colModel: [
+                          { name: 'CategoryId', index: 'CategoryId', width: 20, stype: 'hidden' },
+                          { name: 'CategoryName', index: 'CategoryName', width: 250, stype: 'text', sortable: true, editable: true },
+                          {
+                              name: 'CategoryGroupName', index: 'CategoryGroupName', width: 250, stype: 'text', sortable: true, editable: true, celledit: true,
+                              edittype: 'select',
+                              editrules: { required: true },
+                              editoptions: {
+                                  value: getCategoryGroup()//'1:General;2:AAAA;3:BBBB'//LOAD ALL THE KPI PARAMETER KEY-VALUE PAIR}
+                              },
+                          }
+              ],
+              rowNum: 10,
+              autowidth: true,
+              height: '400px',
+              mtype: 'GET',
+              align: 'center',
+              loadonce: true,
+              rowList: [10, 20, 30],
+              pager: '#jQGridDemoPager',
+              sortname: 'CategoryId',
+              viewrecords: true,
+              sortorder: 'desc',
+              caption: "List Categoty Details",
+              editurl: 'JQCategory.ashx'
+          });
+
+          $('#jQGridDemo').jqGrid('navGrid', '#jQGridDemoPager',
+                     {
+                         edit: true,
+                         add: true,
+                         del: true,
+                         search: true,
+                         searchtext: "Search",
+                         addtext: "Add",
+                         edittext: "Edit",
+                         deltext: "Delete"
+                     },
+                      //{
+                      //    beforeShowForm: function(form) {
+                      //        // "editmodlist"
+                      //        var dlgDiv = $("#editmod" + $('#jQGridDemo')[0].id);
+                      //        var parentDiv = dlgDiv.parent(); // div#gbox_list
+                      //        var dlgWidth = dlgDiv.width();
+                      //        var parentWidth = parentDiv.width();
+                      //        var dlgHeight = dlgDiv.height();
+                      //        var parentHeight = parentDiv.height();
+                      //        // TODO: change parentWidth and parentHeight in case of the grid
+                      //        //       is larger as the browser window
+                      //        dlgDiv[0].style.top = Math.round((parentHeight-dlgHeight)/2) + "px";
+                      //        dlgDiv[0].style.left = Math.round((parentWidth-dlgWidth)/2) + "px";
+                      //    }
+                      //},
+                     {   //EDIT
+                         //                       height: 300,
+                         //                       width: 400,
+                         //                       top: 50,
+                         //                       left: 100,
+                         //                       dataheight: 280,
+                         //afterShowForm: centerForm,
+                         beforeShowForm: function (form) {
+                             // "editmodlist"
+                             var dlgDiv = $("#editmod" + $('#jQGridDemo')[0].id);
+                             var parentDiv = dlgDiv.parent(); // div#gbox_list
+                             var dlgWidth = dlgDiv.width();
+                             var parentWidth = parentDiv.width();
+                             var dlgHeight = dlgDiv.height();
+                             var parentHeight = parentDiv.height();
+                             // TODO: change parentWidth and parentHeight in case of the grid
+                             //       is larger as the browser window
+                             dlgDiv[0].style.top = Math.round((parentHeight - dlgHeight) / 2) + "px";
+                             dlgDiv[0].style.left = Math.round((parentWidth - dlgWidth) / 2) + "px";
+                         },
+                         //closeOnEscape: true,//Closes the popup on pressing escape key
+                         reloadAfterSubmit: true,
+                         drag: true,
+                         afterSubmit: function (response, postdata) {
+                             //debugger;
+                             if (response.responseText == "") {
+
+                                 $(this).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');//Reloads the grid after edit
+                                 return [true, '']
+                             }
+                             else {
+                                 $(this).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid'); //Reloads the grid after edit
+                                 return [false, response.responseText]//Captures and displays the response text on th Edit window
+                             }
+                         },
+                         editData: {
+                             CategoryId: function () {
+                                 var sel_id = $('#jQGridDemo').jqGrid('getGridParam', 'selrow');
+                                 var value = $('#jQGridDemo').jqGrid('getCell', sel_id, 'CategoryId');
+                                 return value;
+                             }
+                         }
+                     },
+                     {
+                         beforeShowForm: function (form) {
+                             // "editmodlist"
+                             var dlgDiv = $("#editmod" + $('#jQGridDemo')[0].id);
+                             var parentDiv = dlgDiv.parent(); // div#gbox_list
+                             var dlgWidth = dlgDiv.width();
+                             var parentWidth = parentDiv.width();
+                             var dlgHeight = dlgDiv.height();
+                             var parentHeight = parentDiv.height();
+                             // TODO: change parentWidth and parentHeight in case of the grid
+                             //       is larger as the browser window
+                             dlgDiv[0].style.top = Math.round((parentHeight - dlgHeight) / 2) + "px";
+                             dlgDiv[0].style.left = Math.round((parentWidth - dlgWidth) / 2) + "px";
+                         },
+                         closeAfterAdd: true,//Closes the add window after add
+                         afterSubmit: function (response, postdata) {
+                             //debugger;
+                             if (response.responseText == "") {
+
+                                 $(this).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid')//Reloads the grid after Add
+                                 return [true, '']
+                             }
+                             else {
+                                 $(this).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid')//Reloads the grid after Add
+                                 return [true, response.responseText]
+                             }
+                         }
+                     },
+                     {   //DELETE
+                         beforeShowForm: function (form) {
+                             // "editmodlist"
+                             var dlgDiv = $("#delmod" + $('#jQGridDemo')[0].id);
+                             var parentDiv = dlgDiv.parent(); // div#gbox_list
+                             var dlgWidth = dlgDiv.width();
+                             var parentWidth = parentDiv.width();
+                             var dlgHeight = dlgDiv.height();
+                             var parentHeight = parentDiv.height();
+                             // TODO: change parentWidth and parentHeight in case of the grid
+                             //       is larger as the browser window
+                             dlgDiv[0].style.top = Math.round((parentHeight - dlgHeight) / 2) + "px";
+                             dlgDiv[0].style.left = Math.round((parentWidth - dlgWidth) / 2) + "px";
+                         },
+                         closeOnEscape: true,
+                         closeAfterDelete: true,
+                         reloadAfterSubmit: true,
+                         closeOnEscape: true,
+                         drag: true,
+                         afterSubmit: function (response, postdata) {
+                             if (response.responseText == "") {
+
+                                 $("#jQGridDemo").trigger("reloadGrid", [{ current: true }]);
+                                 return [false, response.responseText]
+                             }
+                             else {
+                                 $(this).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid')
+                                 return [false, response.responseText]
+                             }
+                         },
+                         delData: {
+                             CategoryId: function () {
+                                 var sel_id = $('#jQGridDemo').jqGrid('getGridParam', 'selrow');
+                                 var value = $('#jQGridDemo').jqGrid('getCell', sel_id, 'CategoryId');
+                                 return value;
+                             }
+                         }
+                     },
+                     {//SEARCH
+                         closeOnEscape: true
+
+                     }
+              );
+
+    </script>
