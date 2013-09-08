@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WorldDomination.Net.IPAddressExtensions</name>
+    </assembly>
+    <members>
+        <member name="T:WorldDomination.Net.IPAddressExtensions">
+            <summary>
+            Extension methods for the IPAddress class.
+            </summary>
+        </member>
+        <member name="M:WorldDomination.Net.IPAddressExtensions.Registry(System.Net.IPAddress)">
+            <summary>
+            The Regional Internet Registery.
+            </summary>
+            <remarks>What the hell is this? Wiki knows all :- http://en.wikipedia.org/wiki/Regional_Internet_Registry/<br /><br />
+            Expected values are: Reserved, IANA, IETF, APCNIC, ARIN, LACNIC, RIPENCC and AFRINIC.</remarks>
+            <returns>The RIR code.</returns>
+        </member>
+        <member name="M:WorldDomination.Net.IPAddressExtensions.AssignedDateTime(System.Net.IPAddress)">
+            <summary>
+            The date this IP or block was assigned.
+            </summary>
+            <remarks>If the date was unknown when assigned, a null value is returned.</remarks>
+            <returns>The date and time in UTC if known, otherwise null.</returns>
+        </member>
+        <member name="M:WorldDomination.Net.IPAddressExtensions.Iso3166TwoLetterCode(System.Net.IPAddress)">
+            <summary>
+            The two letter ISO 3166 code.
+            </summary>
+            <remarks>What the hell is this? Wiki knows all :- http://en.wikipedia.org/wiki/ISO_3166/</remarks>
+            <returns>The two letter code.</returns>
+        </member>
+        <member name="M:WorldDomination.Net.IPAddressExtensions.Iso3166ThreeLetterCode(System.Net.IPAddress)">
+            <summary>
+            The three letter ISO 3166 code.
+            </summary>
+            <remarks>What the hell is this? Wiki knows all :- http://en.wikipedia.org/wiki/ISO_3166/</remarks>
+            <param name="ipAddress"></param>
+            <returns>The three letter code.</returns>
+        </member>
+        <member name="M:WorldDomination.Net.IPAddressExtensions.Country(System.Net.IPAddress)">
+            <summary>
+            The full country name.
+            </summary>
+            <returns>The full country name.</returns>
+        </member>
+    </members>
+</doc>
