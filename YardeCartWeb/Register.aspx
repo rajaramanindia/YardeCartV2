@@ -302,7 +302,7 @@
             var objectAsJson = JSON.stringify(msg2);
 
             Type = "POST";
-            Url = "http://localhost:1098/AddRegistration";
+            Url = sServicePath + "/AddRegistration";
             ContentType = "application/json;charset=utf-8";
             Data = objectAsJson;
             DataType = "json"; ProcessData = false;
@@ -321,7 +321,7 @@
             };
             var objectAsJson = JSON.stringify(msg2);
             Type = "POST";
-            Url = "http://localhost:1098/SendMailtoUser";
+            Url = sServicePath + "/SendMailtoUser";
             ContentType = "application/json;charset=utf-8";
             Data = objectAsJson;
             DataType = "json"; ProcessData = false;
@@ -330,7 +330,7 @@
         }
         function loadState() {
             Type = "POST";
-            Url = "http://localhost:1098/SelectAllState";
+            Url = sServicePath + "/SelectAllState";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "SelectAllState";
@@ -338,7 +338,7 @@
         }
         function loadCountry() {
             Type = "POST";
-            Url = "http://localhost:1098/SelectAllCountry";
+            Url = sServicePath + "/SelectAllCountry";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "SelectAllCountry";
@@ -346,7 +346,7 @@
         }
         function loadCity() {
             Type = "POST";
-            Url = "http://localhost:1098/SelectAllCity";
+            Url = sServicePath + "/SelectAllCity";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "SelectAllCity";
@@ -358,7 +358,7 @@
             };
             var objectAsJson = JSON.stringify(msg2);
             Type = "POST";
-            Url = "http://localhost:1098/AvailableUser";
+            Url = sServicePath + "/AvailableUser";
             ContentType = "application/json;charset=utf-8";
             Data = objectAsJson;
             DataType = "json"; ProcessData = false;
@@ -372,7 +372,7 @@
             };
             var objectAsJson = JSON.stringify(msg2);
             Type = "POST";
-            Url = "http://localhost:1098/AddBank";
+            Url = sServicePath + "/AddBank";
             ContentType = "application/json;charset=utf-8";
             Data = objectAsJson;
             DataType = "json"; ProcessData = false;

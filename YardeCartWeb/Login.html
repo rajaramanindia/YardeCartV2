@@ -145,9 +145,9 @@
 
         Type = "POST";
         if($("#txtUsername").val()=="admin")
-            Url = "http://localhost:1098/LoginAdmin";
+            Url = sServicePath + "/LoginAdmin";
         else
-            Url = "http://localhost:1098/LoginUser";
+            Url = sServicePath + "/LoginUser";
         Data = objectAsJson;
         ContentType = "application/json;charset=utf-8";
         DataType = "json"; ProcessData = false;

@@ -117,8 +117,12 @@ namespace YardeCartCommon.Interface
         #region .. SELECT POST AD ..
         
         [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserAdsDT")]
+        DataTable SelectUserAdsDT(int intUserId);
+
+        [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserAds")]
-        DataTable SelectUserAds(int intUserId);
+        string SelectUserAds(UserAdpost userad);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAdDetails")]

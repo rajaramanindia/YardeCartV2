@@ -91,7 +91,7 @@ namespace YardeCartV2
             PlaceHolder ht = (PlaceHolder)Page.FindControl("PlaceHolder1");
 
             Placeholder1.Controls.Clear();
-            MyAdposts homeHead = (MyAdposts)Page.LoadControl("MyAdposts.ascx");
+            MyAdpost homeHead = (MyAdpost)Page.LoadControl("MyAdpost.ascx");
             Placeholder1.Controls.Add(homeHead);
 
         }

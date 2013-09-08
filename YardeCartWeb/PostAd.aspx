@@ -125,7 +125,7 @@
         }
         function SelectAllCategory() {
             Type = "POST";
-            Url = "http://localhost:1098/SelectAllCategory";
+            Url = sServicePath + "/SelectAllCategory";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "SelectAllCategory";
@@ -152,7 +152,7 @@
             var objectAsJson = JSON.stringify(msg2);
 
             Type = "POST";
-            Url = "http://localhost:1098/AddAdPost";
+            Url = sServicePath + "/AddAdPost";
             ContentType = "application/json;charset=utf-8";
             Data = objectAsJson;
             DataType = "json"; ProcessData = false;
@@ -173,7 +173,7 @@
             var objectAsJson = JSON.stringify(msg2);
 
             Type = "POST";
-            Url = "http://localhost:1098/AddAdImageDetails";
+            Url = sServicePath + "/AddAdImageDetails";
             ContentType = "application/json;charset=utf-8";
             Data = objectAsJson;
             DataType = "json"; ProcessData = false;
@@ -187,7 +187,7 @@
             var objectAsJson = JSON.stringify(msg2);
             method = "SelectProfile";
             Type = "POST";
-            Url = "http://localhost:1098/SelectProfile";
+            Url = sServicePath + "/SelectProfile";
             Data = objectAsJson;
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;

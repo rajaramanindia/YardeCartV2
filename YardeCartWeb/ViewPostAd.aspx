@@ -25,36 +25,6 @@
                 width: 500
             });
         }
-
-        var Type;
-        var Url;
-        var Data;
-        var ContentType;
-        var DataType;
-        var ProcessData;
-        var method;
-        //Generic function to call AXMX/WCF  Service
-        function CallService() {
-            $.ajax({
-                type: Type, //GET or POST or PUT or DELETE verb
-                url: Url, // Location of the service
-                data: Data, //Data sent to server
-                contentType: ContentType, // content type sent to server
-                dataType: DataType, //Expected data format from server
-                processdata: ProcessData, //True or False
-                async: false,
-                dataFilter: function (data, type) {
-                    // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
-                    return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
-                },
-
-                success: function (msg) {//On Successfull service call
-                    ServiceSucceeded(msg);
-                },
-                error: ServiceFailed// When Service call fails
-            });
-        }
-
         function ServiceFailed(result) {
             alert('Service call failed: ' + result.status + '' + result.statusText);
             Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
@@ -65,7 +35,7 @@
 
             Type = "POST";
             Data = objectAsJson;
-            Url = "http://localhost:1098/GetAdDetails";
+            Url = sServicePath + "/GetAdDetails";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "GetAdDetails";
@@ -123,7 +93,6 @@
                 }
             }
         }
-
         function MonthName(mon) {
             if (mon == 1) return "January";
             else if (mon == 2) return "February";
@@ -145,7 +114,7 @@
 
             Type = "POST";
             Data = objectAsJson;
-            Url = "http://localhost:1098/CreateUserCart";
+            Url = sServicePath + "/CreateUserCart";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "CreateUserCart";

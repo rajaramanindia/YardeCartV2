@@ -60,14 +60,14 @@
               //debugger;
               //var s = $.ajax({
               //    type: "POST", //GET or POST or PUT or DELETE verb
-              //    url: "http://localhost:1098/SelectAllCategoryGroup", // Location of the service
+              //    url: sServicePath + "/SelectAllCategoryGroup", // Location of the service
               //    contentType: "application/json;charset=utf-8", // content type sent to server
               //    dataType: "json", //Expected data format from server
               //    processdata: false, //True or False
               //    async: false,
               //}).responseText;
               Type = "POST";
-              Url = "http://localhost:1098/SelectAllCategoryGroup";
+              Url = sServicePath + "/SelectAllCategoryGroup";
               ContentType = "application/json;charset=utf-8";
               DataType = "json"; ProcessData = false;
               method = "SelectAllCategoryGroup";

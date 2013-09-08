@@ -125,7 +125,7 @@
 
     function GetAllAdDetails() {
         Type = "POST";
-        Url = "http://localhost:1098/GetAllAdDetails";
+        Url = sServicePath + "/GetAllAdDetails";
         ContentType = "application/json;charset=utf-8";
         DataType = "json"; ProcessData = false;
         method = "GetAllAdDetails";
@@ -134,7 +134,7 @@
 
     function SelectAllCategory() {
         Type = "POST";
-        Url = "http://localhost:1098/SelectAllCategory";
+        Url = sServicePath + "/SelectAllCategory";
         ContentType = "application/json;charset=utf-8";
         DataType = "json"; ProcessData = false;
         method = "SelectAllCategory";

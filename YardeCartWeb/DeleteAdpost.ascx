@@ -118,7 +118,7 @@
             var objectAsJson = JSON.stringify(msg);
             Type = "POST";
             Data = objectAsJson;
-            Url = "http://localhost:1098/UpdateAdDeleteStatus";
+            Url = sServicePath + "/UpdateAdDeleteStatus";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "UpdateAdDeleteStatus";

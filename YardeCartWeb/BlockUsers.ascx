@@ -100,7 +100,7 @@
             var objectAsJson = JSON.stringify(msg);
             Type = "POST";
             Data = objectAsJson;
-            Url = "http://localhost:1098/UpdateUserBlockStatus";
+            Url = sServicePath + "/UpdateUserBlockStatus";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "UpdateUserBlockStatus";

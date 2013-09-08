@@ -44,7 +44,7 @@
 
 
             Type = "POST";
-            Url = "http://localhost:1098/UpdateActivation";
+            Url = sServicePath + "/UpdateActivation";
             Data = objectAsJson;
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;

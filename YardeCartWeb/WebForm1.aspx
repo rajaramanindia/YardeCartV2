@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Yarde.Master" CodeBehind="Login.aspx.cs" Inherits="YardeCartV2.Login" Title="Yard e-Cart Login" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <script type="text/javascript">
+    <%--<script type="text/javascript">
 
         var Type;
         var Url;
@@ -45,9 +45,9 @@
 
             Type = "POST";
             if ($("#txtUsername").val() == "admin")
-                Url = "http://localhost:1098/LoginAdmin";
+                Url = sServicePath + "/LoginAdmin";
             else
-                Url = "http://localhost:1098/LoginUser";
+                Url = sServicePath + "/LoginUser";
             Data = objectAsJson;
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
@@ -91,9 +91,9 @@
             });
         });
 
-    </script>
+    </script>--%>
     
-        <div id="MainSection">
+        <%--<div id="MainSection">
             <%--<div id="MainCategory">
             <br>
             <strong><label id="currentLocation" runat="server"> / Current Location:</label></strong>
@@ -101,7 +101,7 @@
             <br>
             <hr>
             </div>
-            --%>
+            -%>
             <div id="MainItem">
                 <div id="HighlightItem" style="height: 500px; width: 100%;">
                     <div style="padding-top:100px;padding-left:75px;border: thin solid #800080;width: 100%; height: 237px; border-radius:5px 5px 5px 5px;">
@@ -155,13 +155,38 @@
     <p></p>
     <p></p>
 
-    </div>
-    <style type="text/css">
+    </div>--%>
+    <%--<style type="text/css">
                             .auto-style1 {
                                 height: 36px;
                             }
                             .auto-style2 {
                                 width: 269px;
                             }
-                        </style>
+                        </style>--%>
+
+    <style>
+        #AdShow {
+	clear: none;
+	float: left;
+	margin-left: 4.1666%;
+	width: 100%;
+	display: block;
+}
+    </style>
+
+    <div id="AdShow" style="height:200px;width:700px;border-radius:10px 10px 10px 10px;
+    border:thin solid #800080;">
+        <div style="height:30px;width:700px;border-radius:10px 10px 0px 0px;background-color:lightgray;vertical-align:middle;">
+            <strong>Ad Title</strong> 
+            <a href="">Edit</a>
+            <a href="">Delete</a>
+        </div>
+        <div style="height:150px;width:300px;margin-left:10px;margin-top:10px;float:left;">
+            <img src="Content/images/1803074608-1366626107.jpg" style="height:150px;width:250px;">
+    </div>
+        <div  style="height:35px;margin-top:10px;">Category - ddddddd</div>
+        <div style="height:35px;">Posted Date - ddddddd</div>
+        <div style="height:35px;">Price - ddddddd</div>
+    </div>
 </asp:Content>

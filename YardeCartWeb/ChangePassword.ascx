@@ -127,7 +127,7 @@
         var objectAsJson = JSON.stringify(msg2);
 
         Type = "POST";
-        Url = "http://localhost:1098/UpdateUserPassword";
+        Url = sServicePath + "/UpdateUserPassword";
         ContentType = "application/json;charset=utf-8";
         Data = objectAsJson;
         DataType = "json"; ProcessData = false;
@@ -146,7 +146,7 @@
         };
         var objectAsJson = JSON.stringify(msg2);
         Type = "POST";
-        Url = "http://localhost:1098/SendMailtoUser";
+        Url = sServicePath + "/SendMailtoUser";
         ContentType = "application/json;charset=utf-8";
         Data = objectAsJson;
         DataType = "json"; ProcessData = false;
@@ -171,7 +171,7 @@
         var msg2 = { "UserId": sUserId };
         var objectAsJson = JSON.stringify(msg2);
         Type = "POST";
-        Url = "http://localhost:1098/SelectProfile";
+        Url = sServicePath + "/SelectProfile";
         ContentType = "application/json;charset=utf-8";
         Data = objectAsJson;
         DataType = "json"; ProcessData = false;

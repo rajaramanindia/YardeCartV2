@@ -27,6 +27,7 @@
     
     <script type="text/javascript">
 
+        var sServicePath;
         var Type;
         var Url;
         var Data;
@@ -34,8 +35,11 @@
         var DataType;
         var ProcessData;
         var method;
-        var UserId
+        var UserId;
+        
         //Generic function to call AXMX/WCF  Service
+
+        var sServicePath = "<%= strServicePath %>";
 
         function CallService() {
             $.ajax({
@@ -99,7 +103,7 @@
             var objectAsJson = JSON.stringify(msg2);
             $.ajax({
                 type: "POST", //GET or POST or PUT or DELETE verb
-                url: "http://localhost:1098/SelectProfile", // Location of the service
+                url: sServicePath+"/SelectProfile", // Location of the service
                 data: objectAsJson, //Data sent to server
                 contentType: "application/json;charset=utf-8", // content type sent to server
                 dataType: "json", //Expected data format from server

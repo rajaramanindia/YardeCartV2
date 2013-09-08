@@ -53,7 +53,7 @@ namespace YardeCartV2
             GridView1.Controls.Clear();
 
             //gridpageIndex = 0;
-            dt = oY.SelectUserAds(Convert.ToInt32(Session["UserId"].ToString()));
+            dt = oY.SelectUserAdsDT(Convert.ToInt32(Session["UserId"].ToString()));
 
 
             if (dt.Rows.Count > 4)

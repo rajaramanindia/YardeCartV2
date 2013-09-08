@@ -21,6 +21,7 @@
                 contentType: ContentType, // content type sent to server
                 dataType: DataType, //Expected data format from server
                 processdata: ProcessData, //True or False
+                async: false,
                 dataFilter: function (data, type) {
                     // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
                     return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');

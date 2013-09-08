@@ -127,6 +127,7 @@
     <Content Include="Login.html" />
     <Content Include="Logout.aspx" />
     <Content Include="MyAdminHome.aspx" />
+    <Content Include="MyAdpost.ascx" />
     <Content Include="MyAdposts.ascx" />
     <Content Include="MyCart.ascx" />
     <Content Include="MyHome.aspx" />
@@ -299,6 +300,13 @@
     </Compile>
     <Compile Include="MyAdminHome.aspx.designer.cs">
       <DependentUpon>MyAdminHome.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyAdpost.ascx.cs">
+      <DependentUpon>MyAdpost.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAdpost.ascx.designer.cs">
+      <DependentUpon>MyAdpost.ascx</DependentUpon>
     </Compile>
     <Compile Include="MyAdposts.ascx.cs">
       <DependentUpon>MyAdposts.ascx</DependentUpon>

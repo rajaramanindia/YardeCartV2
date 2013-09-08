@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Data;
 using System.Web.Security;
+using System.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using WorldDomination.Net;
@@ -19,9 +20,11 @@ namespace YardeCartV2
     public partial class Yarde : MasterPage
     {
         public string isShowHideControl = string.Empty;
+        public string strServicePath = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            strServicePath = ConfigurationManager.AppSettings["ServicePath"].ToString();
             if (Request.Cookies["UserType"] != null)
             {
                 Session.Add("UserType", Request.Cookies["UserType"].Value.ToString());

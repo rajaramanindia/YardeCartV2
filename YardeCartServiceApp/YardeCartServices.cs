@@ -609,13 +609,31 @@ namespace YardeCartServiceApp
 
         #region .. SELECT POST AD ..
 
-        public DataTable SelectUserAds(int intUserId)
+        public DataTable SelectUserAdsDT(int intUserId)
         {
             try
             {
                 objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, intUserId);
                 objDALComponent.SqlCommandText = "[SelectUserAds]";
                 return objDALComponent.SelectRecord();
+            }
+            catch (SqlException sqlEx)
+            {
+                throw new ApplicationException("Data error=" + sqlEx.Message.ToString());
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error=" + ex.Message.ToString());
+            }
+        }
+
+        public string SelectUserAds(UserAdpost userad)
+        {
+            try
+            {
+                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, userad.UserId);
+                objDALComponent.SqlCommandText = "[SelectUserAds]";
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
