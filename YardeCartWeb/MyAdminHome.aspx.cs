@@ -175,5 +175,10 @@ namespace YardeCartV2
             Placeholder1.Controls.Add(homeHead);
 
         }
+
+        protected void mypendingid_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
