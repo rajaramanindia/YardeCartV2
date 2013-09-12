@@ -42,7 +42,7 @@ namespace YardeCartV2
         {
             string path = string.Empty;
 
-            oY.AdPostDeleteById(Convert.ToInt32(adpostId));
+            //oY.AdPostDeleteById(Convert.ToInt32(adpostId));
 
             BindAlbumGrid();
         }

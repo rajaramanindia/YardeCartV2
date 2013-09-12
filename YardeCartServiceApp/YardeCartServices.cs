@@ -344,11 +344,11 @@ namespace YardeCartServiceApp
             }
         }
 
-        public void AdPostDeleteById(int intAdpostId)
+        public void AdPostDeleteById(UserAdpost uAdpost)
         {
             try
             {
-                objDALComponent.SetParameters("@adpostId", SqlDbType.Int, 4, intAdpostId);
+                objDALComponent.SetParameters("@adpostId", SqlDbType.Int, 4, uAdpost.AdPostId);
                 objDALComponent.SqlCommandText = "AdPostDeleteById";
                 int x = objDALComponent.DeleteRecord();
             }
@@ -401,13 +401,14 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable AvailableMail(string strEmail)
+        public string AvailableMail(UserDetails userDetails)
         {
             try
             {
-                objDALComponent.SetParameters("@email", SqlDbType.VarChar, 50, strEmail);
-                objDALComponent.SqlCommandText = "[AvailableMail]";
-                return objDALComponent.SelectRecord();
+                DALComponent objDAL = new DALComponent();
+                objDAL.SetParameters("@email", SqlDbType.VarChar, 50, userDetails.Email);
+                objDAL.SqlCommandText = "[AvailableMail]";
+                return GetJson(objDAL.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
@@ -437,11 +438,11 @@ namespace YardeCartServiceApp
             }
         }
 
-        public string SelectProfile(UserDetails userDetails)
+        public string SelectProfile(string userId)
         {
             try
             {
-                objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, userDetails.UserId);
+                objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, Convert.ToInt32(userId));
                 objDALComponent.SqlCommandText = "[SelectProfile]";
                 return GetJson(objDALComponent.SelectRecord());
             }
@@ -509,13 +510,13 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable SelectUserPurchases(int intUserid)
+        public string SelectUserPurchases(string strUserid)
         {
             try
             {
-                objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, intUserid);
+                objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, Convert.ToInt32(strUserid));
                 objDALComponent.SqlCommandText = "[SelectUserPurchases]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
@@ -627,11 +628,11 @@ namespace YardeCartServiceApp
             }
         }
 
-        public string SelectUserAds(UserAdpost userad)
+        public string SelectUserAds(string strUserid)
         {
             try
             {
-                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, userad.UserId);
+                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, Convert.ToInt32(strUserid));
                 objDALComponent.SqlCommandText = "[SelectUserAds]";
                 return GetJson(objDALComponent.SelectRecord());
             }
@@ -1196,13 +1197,14 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable SelectChargeDetailsByID(int intChargeId)
+        public string SelectChargeDetailsByID(string strChargeId)
         {
             try
             {
-                objDALComponent.SetParameters("@chargeId", SqlDbType.Int, 4, intChargeId);
-                objDALComponent.SqlCommandText = "SelectChargeDetailsByID";
-                return objDALComponent.SelectRecord();
+                DALComponent objDAL = new DALComponent();
+                objDAL.SetParameters("@chargeId", SqlDbType.Int, 4, Convert.ToInt32(strChargeId));
+                objDAL.SqlCommandText = "SelectChargeDetailsByID";
+                return GetJson(objDAL.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
@@ -1236,13 +1238,13 @@ namespace YardeCartServiceApp
 
         #region .. CART DETAILS ..
 
-        public DataTable SelectUserCartDetails(int userId)
+        public string SelectUserCartDetails(string struserId)
         {
             try
             {
-                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, userId);
+                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, Convert.ToInt32(struserId));
                 objDALComponent.SqlCommandText = "SelectUserCartDetails";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
@@ -1296,12 +1298,12 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable SelectMaxID()
+        public string SelectMaxID()
         {
             try
             {
                 objDALComponent.SqlCommandText = "SelectMaxID";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
@@ -1320,7 +1322,7 @@ namespace YardeCartServiceApp
                 objDALComponent.SetParameters("@adpostid", SqlDbType.Int, 4, cartDetails.AdPostId);
                 objDALComponent.SetParameters("@userid", SqlDbType.Int, 4, cartDetails.UserId);
                 objDALComponent.SqlCommandText = "UpdateCartStatus";
-                int x = objDALComponent.DeleteRecord();
+                int x = objDALComponent.UpdateRecord();
             }
             catch (SqlException sqlEx)
             {
@@ -1332,25 +1334,28 @@ namespace YardeCartServiceApp
             }
         }
 
-        public void CreateBuyDetails(AdStatusDetails adStatusDetails)
+        public int CreateBuyDetails(AdStatusDetails adStatusDetails)
         {
             try
             {
-                objDALComponent.SetParameters("@adpostid", SqlDbType.Int, 4, adStatusDetails.AdPostId);
-                objDALComponent.SetParameters("@historyId", SqlDbType.Int, 4, adStatusDetails.HistroyId);
-                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, adStatusDetails.UserId_Buyer);
-                objDALComponent.SetParameters("@totalprice", SqlDbType.Decimal, 9, adStatusDetails.TotalPrice);
-                objDALComponent.SetParameters("@delitype", SqlDbType.Int, 4, adStatusDetails.DeliveryType);
-                objDALComponent.SetParameters("@cityId", SqlDbType.Int, 4, adStatusDetails.SaleLocationId);
-                objDALComponent.SetParameters("@currentstatus", SqlDbType.VarChar, 50, adStatusDetails.CurrentStatus);
-                objDALComponent.SetParameters("@viewcount", SqlDbType.Int, 4, adStatusDetails.ViewersCount);
-                objDALComponent.SetParameters("@chargeName", SqlDbType.VarChar, 50, adStatusDetails.ChargeName);
-                objDALComponent.SetParameters("@chargeType", SqlDbType.Int, 4, adStatusDetails.ChargeType);
-                objDALComponent.SetParameters("@chargeAmount", SqlDbType.Float, 9, adStatusDetails.ChargeAmount);
-                objDALComponent.SetParameters("@idvalue", SqlDbType.Int, true);
+                DALComponent oDal = new DALComponent();
+                oDal.SetParameters("@adpostid", SqlDbType.Int, 4, adStatusDetails.AdPostId);
+                oDal.SetParameters("@historyId", SqlDbType.Int, 4, adStatusDetails.HistroyId);
+                oDal.SetParameters("@userId", SqlDbType.Int, 4, adStatusDetails.UserId_Buyer);
+                oDal.SetParameters("@totalprice", SqlDbType.Decimal, 9, Convert.ToDecimal(adStatusDetails.TotalPrice));
+                oDal.SetParameters("@delitype", SqlDbType.Int, 4, adStatusDetails.DeliveryType);
+                oDal.SetParameters("@cityId", SqlDbType.Int, 4, adStatusDetails.SaleLocationId);
+                oDal.SetParameters("@currentstatus", SqlDbType.VarChar, 50, adStatusDetails.CurrentStatus);
+                oDal.SetParameters("@viewcount", SqlDbType.Int, 4, adStatusDetails.ViewersCount);
+                oDal.SetParameters("@chargeName", SqlDbType.VarChar, 50, adStatusDetails.ChargeName);
+                oDal.SetParameters("@chargeType", SqlDbType.Int, 4, adStatusDetails.ChargeType);
+                oDal.SetParameters("@chargeAmount", SqlDbType.Float, 9, Convert.ToDouble(adStatusDetails.ChargeAmount));
+                oDal.SetParameters("@idvalue", SqlDbType.Int, true);
 
-                objDALComponent.SqlCommandText = "[CreateBuyDetails]";
-                int x = objDALComponent.CreateRecord();
+                oDal.SqlCommandText = "[CreateBuyDetails]";
+                int x = oDal.CreateRecord();
+
+                return x;
             }
             catch (SqlException sqlEx)
             {

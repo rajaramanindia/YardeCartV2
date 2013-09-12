@@ -8,42 +8,23 @@
     </div>
       <script type="text/javascript">
 
-          var Type;
-          var Url;
-          var Data;
-          var ContentType;
-          var DataType;
-          var ProcessData;
-          var method;
           var catGroup;
-          //Generic function to call AXMX/WCF  Service
-          function CallService() {
-              $.ajax({
-                  type: Type, //GET or POST or PUT or DELETE verb
-                  url: Url, // Location of the service
-                  data: Data, //Data sent to server
-                  contentType: ContentType, // content type sent to server
-                  dataType: DataType, //Expected data format from server
-                  processdata: ProcessData, //True or False
-                  async: false,
-                  dataFilter: function (data, type) {
-                      // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
-                      return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
-                  },
 
-                  success: function (msg) {//On Successfull service call
-                      ServiceSucceeded(msg);
-                  },
-                  error: ServiceFailed// When Service call fails
-              });
+          function getGroup() {
+              getCategoryGroup();
+              var s = catGroup;
+              return s;
           }
-          function ServiceFailed(result) {
-              //alert('Service call failed: ' + result.status + '' + result.statusText);
-              Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
-          }
-          function ServiceSucceeded(result) {
-              if (DataType == "json") {
-                  if (method == "SelectAllCategoryGroup") {
+          function getCategoryGroup() {
+              $.ajax({
+                  type: "GET", //GET or POST or PUT or DELETE verb
+                  url: sServicePath + "/SelectAllCategoryGroup", // Location of the service
+                  //data: objectAsJson, //Data sent to server
+                  contentType: "application/json;charset=utf-8", // content type sent to server
+                  dataType: "json", //Expected data format from server
+                  processdata: false, //True or False
+                  async: false,
+                  success: function (result) {//On Successfull service call
                       //debugger;
                       resultObject = result;
                       var obj = jQuery.parseJSON(result);
@@ -53,44 +34,12 @@
                           catGroup += ";" + obj[i].CategoryGroupId + ":" + obj[i].CategoryGroupName;
                       }
                       return catGroup;
-                  }
-              }
-          }
-          function getCategoryGroup() {
-              //debugger;
-              //var s = $.ajax({
-              //    type: "POST", //GET or POST or PUT or DELETE verb
-              //    url: sServicePath + "/SelectAllCategoryGroup", // Location of the service
-              //    contentType: "application/json;charset=utf-8", // content type sent to server
-              //    dataType: "json", //Expected data format from server
-              //    processdata: false, //True or False
-              //    async: false,
-              //}).responseText;
-              Type = "POST";
-              Url = sServicePath + "/SelectAllCategoryGroup";
-              ContentType = "application/json;charset=utf-8";
-              DataType = "json"; ProcessData = false;
-              method = "SelectAllCategoryGroup";
-              CallService();
-              var s = catGroup;
-              //alert(s);
-              //var obj = jQuery.parseJSON(s);
-              //catGroup = obj[0].CategoryGroupId + ":" + obj[0].CategoryGroupName;
 
-              //for (var i = 1; i < obj.length; i++) {
-              //    catGroup += ";" + obj[i].CategoryGroupId + ":" + obj[i].CategoryGroupName;
-              //}
-              //alert(catGroup);
-
-              //return catGroup;
-              //debugger;
-              return s;
           }
-          $(document).ready(function () {
-              //debugger;
-              getCategoryGroup();
           });
 
+             }
+          
           var mydata = grid = $("#jQGridDemo"),
               centerForm = function ($form) {
                   $form.closest('div.ui-jqdialog').position({
@@ -98,20 +47,24 @@
                       of: grid.closest('div.ui-jqgrid')
                   });
               };
+          $(document).ready(function () {
+              getGroup();
+
+
           jQuery("#jQGridDemo").jqGrid({
-              url: 'JQCategory.ashx',
+              url: 'Handlers/JQCategory.ashx',
               datatype: "json",
               //data: mydata,
               colNames: ['Id', 'Category Name', 'Category Group'],
               colModel: [
-                          { name: 'CategoryId', index: 'CategoryId', width: 20, stype: 'hidden' },
+                          { name: 'CategoryId', index: 'CategoryId', width: 20, hidden: true },
                           { name: 'CategoryName', index: 'CategoryName', width: 250, stype: 'text', sortable: true, editable: true },
                           {
                               name: 'CategoryGroupName', index: 'CategoryGroupName', width: 250, stype: 'text', sortable: true, editable: true, celledit: true,
                               edittype: 'select',
                               editrules: { required: true },
                               editoptions: {
-                                  value: getCategoryGroup()//'1:General;2:AAAA;3:BBBB'//LOAD ALL THE KPI PARAMETER KEY-VALUE PAIR}
+                                  value: getGroup()//'1:General;2:AAAA;3:BBBB'//LOAD ALL THE KPI PARAMETER KEY-VALUE PAIR}
                               },
                           }
               ],
@@ -125,9 +78,10 @@
               pager: '#jQGridDemoPager',
               sortname: 'CategoryId',
               viewrecords: true,
+              rownumbers: true,
               sortorder: 'desc',
               caption: "List Categoty Details",
-              editurl: 'JQCategory.ashx'
+              editurl: 'Handlers/JQCategory.ashx'
           });
 
           $('#jQGridDemo').jqGrid('navGrid', '#jQGridDemoPager',
@@ -270,5 +224,6 @@
 
                      }
               );
+          });
 
     </script>

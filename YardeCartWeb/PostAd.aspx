@@ -53,13 +53,7 @@
        
     </style>
     <script type="text/javascript">
-        var Type;
-        var Url;
-        var Data;
-        var ContentType;
-        var DataType;
-        var ProcessData;
-        var method;
+
         var intStateId;
         var intCityId;
         var intCountryId;
@@ -67,33 +61,7 @@
         var UserId;
         var adpostid;
         var strimagePath;
-        //Generic function to call AXMX/WCF  Service
-        function CallService() {
-            $.ajax({
-                type: Type, //GET or POST or PUT or DELETE verb
-                url: Url, // Location of the service
-                data: Data, //Data sent to server
-                contentType: ContentType, // content type sent to server
-                dataType: DataType, //Expected data format from server
-                processdata: ProcessData, //True or False
-                async: false,
-                dataFilter: function (data, type) {
-                    // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
-                    return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
-                },
-
-                success: function (msg) {//On Successfull service call
-                    ServiceSucceeded(msg);
-                },
-                error: function (xhr) {
-                    ServiceFailed(xhr); // When Service call fails
-                }
-            });
-        }
-        function ServiceFailed(result) {
-            alert('Service call failed: ' + result.status + '' + result.statusText);
-            Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
-        }
+        
         function ServiceSucceeded(result) {
             if (DataType == "json") {
                 if (method == "SelectAllCategory") {
@@ -104,7 +72,7 @@
                     }
 
                 }
-                else if (method == "SelectProfile") {
+                else if (method == "SelectUserProfile") {
                     resultObject = result;
                     var obj = jQuery.parseJSON(result);
 
@@ -124,7 +92,7 @@
             }
         }
         function SelectAllCategory() {
-            Type = "POST";
+            Type = "GET";
             Url = sServicePath + "/SelectAllCategory";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
@@ -182,13 +150,12 @@
 
         }
         function SelectUserProfile() {
-            //debugger;
             var msg2 = { "UserId": UserId };
             var objectAsJson = JSON.stringify(msg2);
-            method = "SelectProfile";
-            Type = "POST";
-            Url = sServicePath + "/SelectProfile";
-            Data = objectAsJson;
+            method = "SelectUserProfile";
+            Type = "GET";
+            Url = sServicePath + "/SelectProfile/" + UserId;
+            //Data = objectAsJson;
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             CallService();
@@ -231,23 +198,23 @@
 
         $(document).ready(
         function () {
-            $.ajax({
-                url: 'GetSession.ashx',
-                processData: false,
-                contentType: false,
-                type: 'GET',
-                async: false,
-                success: function (data) {
-                    var temp = data.split('/');
-                    UserId = temp[1];
-                    if (UserId == "")
-                        window.location = "Login.aspx";
-                },
-                error: function (errorData) {
-                    alert("ERR ON  " + errorData);
-                    $('.result-message').html("there was a problem uploading the file.").show();
-                }
-            });
+            //$.ajax({
+            //    url: 'Handlers/GetSession.ashx',
+            //    processData: false,
+            //    contentType: false,
+            //    type: 'GET',
+            //    async: false,
+            //    success: function (data) {
+            //        var temp = data.split('/');
+            //        UserId = temp[1];
+            //        if (UserId == "")
+            //            window.location = "Login.aspx";
+            //    },
+            //    error: function (errorData) {
+            //        alert("ERR ON  " + errorData);
+            //        $('.result-message').html("there was a problem uploading the file.").show();
+            //    }
+            //});
 
             SelectAllCategory();
             SelectUserProfile();
@@ -257,7 +224,7 @@
         $(function () {
 
             new AjaxUpload('#UploadButton1', {
-                action: 'UploadFile.ashx',
+                action: 'Handlers/UploadFile.ashx',
                 onComplete: function (file, response) {
                     //debugger;
                     if ($("#strImgPath").val() == "")
@@ -279,7 +246,7 @@
                 }
             });
             new AjaxUpload('#UploadButton2', {
-                action: 'UploadFile.ashx',
+                action: 'Handlers/UploadFile.ashx',
                 onComplete: function (file, response) {
                     if ($("#strImgPath").val() == "")
                         $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
@@ -300,7 +267,7 @@
                 }
             });
             new AjaxUpload('#UploadButton3', {
-                action: 'UploadFile.ashx',
+                action: 'Handlers/UploadFile.ashx',
                 onComplete: function (file, response) {
                     if ($("#strImgPath").val() == "")
                         $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
@@ -321,7 +288,7 @@
                 }
             });
             new AjaxUpload('#UploadButton4', {
-                action: 'UploadFile.ashx',
+                action: 'Handlers/UploadFile.ashx',
                 onComplete: function (file, response) {
                     if ($("#strImgPath").val() == "")
                         $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
@@ -342,7 +309,7 @@
                 }
             });
             new AjaxUpload('#UploadButton5', {
-                action: 'UploadFile.ashx',
+                action: 'Handlers/UploadFile.ashx',
                 onComplete: function (file, response) {
                     if ($("#strImgPath").val() == "")
                         $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
@@ -369,7 +336,7 @@
             debugger;
             var file1 = file.split('/');
             $.ajax({
-                url: "UploadFile.ashx?file=" + file1[0],
+                url: "Handlers/UploadFile.ashx?file=" + file1[0],
                 type: "GET",
                 cache: false,
                 async: true,
@@ -408,7 +375,7 @@
                     <label>Title</label>
                 </td>
                 <td>
-                    <input type="text" id="txtTitle" style="width: 200px;"/>
+                    <input type="text" id="txtTitle" style="width: 200px;"  class="easyui-validatebox" data-options="required:true"/>
                 </td>
             </tr>
             <tr>
@@ -424,7 +391,7 @@
                 <td style="width:250px; height:70px;">
                     <label>Keywords</label></td>
                 <td>
-                    <textarea id="txtKeywords" style="width:300px; height:50px;" maxlength="1000"></textarea>
+                    <textarea id="txtKeywords" style="width:300px; height:50px;" maxlength="1000"  class="easyui-validatebox" data-options="required:true"></textarea>
                 </td>
             </tr>
 
@@ -440,7 +407,7 @@
                 <td style="width:250px; height:35px;">
                     <label>Price</label></td>
                 <td>
-                    <input type="text" id="txtPrice" style="width: 200px;"/>
+                    <input type="text" id="txtPrice" style="width: 200px;"  class="easyui-validatebox" data-options="required:true"/>
                 </td>
             </tr>
 
@@ -448,7 +415,7 @@
                 <td style="width:250px; height:35px;">
                     <label>Show Till Date</label></td>
                 <td>
-                    <input id="txtShowDate" type="text" class="easyui-datebox" required="true" />
+                    <input id="txtShowDate" type="text" class="easyui-datebox" data-options="required:true" />
                 </td>
             </tr>
             <tr>

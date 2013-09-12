@@ -62,46 +62,11 @@
 
 <script type="text/javascript">
 
-
-    var Type;
-    var Url;
-    var Data;
-    var ContentType;
-    var DataType;
-    var ProcessData;
-    var method;
     var sBankId;
-    var sUserType;
-    var sUserId;
 
-    //Generic function to call AXMX/WCF  Service
-    function CallService() {
-        $.ajax({
-            type: Type, //GET or POST or PUT or DELETE verb
-            url: Url, // Location of the service
-            data: Data, //Data sent to server
-            contentType: ContentType, // content type sent to server
-            dataType: DataType, //Expected data format from server
-            processdata: ProcessData, //True or False
-            async: false,
-            dataFilter: function (data, type) {
-                // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
-                return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
-            },
-
-            success: function (msg) {//On Successfull service call
-                ServiceSucceeded(msg);
-            }
-            //error: ServiceFailed// When Service call fails
-        });
-    }
-    function ServiceFailed(result) {
-        alert('Service call failed: ' + result.status + '' + result.statusText);
-        Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
-    }
     function ServiceSucceeded(result) {
         if (DataType == "json") {
-            if (method == "SelectProfile") {
+            if (method == "SelectUserProfile") {
                 resultObject = result;
                 var obj = jQuery.parseJSON(result);
                 sBankId = obj[0].BankId;
@@ -114,42 +79,25 @@
                 resultObject = result;
                 hdnUserId = resultObject;
                 //MailToUser();
-                if(sUserType=="1")
+                if(UserType=="1")
                     window.location = "MyHome.aspx";
-                else if(sUserType == "2")
+                else if(UserType == "2")
                     window.location = "MyAdminHome.aspx";
 
             }
         }
     }
-    function GetSession() {
-        $.ajax({
-            url: 'GetSession.ashx',
-            processData: false,
-            contentType: false,
-            type: 'GET',
-            async: false,
-            success: function (data) {
-                var temp = data.split('/');
-                sUserType = temp[0];
-                sUserId = temp[1];
-            }
-        });
-    }
-    function SelectProfile() {
-        var msg2 = { "UserId": sUserId };
-        var objectAsJson = JSON.stringify(msg2);
-        Type = "POST";
-        Url = sServicePath + "/SelectProfile";
+    function SelectUserProfile() {
+        Type = "GET";
+        Url = sServicePath + "/SelectProfile/" + UserId;
         ContentType = "application/json;charset=utf-8";
-        Data = objectAsJson;
         DataType = "json"; ProcessData = false;
-        method = "SelectProfile";
+        method = "SelectUserProfile";
         CallService();
     }
     function AddBankinfo() {
         var msg2 = {
-            "BankId": sBankId, "UserId": sUserId, "BankName": $("#txtBankName").val(),
+            "BankId": sBankId, "UserId": UserId, "BankName": $("#txtBankName").val(),
             "CardHolderName": $("#txtCardHolderName").val(), "CardNumber": $("#txtCardNumber").val(), "CVCNumber": $("#txtCVCNumber").val()
         };
         var objectAsJson = JSON.stringify(msg2);
@@ -159,15 +107,12 @@
         Data = objectAsJson;
         DataType = "json"; ProcessData = false;
         method = "AddBank";
-        debugger;
         CallService();
     }
 
     $(document).ready(
     function () {
-        debugger;
-        GetSession();
-        SelectProfile();
+        SelectUserProfile();
         $("#btnUpdate").click(function () {
             AddBankinfo();
             alert("Updated Successfully");

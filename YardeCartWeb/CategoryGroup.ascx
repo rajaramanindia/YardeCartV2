@@ -1,34 +1,39 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CategoryGroup.ascx.cs" Inherits="YardeCartV2.CategoryGroup" %>
- <div style="text-align:center; width:800px;" >
-        <table id="jQGridDemo" style="width:500px;">
+ <div style="text-align:center; width:800px;padding-top:50px;padding-left:10px;" >
+     <div><strong>List of Category Group details</strong></div>
+     <br />
+     <br />
+        <table id="JQCategoryGroup" style="width:500px;">
         </table>
-        <div id="jQGridDemoPager">
+        <div id="JQCategoryGroupPager">
         </div>
     </div>
       <script type="text/javascript">
-          jQuery("#jQGridDemo").jqGrid({
-              url: 'JQCategoryGroup.ashx',
+          jQuery("#JQCategoryGroup").jqGrid({
+              url: 'Handlers/JQCategoryGroup.ashx',
               datatype: "json",
               colNames: ['Id', 'Group Name'],
               colModel: [
-                          { name: 'CategoryGroupId', index: 'CategoryGroupId', width: 20, stype: 'hidden' },
+                          { name: 'CategoryGroupId', index: 'CategoryGroupId', width: 20, hidden: true },
                           { name: 'CategoryGroupName', index: 'CategoryGroupName', width: 350, stype: 'text', sortable: true, editable: true }
               ],
               rowNum: 10,
-              width: '500px',
-              height: '400px',
+              dataheight:'40px',
+              autowidth: true,
+              height: '280px',
               mtype: 'GET',
               loadonce: true,
               rowList: [10, 20, 30],
-              pager: '#jQGridDemoPager',
+              pager: '#JQCategoryGroupPager',
               sortname: 'CategoryGroupId',
               viewrecords: true,
+              rownumbers: true,
               sortorder: 'asc',
               caption: "List Categoty Group Details",
-              editurl: 'JQCategoryGroup.ashx'
+              editurl: 'Handlers/JQCategoryGroup.ashx'
           });
 
-          $('#jQGridDemo').jqGrid('navGrid', '#jQGridDemoPager',
+          $('#JQCategoryGroup').jqGrid('navGrid', '#JQCategoryGroupPager',
                      {
                          edit: true,
                          add: true,
@@ -45,11 +50,24 @@
                          //                       top: 50,
                          //                       left: 100,
                          //                       dataheight: 280,
+                         beforeShowForm: function (form) {
+                             // "editmodlist"
+                             var dlgDiv = $("#editmod" + $('#JQCategoryGroup')[0].id);
+                             var parentDiv = dlgDiv.parent(); // div#gbox_list
+                             var dlgWidth = dlgDiv.width();
+                             var parentWidth = parentDiv.width();
+                             var dlgHeight = dlgDiv.height();
+                             var parentHeight = parentDiv.height();
+                             // TODO: change parentWidth and parentHeight in case of the grid
+                             //       is larger as the browser window
+                             dlgDiv[0].style.top = Math.round((parentHeight - dlgHeight) / 2) + "px";
+                             dlgDiv[0].style.left = Math.round((parentWidth - dlgWidth) / 2) + "px";
+                         },
                          closeOnEscape: true,//Closes the popup on pressing escape key
                          reloadAfterSubmit: true,
                          drag: true,
                          afterSubmit: function (response, postdata) {
-                             debugger;
+                             //debugger;
                              if (response.responseText == "") {
 
                                  $(this).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');//Reloads the grid after edit
@@ -62,8 +80,8 @@
                          },
                          editData: {
                              GroupId: function () {
-                                 var sel_id = $('#jQGridDemo').jqGrid('getGridParam', 'selrow');
-                                 var value = $('#jQGridDemo').jqGrid('getCell', sel_id, 'CategoryGroupId');
+                                 var sel_id = $('#JQCategoryGroup').jqGrid('getGridParam', 'selrow');
+                                 var value = $('#JQCategoryGroup').jqGrid('getCell', sel_id, 'CategoryGroupId');
                                  return value;
                              }
                          }
@@ -71,7 +89,7 @@
                      {
                          closeAfterAdd: true,//Closes the add window after add
                          afterSubmit: function (response, postdata) {
-                             debugger;
+                             //debugger;
                              if (response.responseText == "") {
 
                                  $(this).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid')//Reloads the grid after Add
@@ -90,10 +108,10 @@
                          closeOnEscape: true,
                          drag: true,
                          afterSubmit: function (response, postdata) {
-                             debugger;
+                             //debugger;
                              if (response.responseText == "") {
 
-                                 $("#jQGridDemo").trigger("reloadGrid", [{ current: true }]);
+                                 $("#JQCategoryGroup").trigger("reloadGrid", [{ current: true }]);
                                  return [false, response.responseText]
                              }
                              else {
@@ -103,8 +121,8 @@
                          },
                          delData: {
                              GroupId: function () {
-                                 var sel_id = $('#jQGridDemo').jqGrid('getGridParam', 'selrow');
-                                 var value = $('#jQGridDemo').jqGrid('getCell', sel_id, 'CategoryGroupId');
+                                 var sel_id = $('#JQCategoryGroup').jqGrid('getGridParam', 'selrow');
+                                 var value = $('#JQCategoryGroup').jqGrid('getCell', sel_id, 'CategoryGroupId');
                                  return value;
                              }
                          }

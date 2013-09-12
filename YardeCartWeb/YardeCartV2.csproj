@@ -78,21 +78,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About.html" />
+    <Content Include="Content\images\del_no.png" />
+    <Content Include="Content\images\yes_avai.jpg" />
+    <Content Include="html\About.html" />
     <Content Include="ActivateUser.aspx" />
     <Content Include="BankInfo.ascx" />
     <Content Include="BlockAdpost.ascx" />
-    <Content Include="BlockAdpost.html" />
+    <Content Include="html\BlockAdpost.html" />
     <Content Include="BlockUsers.ascx" />
-    <Content Include="BlockUsers.html" />
+    <Content Include="html\BlockUsers.html" />
     <Content Include="Category.ascx" />
-    <Content Include="Category.html" />
+    <Content Include="html\Category.html" />
     <Content Include="CategoryGroup.ascx" />
-    <Content Include="CatetgoryGroup.html" />
+    <Content Include="html\CatetgoryGroup.html" />
     <Content Include="ChangePassword.ascx" />
     <Content Include="ChargeList.ascx" />
-    <Content Include="ChargeList.html" />
-    <Content Include="Contacts.html" />
+    <Content Include="html\ChargeList.html" />
+    <Content Include="html\Contacts.html" />
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\ajax-loader.png" />
     <Content Include="Content\images\icons-18-black.png" />
@@ -107,16 +109,16 @@
     <Content Include="css\boilerplate.css" />
     <Content Include="css\newYardStyle.css" />
     <Content Include="DeleteAdpost.ascx" />
-    <Content Include="DeleteAdpost.html" />
+    <Content Include="html\DeleteAdpost.html" />
     <Content Include="DeleteUsers.ascx" />
-    <Content Include="DeleteUsers.html" />
+    <Content Include="html\DeleteUsers.html" />
     <Content Include="EditAdpost.aspx" />
     <Content Include="EditBankInfo.ascx" />
     <Content Include="EditProfile.ascx" />
-    <Content Include="EditProfile.html" />
+    <Content Include="html\EditProfile.html" />
     <Content Include="Global.asax" />
     <Content Include="index.aspx" />
-    <Content Include="index.html" />
+    <Content Include="html\index.html" />
     <Content Include="JQGridReq\grid.locale-en.js" />
     <Content Include="JQGridReq\jquery-1.9.0.min.js" />
     <Content Include="JQGridReq\jquery-ui-1.9.2.custom.css" />
@@ -124,28 +126,28 @@
     <Content Include="JQGridReq\ui.jqgrid.css" />
     <Content Include="js\menu_html_block.js" />
     <Content Include="Login.aspx" />
-    <Content Include="Login.html" />
+    <Content Include="html\Login.html" />
     <Content Include="Logout.aspx" />
     <Content Include="MyAdminHome.aspx" />
     <Content Include="MyAdpost.ascx" />
     <Content Include="MyAdposts.ascx" />
     <Content Include="MyCart.ascx" />
     <Content Include="MyHome.aspx" />
-    <Content Include="MyHome.html" />
+    <Content Include="html\MyHome.html" />
     <Content Include="MyPuchase.ascx" />
     <Content Include="packages.config" />
     <Content Include="PostAd.aspx" />
     <Content Include="Register.aspx" />
-    <Content Include="UserSession.ashx" />
-    <Content Include="GetSession.ashx" />
-    <Content Include="JQCategoryGroup.ashx" />
-    <Content Include="JQCategory.ashx" />
-    <Content Include="JQBlockUsers.ashx" />
-    <Content Include="JQCharge.ashx" />
-    <Content Include="JQBlockAdpost.ashx" />
+    <Content Include="Handlers\UserSession.ashx" />
+    <Content Include="Handlers\GetSession.ashx" />
+    <Content Include="Handlers\JQCategoryGroup.ashx" />
+    <Content Include="Handlers\JQCategory.ashx" />
+    <Content Include="Handlers\JQBlockUsers.ashx" />
+    <Content Include="Handlers\JQCharge.ashx" />
+    <Content Include="Handlers\JQBlockAdpost.ashx" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
-    <Content Include="PostAd.html" />
-    <Content Include="Register.html" />
+    <Content Include="html\PostAd.html" />
+    <Content Include="html\Register.html" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
@@ -159,7 +161,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="ViewPostAd.aspx" />
-    <Content Include="ViewPostAd.html" />
+    <Content Include="html\ViewPostAd.html" />
     <Content Include="ViewProfile.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -259,25 +261,25 @@
     <Compile Include="EditProfile.ascx.designer.cs">
       <DependentUpon>EditProfile.ascx</DependentUpon>
     </Compile>
-    <Compile Include="GetSession.ashx.cs">
+    <Compile Include="Handlers\GetSession.ashx.cs">
       <DependentUpon>GetSession.ashx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="JQBlockAdpost.ashx.cs">
+    <Compile Include="Handlers\JQBlockAdpost.ashx.cs">
       <DependentUpon>JQBlockAdpost.ashx</DependentUpon>
     </Compile>
-    <Compile Include="JQBlockUsers.ashx.cs">
+    <Compile Include="Handlers\JQBlockUsers.ashx.cs">
       <DependentUpon>JQBlockUsers.ashx</DependentUpon>
     </Compile>
-    <Compile Include="JQCategory.ashx.cs">
+    <Compile Include="Handlers\JQCategory.ashx.cs">
       <DependentUpon>JQCategory.ashx</DependentUpon>
     </Compile>
-    <Compile Include="JQCategoryGroup.ashx.cs">
+    <Compile Include="Handlers\JQCategoryGroup.ashx.cs">
       <DependentUpon>JQCategoryGroup.ashx</DependentUpon>
     </Compile>
-    <Compile Include="JQCharge.ashx.cs">
+    <Compile Include="Handlers\JQCharge.ashx.cs">
       <DependentUpon>JQCharge.ashx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
@@ -350,13 +352,13 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SetSession.ashx.cs">
+    <Compile Include="Handlers\SetSession.ashx.cs">
       <DependentUpon>SetSession.ashx</DependentUpon>
     </Compile>
-    <Compile Include="UploadFile.ashx.cs">
+    <Compile Include="Handlers\UploadFile.ashx.cs">
       <DependentUpon>UploadFile.ashx</DependentUpon>
     </Compile>
-    <Compile Include="UserSession.ashx.cs">
+    <Compile Include="Handlers\UserSession.ashx.cs">
       <DependentUpon>UserSession.ashx</DependentUpon>
     </Compile>
     <Compile Include="index.aspx.cs">
@@ -398,8 +400,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-2.0.3.min.map" />
-    <Content Include="UploadFile.ashx" />
-    <Content Include="SetSession.ashx" />
+    <Content Include="Handlers\UploadFile.ashx" />
+    <Content Include="Handlers\SetSession.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

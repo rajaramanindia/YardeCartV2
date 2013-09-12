@@ -10,26 +10,26 @@
         </table>
         <div id="jQAdpostPager">
         </div>
-        <input id="btnBlock" type="button" value="Delete" onclick="DoAction();"/>
-        <input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>
-        <input id="btnBlock1" type="button" value="Uncheck All" onclick="CheckAll();"/>
+        <input id="btnBlock" type="button" value="Block" onclick="DoAction();"/>
+        <%--<input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>--%>
+        <%--<input id="btnBlock1" type="button" value="Uncheck All" onclick="CheckAll();"/>--%>
 
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#btnSearch').click(function () {
-                debugger;
+                //debugger;
                 $('#jQAdpost').jqGrid('GridUnload');  //this does the work of clearing out the table content and loading fresh data
 
                 var valop = $('input:radio[name=soption]:checked').val();
                 var str = $("#txtSearch").val();
 
                 jQuery("#jQAdpost").jqGrid({
-                    url: 'JQBlockAdpost.ashx?opt=' + valop + '&str=' + str,
+                    url: 'Handlers/JQBlockAdpost.ashx?opt=' + valop + '&str=' + str,
                     datatype: "json",
                     colNames: ['Id', 'Ad Title', 'First Name', 'Last Name', 'Block Status'],
                     colModel: [
-                                { name: 'AdPostId', index: 'AdPostId', width: 20, stype: 'hidden' },
+                                { name: 'AdPostId', index: 'AdPostId', width: 20, hidden: true },
                                 { name: 'AdPostTitle', index: 'AdPostTitle', width: 150, stype: 'text', sortable: true, editable: true },
                                 { name: 'FirstName', index: 'FirstName', width: 150, stype: 'text', sortable: true, editable: true },
                                 { name: 'LastName', index: 'LastName', width: 150, stype: 'text', sortable: true, editable: true },
@@ -49,6 +49,7 @@
                     pager: '#jQAdpostPager',
                     sortname: 'AdPostId',
                     viewrecords: true,
+                    rownumbers: true,
                     sortorder: 'desc',
                     caption: "List Adpost Details",
                     onSelectRow: function (id, status) {
@@ -97,7 +98,7 @@
 
 
         function DoAction() {
-            debugger;
+            //debugger;
             var lista = jQuery("#jQAdpost").getDataIDs();
             for (i = 0; i < lista.length; i++) {
                 rowData = jQuery("#jQAdpost").getRowData(lista[i]);
@@ -117,7 +118,7 @@
             //debugger;
             var msg = { "AdPostId": adpostid, "AdBlocked": Blockstatus };
             var objectAsJson = JSON.stringify(msg);
-            Type = "POST";
+            Type = "PUT";
             Data = objectAsJson;
             Url = sServicePath + "/UpdateAdBlockStatus";
             ContentType = "application/json;charset=utf-8";

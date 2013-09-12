@@ -24,19 +24,20 @@ namespace YardeCartV2
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["uid"] != null)
-            {
-                Session.Add("UserId", Request.QueryString["uid"].ToString());
-                strUserId = Request.QueryString["uid"].ToString();
-            }
-            if (Request.Cookies["UserId"] != null)
-                Session.Add("UserId", Request.Cookies["UserId"].Value.ToString());
-            if (!IsPostBack)
-            {
-                BindAlbumGrid();
-            }
+            //if (Request.QueryString["uid"] != null)
+            //{
+            //    Session.Add("UserId", Request.QueryString["uid"].ToString());
+            //    strUserId = Request.QueryString["uid"].ToString();
+            //}
+            //if (Request.Cookies["UserId"] != null)
+            //    Session.Add("UserId", Request.Cookies["UserId"].Value.ToString());
+            //if (!IsPostBack)
+            //{
+            //    BindAlbumGrid();
+            //}
         }
 
+        /*
         void BindAlbumGrid()
         {
             int k = GridView1.PageCount;
@@ -137,6 +138,6 @@ namespace YardeCartV2
         {
             Response.Redirect("index.aspx");
         }
-
+        */
     }
 }

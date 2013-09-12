@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="css/mediaelementplayer.css" />
     <script type="text/javascript">
         var adid = "<%=AdpostId%>";
-        var usrid = "<%=UserId%>";
+        var adusrid = "<%=AdUserId%>";
         $(document).ready(function () {
             //debugger;
             
-            GetAdDetails(adid, usrid);
+            GetAdDetails(adid, adusrid);
             InitializeImageSlider();
         });
         function InitializeImageSlider() {
@@ -89,7 +89,10 @@
                 }
                 else if (method == "CreateUserCart") {
                     alert("Added Successfully and then keep shopping");
-                    window.location = "index.ascx";
+                    if(UserType=="1")
+                    window.location = "MyHome.aspx?page=cart";
+                    if (UserType == "2")
+                        window.location = "MyAdminHome.aspx?page=cart";
                 }
             }
         }
@@ -108,8 +111,8 @@
             else if (mon == 12) return "December";
         }
         function AddCart() {
-            debugger;
-            var msg = { "CartId": 0, "AdPostId": adid, "UserId": usrid };
+            //debugger;
+            var msg = { "CartId": 0, "AdPostId": adid, "UserId": UserId };
             var objectAsJson = JSON.stringify(msg);
 
             Type = "POST";

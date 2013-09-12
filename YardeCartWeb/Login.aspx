@@ -10,46 +10,13 @@
 
     <script type="text/javascript">
 
-        var Type;
-        var Url;
-        var Data;
-        var ContentType;
-        var DataType;
-        var ProcessData;
-        var method;
         var userId;
-        //Generic function to call AXMX/WCF  Service
-        function CallService() {
-            $.ajax({
-                type: Type, //GET or POST or PUT or DELETE verb
-                url: Url, // Location of the service
-                data: Data, //Data sent to server
-                contentType: ContentType, // content type sent to server
-                dataType: DataType, //Expected data format from server
-                processdata: ProcessData, //True or False
-                async: false,
-                dataFilter: function (data, type) {
-                    // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
-                    return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
-                },
-
-                success: function (msg) {//On Successfull service call
-                    ServiceSucceeded(msg);
-                },
-                //error: ServiceFailed// When Service call fails
-            });
-        }
-
-        function ServiceFailed(result) {
-            alert('Service call failed: ' + result.status + '' + result.statusText);
-            Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
-        }
 
         function LoginUsers() {
 
             var msg2 = { "UserName": $("#txtUsername").val(), "UserPassword": $("#txtUserpassword").val() };
             var objectAsJson = JSON.stringify(msg2);
-
+            //debugger;
             Type = "POST";
             if ($("#txtUsername").val() == "admin")
                 Url = sServicePath + "/LoginAdmin";
@@ -74,7 +41,7 @@
                     }
                     else {
                         $.ajax({
-                            url: 'SetSession.ashx?uid=' + resultObject,
+                            url: 'Handlers/SetSession.ashx?uid=' + resultObject,
                             processData: false,
                             contentType: false,
                             type: 'POST',
@@ -134,7 +101,7 @@
                                 <strong><span class="auto-style2">User Name</span></strong>
                             </td>
                             <td class="auto-style2">
-                                <input id="txtUsername" type="text" class="easyui-validatebox" required="true" />
+                                <input id="txtUsername" type="text" class="easyui-validatebox" data-options="required:true" />
                             </td>
                         </tr>
                         <tr>
@@ -142,7 +109,7 @@
                                 <strong><span class="auto-style2">Password</span></strong>
                             </td>
                             <td class="auto-style2">
-                                <input id="txtUserpassword" type="password" class="easyui-validatebox" required="true" />
+                                <input id="txtUserpassword" type="password" class="easyui-validatebox" data-options="required:true" />
                             </td>
                         </tr>
                         <tr>

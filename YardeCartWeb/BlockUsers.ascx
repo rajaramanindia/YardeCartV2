@@ -5,16 +5,16 @@
         <div id="jQUserPager">
         </div>
         <input id="btnBlock" type="button" value="Block" onclick="GetUsers();"/>
-        <input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>
-        <input id="btnBlock1" type="button" value="Block" onclick="GetUsers();"/></div>
+        <%--<input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>--%>
+        <%--<input id="btnBlock1" type="button" value="Block" onclick="GetUsers();"/>--%></div>
     <script type="text/javascript">
 
         jQuery("#jQUser").jqGrid({
-            url: 'JQBlockUsers.ashx',
+            url: 'Handlers/JQBlockUsers.ashx',
             datatype: "json",
             colNames: ['Id', 'User Name', 'First Name', 'Last Name', 'Block Status'],
             colModel: [
-                        { name: 'UserID', index: 'UserID', width: 20, stype: 'hidden' },
+                        { name: 'UserID', index: 'UserID', width: 20, hidden: true },
                         { name: 'UserName', index: 'UserName', width: 150, stype: 'text', sortable: true, editable: true },
                         { name: 'FirstName', index: 'FirstName', width: 150, stype: 'text', sortable: true, editable: true },
                         { name: 'LastName', index: 'LastName', width: 150, stype: 'text', sortable: true, editable: true },
@@ -34,9 +34,10 @@
             pager: '#jQUserPager',
             sortname: 'UserID',
             viewrecords: true,
+            rownumbers: true,
             sortorder: 'desc',
             caption: "List User Details",
-            editurl: 'JQBlockUsers.ashx',
+            editurl: 'Handlers/JQBlockUsers.ashx',
             onSelectRow: function (id, status) {
                 var rowData = jQuery(this).getRowData(id);
                 configid = rowData['UserID'];
@@ -98,7 +99,7 @@
         function DoBlockUsers(userid, blockstatus) {
             var msg = { "UserId": userid, "UserBlocked": blockstatus };
             var objectAsJson = JSON.stringify(msg);
-            Type = "POST";
+            Type = "PUT";
             Data = objectAsJson;
             Url = sServicePath + "/UpdateUserBlockStatus";
             ContentType = "application/json;charset=utf-8";

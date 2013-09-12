@@ -8,12 +8,12 @@
       <script type="text/javascript">
 
           jQuery("#JQCharge").jqGrid({
-              url: 'JQCharge.ashx',
+              url: 'Handlers/JQCharge.ashx',
               datatype: "json",
               //data: mydata,
               colNames: ['Id', 'Charge Name', 'Charge Type', 'Amount or Percent'],
               colModel: [
-                          { name: 'ChargeId', index: 'ChargeId', width: 20, stype: 'hidden' },
+                          { name: 'ChargeId', index: 'ChargeId', width: 20, hidden: true },
                           { name: 'ChargeName', index: 'ChargeName', width: 150, stype: 'text', sortable: true, editable: true },
                           {
                               name: 'ChargeType', index: 'ChargeType', width: 150, stype: 'text', sortable: true, editable: true, celledit: true,
@@ -36,9 +36,10 @@
               pager: '#JQChargePager',
               sortname: 'ChargeId',
               viewrecords: true,
+              rownumbers: true,
               sortorder: 'desc',
               caption: "List Charge Details",
-              editurl: 'JQCharge.ashx'
+              editurl: 'Handlers/JQCharge.ashx'
           });
 
           $('#JQCharge').jqGrid('navGrid', '#JQChargePager',

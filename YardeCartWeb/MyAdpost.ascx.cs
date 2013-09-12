@@ -9,9 +9,20 @@ namespace YardeCartV2
 {
     public partial class MyAdpost : System.Web.UI.UserControl
     {
+        public string strAbsPath = string.Empty;
+        public string sDel = string.Empty;
+        public string sAdid = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            strAbsPath = Request.Url.AbsolutePath.ToString();
+            if (Request.QueryString["act"] != null)
+            {
+                sDel = Request.QueryString["act"].ToString();
+            }
+            if (Request.QueryString["aid"] != null)
+            {
+                sAdid = Request.QueryString["aid"].ToString();
+            }
         }
     }
 }

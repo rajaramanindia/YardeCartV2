@@ -18,7 +18,7 @@
             GetAllAdDetails();
             SelectAllCategory();
 
-            $('#SortItem').pagination({
+            $('#AdPager').pagination({
                 total: AdTotal,
                 pageSize: AdPageSize,
                 showPageList: false,
@@ -36,7 +36,7 @@
         );
 
         function GetAllAdDetails() {
-            Type = "POST";
+            Type = "GET";
             Url = sServicePath + "/GetAllAdDetails";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
@@ -44,7 +44,7 @@
             CallService();
         }
         function SelectAllCategory() {
-            Type = "POST";
+            Type = "GET";
             Url = sServicePath + "/SelectAllCategory";
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
@@ -56,7 +56,7 @@
                 if (method == "GetAllAdDetails") {
                     resultObject = result;
                     var obj = jQuery.parseJSON(result);
-
+                    //debugger;
                     var tempStart;
                     var tempEnd;
                     AdTotal = obj.length;
@@ -115,9 +115,11 @@
               <%--<div id="SortItem">First Prev 1 2 3 4 5 6 7 8 9 Next Last&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sort by &nbsp;
                 <input name="TimePostedButton" id="SortButton" type="button" value="Time Posted">&nbsp;<input name="SearchButton" id="Button1" type="button" value="Sale Date">&nbsp;&nbsp;&nbsp;&nbsp;</div>
               --%>  
-                <div id="SortItem" class="easyui-pagination" style="background:#efefef;border:1px solid #ccc;">
+                    <div id="SortItem">
+                    <input name="TimePostedButton" id="SortButton" type="button" value="Time Posted">&nbsp;<input name="SearchButton" id="Button1" type="button" value="Sale Date">
+                <div id="AdPager" class="easyui-pagination" style="border:1px solid #ccc;">
                 </div>
-
+                </div>
               <div id="HighlightItem">
                 <div id="HighlightItemHeading"></div>
         

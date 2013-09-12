@@ -10,10 +10,14 @@ namespace YardeCartV2
 {
     public partial class ActivateUser : System.Web.UI.Page
     {
+        public string strUserId = string.Empty;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.QueryString.Count == 1)
             {
+                strUserId = Request.QueryString["uid"].ToString();
+                /*
                 string s = Request.QueryString["uid"].ToString();
                 s = s.Replace(" ", "+");
 
@@ -22,7 +26,7 @@ namespace YardeCartV2
 
                 YardeCartServiceApp.YardeCartServices oy = new YardeCartServices();
                 oy.UpdateActivation(ua);
-
+                */
             }
         }
     }

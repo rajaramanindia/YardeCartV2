@@ -36,10 +36,11 @@
         var ProcessData;
         var method;
         var UserId;
+        var UserType;
         
         //Generic function to call AXMX/WCF  Service
 
-        var sServicePath = "<%= strServicePath %>";
+        sServicePath = "<%= strServicePath %>";
 
         function CallService() {
             $.ajax({
@@ -58,53 +59,67 @@
                 success: function (msg) {//On Successfull service call
                     ServiceSucceeded(msg);
                 },
-                error: ServiceFailed// When Service call fails
+                //error: ServiceFailed// When Service call fails
             });
         }
 
         function ServiceFailed(result) {
             alert('Service call failed: ' + result.status + '' + result.statusText);
-            Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
+            Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null; method = null;
+        }
+
+        function ServiceSucceeded(result) {
+            if (DataType == "json") {
+                if (method == "SelectProfileNO") {
+                    //resultObject = result;
+                    //var obj = jQuery.parseJSON(result);
+                    //if (UserType == "1")
+                    //    $("#ctl00_welcomeMessage").text("Welcome " + obj[0].UserName);
+                    //else if (UserType == "2")
+                    //    $("#ctl00_welcomeMessage").text("Welcome " + obj[0].UserName);
+
+                }
+            }
         }
 
         $(document).ready(
         function () {
             $.ajax({
-                url: 'GetSession.ashx',
+                url: 'Handlers/GetSession.ashx',
                 processData: false,
                 contentType: false,
                 type: 'GET',
                 async: false,
                 success: function (data) {
-                    //;
                     var temp = data.split('/');
                     UserType = temp[0];
                     UserId = temp[1];
                     //alert(UserId);
                 },
                 error: function (errorData) {
-                    //debugger;
                     //alert("ERR ON  " + errorData);
                     $('.result-message').html("there was a problem uploading the file.").show();
                 }
             });
-            SelectUserProfile();
-
+            SelectProfile();
             $("#PostButton").click(function ()
             {
+                if(UserId=="")
+                    window.location = "Login.aspx";
+                else
                 window.location = "PostAd.aspx";
             }
             );
         });
 
-        function SelectUserProfile() {
-            //debugger;
+        function SelectProfile() {
             var msg2 = { "UserId": UserId };
             var objectAsJson = JSON.stringify(msg2);
+            //debugger;
             $.ajax({
-                type: "POST", //GET or POST or PUT or DELETE verb
-                url: sServicePath+"/SelectProfile", // Location of the service
-                data: objectAsJson, //Data sent to server
+                type: "GET", //GET or POST or PUT or DELETE verb
+                url: sServicePath + "/SelectProfile/" + UserId, // Location of the service
+                //data: objectAsJson, //Data sent to server
                 contentType: "application/json;charset=utf-8", // content type sent to server
                 dataType: "json", //Expected data format from server
                 processdata: false, //True or False

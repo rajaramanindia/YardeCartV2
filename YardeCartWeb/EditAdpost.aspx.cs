@@ -214,9 +214,9 @@ namespace YardeCartV2
                 objYser.AddAdImageDetails(adimg);
 
                 if (dt.Rows[0]["UserStatus"].ToString()=="1")
-                    Response.Redirect("MyHome.aspx");
+                    Response.Redirect("MyHome.aspx?page=adpost");
                 else if (dt.Rows[0]["UserStatus"].ToString() == "1")
-                    Response.Redirect("MyAdminHome.aspx");
+                    Response.Redirect("MyAdminHome.aspx?page=adpost");
 
             }
             catch (System.Threading.ThreadAbortException th)

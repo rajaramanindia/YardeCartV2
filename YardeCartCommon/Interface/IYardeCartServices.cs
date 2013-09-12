@@ -53,15 +53,15 @@ namespace YardeCartCommon.Interface
         string AddAdImageDetails(AdImageDetails adimageDetails);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "AdPostDeleteById")]
-        void AdPostDeleteById(int intAdpostId);
+        [WebInvoke(Method = "DELETE", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "AdPostDeleteById")]
+        void AdPostDeleteById(UserAdpost uAdpost);
         
         #endregion
 
         #region .. SELECT USER ..
         
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllProfile")]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllProfile")]
         string SelectAllProfile();
 
         [OperationContract]
@@ -70,15 +70,15 @@ namespace YardeCartCommon.Interface
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "AvailableMail")]
-        DataTable AvailableMail(string strEmail);
+        string AvailableMail(UserDetails userDetails);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetUserName")]
         DataTable GetUserName(int intUserId);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectProfile")]
-        string SelectProfile(UserDetails userDetails);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectProfile/{userId}")]
+        string SelectProfile(string userId);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserProfile")]
@@ -93,23 +93,23 @@ namespace YardeCartCommon.Interface
         DataTable SelectUserByEmail(string strEmail);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserPurchases")]
-        DataTable SelectUserPurchases(int intUserid);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserPurchases/{strUserid}")]
+        string SelectUserPurchases(string strUserid);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateActivation")]
+        [WebInvoke(Method = "PUT", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateActivation")]
         void UpdateActivation(UserAct userAct);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateUserBlockStatus")]
+        [WebInvoke(Method = "PUT", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateUserBlockStatus")]
         void UpdateUserBlockStatus(UserDetails userDetails);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateUserDeleteStatus")]
+        [WebInvoke(Method = "PUT", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateUserDeleteStatus")]
         void UpdateUserDeleteStatus(UserDetails userDetails);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateUserPassword")]
+        [WebInvoke(Method = "PUT", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateUserPassword")]
         void UpdateUserPassword(UserDetails userDetails);
 
         #endregion
@@ -121,8 +121,8 @@ namespace YardeCartCommon.Interface
         DataTable SelectUserAdsDT(int intUserId);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserAds")]
-        string SelectUserAds(UserAdpost userad);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserAds/{strUserid}")]
+        string SelectUserAds(string strUserid);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAdDetails")]
@@ -137,7 +137,7 @@ namespace YardeCartCommon.Interface
         DataTable GetAdImageDetails(AdPostDetails adpostDetails);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAllAdDetails")]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAllAdDetails")]
         string GetAllAdDetails();
 
         [OperationContract]
@@ -148,7 +148,7 @@ namespace YardeCartCommon.Interface
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByUsername")]
         string SearchAdsByUsername(string strKeyword);
 
-        [OperationContract]
+            [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByKeyword")]
         string SearchAdsByKeyword(string strKeyword);
 
@@ -169,11 +169,11 @@ namespace YardeCartCommon.Interface
         void UpdateAdImagePath(AdImageDetails adImagDetails);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateAdBlockStatus")]
+        [WebInvoke(Method = "PUT", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateAdBlockStatus")]
         void UpdateAdBlockStatus(AdPostDetails adpostDetails);
         
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateAdDeleteStatus")]
+        [WebInvoke(Method = "PUT", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateAdDeleteStatus")]
         void UpdateAdDeleteStatus(AdPostDetails adpostDetails);
         
         #endregion
@@ -181,15 +181,15 @@ namespace YardeCartCommon.Interface
         #region .. CITY, STATE & COUNTRY ..
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCity")]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCity")]
         string SelectAllCity();
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllState")]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllState")]
         string SelectAllState();
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCountry")]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCountry")]
         string SelectAllCountry();
 
         [OperationContract]
@@ -205,11 +205,11 @@ namespace YardeCartCommon.Interface
         #region .. CATEGORY GROUP & CATEGORY LIST ..
        
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCategoryGroup")]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCategoryGroup")]
         string SelectAllCategoryGroup();
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCategory")]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectAllCategory")]
         string SelectAllCategory();
 
         [OperationContract]
@@ -225,11 +225,11 @@ namespace YardeCartCommon.Interface
         int AddCategoryGroup(CategoryGroupDetails categorygroupDetails);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "CategoryDelete")]
+        [WebInvoke(Method = "DELETE", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "CategoryDelete")]
         void CategoryDelete(int intCategoryId);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "CategoryGroupDelete")]
+        [WebInvoke(Method = "DELETE", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "CategoryGroupDelete")]
         void CategoryGroupDelete(int intCategoryGroupId);
 
         [OperationContract]
@@ -245,7 +245,7 @@ namespace YardeCartCommon.Interface
         int AddChargeDetails(ChargeDetails chargeDetails);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectChargeDetails")]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectChargeDetails")]
         string SelectChargeDetails();
 
         [OperationContract]
@@ -253,11 +253,11 @@ namespace YardeCartCommon.Interface
         DataTable SelectChargeDetailsDT();
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectChargeDetailsByID")]
-        DataTable SelectChargeDetailsByID(int intChargeId);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectChargeDetailsByID/{strChargeId}")]
+        string SelectChargeDetailsByID(string strChargeId);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "ChargeDetailsDelete")]
+        [WebInvoke(Method = "DELETE", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "ChargeDetailsDelete")]
         void ChargeDetailsDelete(int intChargeId);
 
         #endregion
@@ -265,20 +265,20 @@ namespace YardeCartCommon.Interface
         #region .. CART DETAILS ..
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserCartDetails")]
-        DataTable SelectUserCartDetails(int userId);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserCartDetails/{struserId}")]
+        string SelectUserCartDetails(string struserId);
         
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "CreateUserCart")]
         int CreateUserCart(CartDetails cartDetails);
         
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "CartDetailDelete")]
+        [WebInvoke(Method = "DELETE", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "CartDetailDelete")]
         void CartDetailDelete(CartDetails cartDetails);
         
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectMaxID")]
-        DataTable SelectMaxID();
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectMaxID")]
+        string SelectMaxID();
         
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateCartStatus")]
@@ -286,7 +286,7 @@ namespace YardeCartCommon.Interface
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "CreateBuyDetails")]
-        void CreateBuyDetails(AdStatusDetails adStatusDetails);
+        int CreateBuyDetails(AdStatusDetails adStatusDetails);
         
         #endregion
 

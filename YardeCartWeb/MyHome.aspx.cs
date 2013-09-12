@@ -18,6 +18,32 @@ namespace YardeCartV2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Request.QueryString["page"] != null)
+            {
+                switch (Request.QueryString["page"].ToString())
+                {
+                    case "profile":
+                        Placeholder1.Controls.Clear();
+                        ViewProfile objViewProfile = (ViewProfile)Page.LoadControl("ViewProfile.ascx");
+                        Placeholder1.Controls.Add(objViewProfile);
+                        break;
+                    case "cart":
+                        Placeholder1.Controls.Clear();
+                        MyCart objMyCart = (MyCart)Page.LoadControl("MyCart.ascx");
+                        Placeholder1.Controls.Add(objMyCart);
+                        break;
+                    case "purchase":
+                        Placeholder1.Controls.Clear();
+                        MyPuchase objMyPuchase = (MyPuchase)Page.LoadControl("MyPuchase.ascx");
+                        Placeholder1.Controls.Add(objMyPuchase);
+                        break;
+                    case "adpost":
+                        Placeholder1.Controls.Clear();
+                        MyAdpost objMyAdpost = (MyAdpost)Page.LoadControl("MyAdpost.ascx");
+                        Placeholder1.Controls.Add(objMyAdpost);
+                        break;
+                }
+            }
             //// To find IP address of a machine behind LAN you can use this code
             //string strHostName = Dns.GetHostName();
             //IPHostEntry ipEntry = Dns.GetHostEntry(strHostName);
@@ -143,8 +169,6 @@ namespace YardeCartV2
 
         protected void mycartid_Click(object sender, EventArgs e)
         {
-
-            PlaceHolder ht = (PlaceHolder)Page.FindControl("PlaceHolder1");
 
             Placeholder1.Controls.Clear();
             MyCart homeHead = (MyCart)Page.LoadControl("MyCart.ascx");

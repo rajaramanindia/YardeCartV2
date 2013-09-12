@@ -31,8 +31,17 @@
     var AdPageSize = 10;
     var AdPage = 1;
     var AdTotal = 0;
+    var abspath = "<%= strAbsPath %>";
+    var delact = "<%= sDel %>";
+    var adid = "<%= sAdid %>";
+
     $(document).ready(
     function () {
+        if (delact == "del") {
+            DeleteAdpost(adid);
+            alert("Adpost deleted successfully");
+        }
+
         UserAdDetails();
         $('#Adpaging').pagination({
             total: AdTotal,
@@ -48,18 +57,20 @@
             }
 
         });
+
+        
     }
     );
-
+    
     function UserAdDetails() {
 
         var msg2 = { "UserId": UserId };
         var objectAsJson = JSON.stringify(msg2);
 
-        Type = "POST";
-        Url = sServicePath + "/SelectUserAds";
+        Type = "GET";
+        Url = sServicePath + "/SelectUserAds/" + UserId;
         ContentType = "application/json;charset=utf-8";
-        Data = objectAsJson;
+        //Data = objectAsJson;
 
         DataType = "json"; ProcessData = false;
         method = "SelectUserAds";
@@ -67,7 +78,13 @@
     }
     function ServiceSucceeded(result) {
         if (DataType == "json") {
-            if (method == "SelectUserAds") {
+            if (method == "AdPostDeleteById") {
+                debugger;
+                resultObject = result;
+                var obj = jQuery.parseJSON(result);
+
+            }
+            else if (method == "SelectUserAds") {
                 //debugger;
                 resultObject = result;
                 var obj = jQuery.parseJSON(result);
@@ -101,12 +118,16 @@
                     //For Price value
                     var p = obj[0].Price;
                     var sPrice = "$ " + p.toFixed(2);
-                    var sViewlink = "EditAdpost.aspx?aid=" + obj[i].AdPostId + "&uid=" + UserId;
+                    var sEditlink;
+                    var sDeletelink;
+
+                    sEditlink = "EditAdpost.aspx?aid=" + obj[i].AdPostId + "&uid=" + UserId;
+                    sDeletelink = abspath + "?page=adpost&act=del&aid=" + obj[i].AdPostId + "&uid=" + UserId;
 
                     $("<div id='AdShow' style='height:200px;width:700px;border-radius:10px 10px 10px 10px;border:thin solid #800080;'>" +
                         "<div style='height:30px;width:700px;border-radius:10px 10px 0px 0px;background-color:lightgray;vertical-align:middle;'>" +
                         "<strong>&nbsp;&nbsp;" + obj[i].AdPostTitle + "</strong>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                        "<a href='" + sViewlink + "'>Edit</a>&nbsp;&nbsp;&nbsp;<a href='#'>Edit</a></div>" +
+                        "<a href='" + sEditlink + "'>Edit</a>&nbsp;&nbsp;&nbsp;<a href='" + sDeletelink + "'>Delete</a></div>" +
                         "<div style='height:150px;width:300px;margin-left:10px;margin-top:10px;float:left;'>" +
                         "<img src=" + strImgPath[0] + " style='height:150px;width:250px;'></div>" +
                         "<div  style='height:35px;margin-top:10px;'>Category - " + obj[i].CategoryName + "</div>" +
@@ -133,6 +154,19 @@
         else if (mon == 11) return "November";
         else if (mon == 12) return "December";
     }
+    function DeleteAdpost(AdpostID) {
+        debugger;
+        var msg2 = { "AdPostId": AdpostID };
+        var objectAsJson = JSON.stringify(msg2);
 
+        Type = "DELETE";
+        Url = sServicePath + "/AdPostDeleteById";
+        ContentType = "application/json;charset=utf-8";
+        Data = objectAsJson;
+        DataType = "json"; ProcessData = false;
+        method = "AdPostDeleteById";
+        CallService();
+    }
 
     </script>
+

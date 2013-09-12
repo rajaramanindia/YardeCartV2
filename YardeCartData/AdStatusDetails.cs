@@ -28,7 +28,7 @@ namespace YardeCartData
 
         public string DeliveryAddress { set; get; }
 
-        public string DeliveryType { set; get; }
+        public int DeliveryType { set; get; }
 
         public string TotalPrice { set; get; }
 

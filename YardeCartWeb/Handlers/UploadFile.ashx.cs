@@ -23,7 +23,7 @@ namespace YardeCartV2
                 //Uploaded File Deletion
                 if (context.Request.QueryString.Count > 0)
                 {
-                    string filePath = HttpContext.Current.Server.MapPath("Data/TS_" + strUserid + "/Images/") + "//" + context.Request.QueryString[0].ToString();
+                    string filePath = HttpContext.Current.Server.MapPath("../Data/TS_" + strUserid + "/Images/") + "//" + context.Request.QueryString[0].ToString();
                     if (File.Exists(filePath))
                         File.Delete(filePath);
                 }
@@ -39,14 +39,14 @@ namespace YardeCartV2
 
 
 
-                    fileName = GetUniqueFileName(fileName, HttpContext.Current.Server.MapPath("Data/TS_" + strUserid + "/Images/"), ext).ToLower();
-                    string savepath = HttpContext.Current.Server.MapPath("~/Data/TS_" + strUserid + "/Images/");
+                    fileName = GetUniqueFileName(fileName, HttpContext.Current.Server.MapPath("../Data/TS_" + strUserid + "/Images/"), ext).ToLower();
+                    string savepath = HttpContext.Current.Server.MapPath("../Data/TS_" + strUserid + "/Images/");
 
                     if (!Directory.Exists(savepath))
                         Directory.CreateDirectory(savepath);
 
 
-                    string location = HttpContext.Current.Server.MapPath("Data/TS_" + strUserid + "/Images/") + fileName + ext;
+                    string location = HttpContext.Current.Server.MapPath("../Data/TS_" + strUserid + "/Images/") + fileName + ext;
                     context.Request.Files[0].SaveAs(location);
                     context.Response.Write(fileName + ext);
 

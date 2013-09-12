@@ -3,47 +3,12 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <script type="text/javascript">
 
-        var Type;
-        var Url;
-        var Data;
-        var ContentType;
-        var DataType;
-        var ProcessData;
-        var method;
-        var userId;
-        //Generic function to call AXMX/WCF  Service
-        function CallService() {
-            $.ajax({
-                type: Type, //GET or POST or PUT or DELETE verb
-                url: Url, // Location of the service
-                data: Data, //Data sent to server
-                contentType: ContentType, // content type sent to server
-                dataType: DataType, //Expected data format from server
-                processdata: ProcessData, //True or False
-                dataFilter: function (data, type) {
-                    // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
-                    return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
-                },
-
-                success: function (msg) {//On Successfull service call
-                    ServiceSucceeded(msg);
-                },
-                error: ServiceFailed// When Service call fails
-            });
-        }
-
-        function ServiceFailed(result) {
-            alert('Service call failed: ' + result.status + '' + result.statusText);
-            Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
-        }
-
+        var sUid = "<%= strUserId %>";
         function updateAct() {
-
-            var msg2 = { "strUserid": queryObj["uid"] };
+            var msg2 = { "strUserid": sUid };
             var objectAsJson = JSON.stringify(msg2);
 
-
-            Type = "POST";
+            Type = "PUT";
             Url = sServicePath + "/UpdateActivation";
             Data = objectAsJson;
             ContentType = "application/json;charset=utf-8";
@@ -51,7 +16,6 @@
             method = "UpdateActivation";
             CallService();
         }
-
         function ServiceSucceeded(result) {
             if (DataType == "json") {
                 if (method == "UpdateActivation") {
@@ -61,7 +25,6 @@
             }
         }
         var queryObj = {};
-
         $(document).ready(
         function () {
            // debugger;
@@ -80,11 +43,11 @@
 
             // ***now you can use queryObj["<name>"] to get the value of a url
             // ***variable
-            alert(queryObj["uid"]);
+            //alert(queryObj["uid"]);
 
 
 
-               // updateAct();
+            updateAct();
         });
 
     </script>

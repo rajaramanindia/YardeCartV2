@@ -21,7 +21,7 @@
     <script type="text/javascript">
 
           jQuery("#jQUser").jqGrid({
-              url: 'JQBlockUsers.ashx',
+              url: 'Handlers/JQBlockUsers.ashx',
               datatype: "json",
               colNames: ['Id', 'User Name', 'First Name', 'Last Name', 'Block Status'],
               colModel: [
@@ -45,7 +45,7 @@
               viewrecords: true,
               sortorder: 'desc',
               caption: "List User Details",
-              editurl: 'JQBlockUsers.ashx',
+              editurl: 'Handlers/JQBlockUsers.ashx',
               onSelectRow: function (id, status) {
                   var rowData = jQuery(this).getRowData(id);
                   configid = rowData['UserID'];

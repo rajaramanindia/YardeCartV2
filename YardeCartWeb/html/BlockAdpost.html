@@ -36,7 +36,7 @@
                 var str = $("#txtSearch").val();
 
                 jQuery("#jQAdpost").jqGrid({
-                    url: 'JQBlockAdpost.ashx?opt=' + valop + '&str=' + str,
+                    url: 'Handlers/JQBlockAdpost.ashx?opt=' + valop + '&str=' + str,
                     datatype: "json",
                     colNames: ['Id', 'Ad Title', 'First Name', 'Last Name', 'Block Status'],
                     colModel: [

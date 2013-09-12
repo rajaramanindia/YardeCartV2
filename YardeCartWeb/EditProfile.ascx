@@ -124,44 +124,10 @@
 
 <script type="text/javascript">
 
-
-    var Type;
-    var Url;
-    var Data;
-    var ContentType;
-    var DataType;
-    var ProcessData;
-    var method;
     var sUsername;
     var sUserpassword;
-    var sUserType;
-    var sUserId;
 
     //Generic function to call AXMX/WCF  Service
-    function CallService() {
-        $.ajax({
-            type: Type, //GET or POST or PUT or DELETE verb
-            url: Url, // Location of the service
-            data: Data, //Data sent to server
-            contentType: ContentType, // content type sent to server
-            dataType: DataType, //Expected data format from server
-            processdata: ProcessData, //True or False
-            async: false,
-            dataFilter: function (data, type) {
-                // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
-                return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
-            },
-
-            success: function (msg) {//On Successfull service call
-                ServiceSucceeded(msg);
-            }
-            //error: ServiceFailed// When Service call fails
-        });
-    }
-    function ServiceFailed(result) {
-        alert('Service call failed: ' + result.status + '' + result.statusText);
-        Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
-    }
     function ServiceSucceeded(result) {
         if (DataType == "json") {
             if (method == "SelectAllCountry") {
@@ -199,7 +165,7 @@
                 else
                     $("#txtUsername").attr("style", "border-color:red");
             }
-            else if (method == "SelectProfile") {
+            else if (method == "SelectUserProfile") {
 
                 resultObject = result;
                 var obj = jQuery.parseJSON(result);
@@ -227,10 +193,10 @@
                 resultObject = result;
                 hdnUserId = resultObject;
                 //MailToUser();
-                if (sUserType == "1")
-                    window.location = "MyHome.aspx";
-                else if (sUserType == "2")
-                    window.location = "MyAdminHome.aspx";
+                if (UserType == "1")
+                    window.location = "MyHome.aspx?page=profile";
+                else if (UserType == "2")
+                    window.location = "MyAdminHome.aspx?page=profile";
             }
         }
     }
@@ -238,7 +204,7 @@
         //debugger;
         var valop = $('input:radio[name=rdoGender]:checked').val();
         var msg2 = {
-            "UserId": sUserId, "UserName": sUsername, "UserPassword": sUserpassword, "FirstName": $("#txtFirstName").val()
+            "UserId": UserId, "UserName": sUsername, "UserPassword": sUserpassword, "FirstName": $("#txtFirstName").val()
         , "LastName": $("#txtLastName").val(), "Gender": $('input:radio[name=rdoGender]:checked').val(), "Address": $("#txtAddress").val(), "StreetName": $("#txtStreetName").val()
         , "Email": $("#txtEmail").val(), "MobilePhone": $("#txtMobilePhone").val(), "CountryId": $("#ddlCountry").val(), "StateId": $("#ddlState").val()
         , "CityId": $("#ddlCity").val(), "ZipCode": $("#txtZipCode").val()
@@ -273,7 +239,7 @@
         CallService();
     }
     function loadState() {
-        Type = "POST";
+        Type = "GET";
         Url = sServicePath + "/SelectAllState";
         ContentType = "application/json;charset=utf-8";
         DataType = "json"; ProcessData = false;
@@ -281,7 +247,7 @@
         CallService();
     }
     function loadCountry() {
-        Type = "POST";
+        Type = "GET";
         Url = sServicePath + "/SelectAllCountry";
         ContentType = "application/json;charset=utf-8";
         DataType = "json"; ProcessData = false;
@@ -289,45 +255,26 @@
         CallService();
     }
     function loadCity() {
-        Type = "POST";
+        Type = "GET";
         Url = sServicePath + "/SelectAllCity";
         ContentType = "application/json;charset=utf-8";
         DataType = "json"; ProcessData = false;
         method = "SelectAllCity";
         CallService();
     }
-    function GetSession() {
-        $.ajax({
-            url: 'GetSession.ashx',
-            processData: false,
-            contentType: false,
-            type: 'GET',
-            async: false,
-            success: function (data) {
-                var temp = data.split('/');
-                sUserType = temp[0];
-                sUserId = temp[1];
-            }
-        });
-    }
-    function SelectProfile() {
-        var msg2 = { "UserId": sUserId };
-        var objectAsJson = JSON.stringify(msg2);
-        Type = "POST";
-        Url = sServicePath + "/SelectProfile";
+    function SelectUserProfile() {
+        Type = "GET";
+        Url = sServicePath + "/SelectProfile/" + UserId;
         ContentType = "application/json;charset=utf-8";
-        Data = objectAsJson;
         DataType = "json"; ProcessData = false;
-        method = "SelectProfile";
+        method = "SelectUserProfile";
         CallService();
     }
 
     $(document).ready(
     function () {
-        debugger;
-        GetSession();
         loadCountry();
-        SelectProfile();
+        SelectUserProfile();
         $("#btnUpdate").click(function () {
             AddRegister();
             alert("Updated Successfully");
