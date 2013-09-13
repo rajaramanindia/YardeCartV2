@@ -87,6 +87,7 @@
                         ).attr("style", "padding:3px").appendTo("#HighlightItemHeading");
 
                     }
+
                 }
                 else if (method == "SelectAllCategory") {
                     resultObject = result;

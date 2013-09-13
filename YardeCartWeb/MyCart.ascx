@@ -19,8 +19,8 @@
 
     <div>
         <p></p>
-        <strong><label id="cartItem"></label></strong>&nbsp;&nbsp;&nbsp;&nbsp;
-        <input id="btnShop" type="button" onclick="" value="Keep Shopping" style="width:180px;" />
+        <strong><label id="cartItem"></label></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="btnShop" type="button" value="Keep Shopping" class="" style="width:180px;" />
     </div>
     <p>&nbsp;</p>
     <div id="divAdContent">
@@ -33,7 +33,7 @@
         <select id="ddlCharge" style="width: 200px;" class="easyui-validatebox" data-options="required:true" onchange="DeliAmount();" />
     </div>--%>
     
-    <div id="divAmtDetail">
+    <div id="divAmtDetail" style="visibility:collapse;">
         <table>
             <tr>
                 <td>
@@ -51,7 +51,7 @@
 
                 </td>
                 <td>
-                    <label id="lblTotalAdAmont"> Amont</label><br />
+                    <label id="lblTotalAdAmont"> </label><br />
 
                 </td>
             </tr>
@@ -60,7 +60,7 @@
 
                 </td>
                 <td>
-        <label id="lblDeliCharge">Amont</label><br />
+        <label id="lblDeliCharge"></label><br />
 
                 </td>
             </tr>
@@ -69,7 +69,7 @@
 
                 </td>
                 <td>
-        <label id="lblDeliTotAmount">Amont</label><br /><br />
+        <label id="lblDeliTotAmount"></label><br /><br />
 
                 </td>
             </tr>
@@ -107,6 +107,7 @@
             CartDetailDelete(cid);
             alert("Adpost Removed from your Cart successfully");
         }
+        //alert("u ="+UserId);
         //debugger;
         UserCartDetails();
         loadCharge();
@@ -119,7 +120,7 @@
                 //alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
                 AdPage = pageNumber;
                 AdPageSize = pageSize;
-                UserAdDetails();
+                UserCartDetails();
                 $(this).pagination('loaded');
             }
 
@@ -162,7 +163,7 @@
                 "AdPostId": AdBuyArray[i].AdPostId, "UserId": UserId
             };
             var objectAsJsonUP = JSON.stringify(msg2);
-            //debugger;
+            debugger;
             Type = "PUT";
             Url = sServicePath + "/UpdateCartStatus";
             ContentType = "application/json;charset=utf-8";
@@ -176,7 +177,10 @@
 
         alert("Purchases are done successfully.");
 
+        if(UserType == "1")
         window.location = "MyHome.aspx?page=purchase";
+        else if (UserType == "2")
+        window.location = "MyAdminHome.aspx?page=purchase";
     }
     function GetHistoryId() {
         Type = "GET";
@@ -207,14 +211,10 @@
         CallService();
     }
     function UserCartDetails() {
-
-        var msg2 = { "UserId": UserId };
-        var objectAsJson = JSON.stringify(msg2);
-
+        //debugger;
         Type = "GET";
         Url = sServicePath + "/SelectUserCartDetails/" + UserId;
         ContentType = "application/json;charset=utf-8";
-        //Data = objectAsJson;
         DataType = "json"; ProcessData = false;
         method = "SelectUserCart";
         CallService();
@@ -230,17 +230,17 @@
                 }
             }
             else if (method == "CreateBuyDetails") {
-                resultObject = result; HistroyId
+                resultObject = result; 
                 var obj = jQuery.parseJSON(result);
             }
             else if (method == "UpdateCartStatus") {
                 //debugger;
-                resultObject = result; HistroyId
+                resultObject = result; 
                 var obj = jQuery.parseJSON(result);
             }
             else if (method == "SelectMaxID") {
                 //debugger;
-                resultObject = result; HistroyId
+                resultObject = result; 
                 var obj = jQuery.parseJSON(result);
                 HistroyId = obj[0].HistroyId;
             }
@@ -264,6 +264,8 @@
                 }
 
                 $("#divAdContent").empty();
+                if (AdTotal > 0)
+                    $("#divAmtDetail").attr("style","visibility:visible");
                 AdTotalPrice = 0;
                 for (var i = tempStart; i < obj.length && i < tempEnd; i++) {
 

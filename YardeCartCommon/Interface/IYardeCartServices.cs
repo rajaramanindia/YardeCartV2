@@ -281,7 +281,7 @@ namespace YardeCartCommon.Interface
         string SelectMaxID();
         
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateCartStatus")]
+        [WebInvoke(Method = "PUT", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateCartStatus")]
         void UpdateCartStatus(CartDetails cartDetails);
 
         [OperationContract]

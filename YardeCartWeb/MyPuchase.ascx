@@ -72,7 +72,7 @@
 <div id="divAdContent">
 
 
-    </div>
+</div>
 
 <script type="text/javascript">
 
@@ -81,7 +81,7 @@
     var AdTotal = 0;
     $(document).ready(
     function () {
-        UserAdDetails();
+        UserAdPurchaseDetails();
         $('#Adpaging').pagination({
             total: AdTotal,
             pageSize: AdPageSize,
@@ -91,7 +91,7 @@
                 //alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
                 AdPage = pageNumber;
                 AdPageSize = pageSize;
-                UserAdDetails();
+                UserAdPurchaseDetails();
                 $(this).pagination('loaded');
             }
 
@@ -99,16 +99,10 @@
     }
     );
 
-    function UserAdDetails() {
-
-        var msg2 = { "UserId": UserId };
-        var objectAsJson = JSON.stringify(msg2);
-
+    function UserAdPurchaseDetails() {
         Type = "GET";
         Url = sServicePath + "/SelectUserPurchases/" + UserId;
         ContentType = "application/json;charset=utf-8";
-        //Data = objectAsJson;
-
         DataType = "json"; ProcessData = false;
         method = "SelectUserPurchases";
         CallService();
@@ -145,11 +139,29 @@
                                      parseInt(MyDate_String_Value.replace(/(^.*\()|([+-].*$)/g, ''))
                                 );
                     var dat = MonthName(value.getMonth()) + " " + value.getDate() + ", " + value.getFullYear();
+                    var MyDate_String_Value1 = obj[0].SaleDate;//"/Date(1224043200000)/"
+                    var value1 = new Date
+                                (
+                                     parseInt(MyDate_String_Value1.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                    var datpur = MonthName(value1.getMonth()) + " " + value1.getDate() + ", " + value1.getFullYear();
 
                     //For Price value
                     var p = obj[0].Price;
                     var sPrice = "$ " + p.toFixed(2);
-                    var sViewlink = "EditAdpost.aspx?aid=" + obj[i].AdPostId + "&uid=" + UserId;
+
+                    //Charge Details
+                    var chgname = obj[0].ChargeName;
+                    var delamt;
+                    var chgamt = obj[0].ChargeAmount;
+                    if (obj[0].ChargeType == "0")
+                        delamt = chgamt;
+                    else if (obj[0].ChargeType == "1")
+                        delamt = p * (chgamt / 100);
+
+
+
+                    var sViewlink = "ViewPurAd.aspx?aid=" + obj[i].AdPostId + "&uid=" + obj[i].AdUserId;
 
                     $("<div id='AdShow' style='height:200px;width:700px;border-radius:10px 10px 10px 10px;border:thin solid #800080;'>" +
                         "<div style='height:30px;width:700px;border-radius:10px 10px 0px 0px;background-color:lightgray;vertical-align:middle;'>" +
@@ -157,13 +169,16 @@
                         "<a href='" + sViewlink + "'>View</a></div>" +
                         "<div style='height:150px;width:300px;margin-left:10px;margin-top:10px;float:left;'>" +
                         "<img src=" + strImgPath[0] + " style='height:150px;width:250px;'></div>" +
-                        "<div  style='height:35px;margin-top:10px;'>Category - " + obj[i].CategoryName + "</div>" +
-                        "<div style='height:35px;'>Posted Date - " + dat + "</div>" +
-                        "<div style='height:35px;'>Price - " + sPrice + "</div></div><br>"
+                        "<div  style='height:30px;margin-top:10px;'>Category - " + obj[i].CategoryName + "</div>" +
+                        "<div style='height:30px;'>Posted Date - " + dat + "</div>" +
+                        "<div style='height:30px;'>Purchased Date - " + datpur + "</div>" +
+                        "<div style='height:30px;'>Delivery Name/Amount - " + chgname + " / $ " + delamt.toFixed(2) + "</div>" +
+                        "<div style='height:30px;'>Price - " + sPrice + "</div></div><br>"
 
                     ).appendTo("#divAdContent");
 
                 }
+
             }
         }
     }

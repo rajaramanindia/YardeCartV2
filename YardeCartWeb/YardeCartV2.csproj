@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CartDetails.aspx" />
     <Content Include="Content\images\del_no.png" />
     <Content Include="Content\images\yes_avai.jpg" />
     <Content Include="html\About.html" />
@@ -163,6 +164,7 @@
     <Content Include="ViewPostAd.aspx" />
     <Content Include="html\ViewPostAd.html" />
     <Content Include="ViewProfile.ascx" />
+    <Content Include="ViewPurAd.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -197,6 +199,13 @@
     </Compile>
     <Compile Include="BlockUsers.ascx.designer.cs">
       <DependentUpon>BlockUsers.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="CartDetails.aspx.cs">
+      <DependentUpon>CartDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CartDetails.aspx.designer.cs">
+      <DependentUpon>CartDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Category.ascx.cs">
       <DependentUpon>Category.ascx</DependentUpon>
@@ -382,6 +391,13 @@
     </Compile>
     <Compile Include="ViewProfile.ascx.designer.cs">
       <DependentUpon>ViewProfile.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewPurAd.aspx.cs">
+      <DependentUpon>ViewPurAd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewPurAd.aspx.designer.cs">
+      <DependentUpon>ViewPurAd.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
