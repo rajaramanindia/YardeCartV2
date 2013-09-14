@@ -60,7 +60,7 @@
                          reloadAfterSubmit: true,
                          drag: true,
                          afterSubmit: function (response, postdata) {
-                             debugger;
+                             //debugger;
                              if (response.responseText == "") {
 
                                  $(this).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid');//Reloads the grid after edit
@@ -82,7 +82,7 @@
                      {
                          closeAfterAdd: true,//Closes the add window after add
                          afterSubmit: function (response, postdata) {
-                             debugger;
+                             //debugger;
                              if (response.responseText == "") {
 
                                  $(this).jqGrid('setGridParam', { datatype: 'json' }).trigger('reloadGrid')//Reloads the grid after Add
@@ -101,7 +101,7 @@
                          closeOnEscape: true,
                          drag: true,
                          afterSubmit: function (response, postdata) {
-                             debugger;
+                             //debugger;
                              if (response.responseText == "") {
 
                                  $("#jQGridDemo").trigger("reloadGrid", [{ current: true }]);

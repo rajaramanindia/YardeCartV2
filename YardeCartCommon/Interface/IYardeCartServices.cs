@@ -149,12 +149,12 @@ namespace YardeCartCommon.Interface
         string SearchAdsByUsername(string strKeyword);
 
             [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByKeyword")]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByKeyword/{strKeyword}")]
         string SearchAdsByKeyword(string strKeyword);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByCategory")]
-        string SearchAdsByCategory(int intcategoryId);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByCategory/{strCategoryId}")]
+        string SearchAdsByCategory(string strCategoryId);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectReportsByDate")]

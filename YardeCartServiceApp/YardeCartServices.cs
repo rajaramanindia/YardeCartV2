@@ -778,11 +778,11 @@ namespace YardeCartServiceApp
             }
         }
 
-        public string SearchAdsByCategory(int intcategoryId)
+        public string SearchAdsByCategory(string strCategoryId)
         {
             try
             {
-                objDALComponent.SetParameters("@categoryId", SqlDbType.Int, 4, intcategoryId);
+                objDALComponent.SetParameters("@categoryId", SqlDbType.Int, 4, Convert.ToInt32(strCategoryId));
                 objDALComponent.SqlCommandText = "[SearchAdsByCategory]";
                 return GetJson(objDALComponent.SelectRecord());
             }

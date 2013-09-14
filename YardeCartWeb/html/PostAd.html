@@ -182,7 +182,7 @@
 
         }
         function SelectUserProfile() {
-            debugger;
+            //debugger;
             var msg2 = { "UserId": UserId };
             var objectAsJson = JSON.stringify(msg2);
             method = "SelectProfile";
@@ -194,7 +194,7 @@
             CallService();
         }
         function UploadFiles() {
-            debugger;
+            //debugger;
             var t = $("#strImgPath").val();
             alert($("#strImgPath").val());
             var fileInput = $("#UploadedFile1");
@@ -238,13 +238,13 @@
                 type: 'GET',
                 async: false,
                 success: function (data) {
-                    debugger;
+                    //debugger;
                     var temp = data.split('/');
                     UserId = temp[1];
                     alert(UserId);
                 },
                 error: function (errorData) {
-                    debugger;
+                    //debugger;
                     alert("ERR ON  " + errorData);
                     $('.result-message').html("there was a problem uploading the file.").show();
                 }
@@ -259,7 +259,7 @@
             new AjaxUpload('#UploadButton1', {
                 action: 'UploadFile.ashx',
                 onComplete: function (file, response) {
-                    debugger;
+                    //debugger;
                     if ($("#strImgPath").val() == "")
                         $("#strImgPath").val("/Data/TS_30/Images/" + response);
                     else {
@@ -368,7 +368,7 @@
 
         function DeleteFile(file) {
             //$('#UploadStatus').html("deleting...");
-            debugger;
+            //debugger;
             var file1 = file.split('/');
             $.ajax({
                 url: "UploadFile.ashx?file=" + file1[0],
@@ -376,7 +376,7 @@
                 cache: false,
                 async: true,
                 success: function (html) {
-                    debugger;
+                    //debugger;
                     var temp = $("#strImgPath").val();
                     if(file1[1]=="1")
                         temp = temp.replace("/Data/TS_30/Images/" + file1[0], "");

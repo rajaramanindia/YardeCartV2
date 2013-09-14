@@ -79,7 +79,7 @@
     function ServiceSucceeded(result) {
         if (DataType == "json") {
             if (method == "AdPostDeleteById") {
-                debugger;
+                //debugger;
                 resultObject = result;
                 var obj = jQuery.parseJSON(result);
 
@@ -155,7 +155,7 @@
         else if (mon == 12) return "December";
     }
     function DeleteAdpost(AdpostID) {
-        debugger;
+        //debugger;
         var msg2 = { "AdPostId": AdpostID };
         var objectAsJson = JSON.stringify(msg2);
 

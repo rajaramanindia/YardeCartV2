@@ -9,7 +9,8 @@
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
 	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript">
-        
+
+        var SearchbyCat;
         var AdPageSize = 10;
         var AdPage = 1;
         var AdTotal = 0;
@@ -17,7 +18,21 @@
         function () {
             GetAllAdDetails();
             SelectAllCategory();
+            PagingAd();
+            
+            $("#SearchButton").click(function () {
+                if ($("#SearchBox").val() == "")
+                    GetAllAdDetails();
+                else
+                    SearchAdsByKeyword();
+                PagingAd();
+            }
+            );
 
+        }
+        );
+
+        function PagingAd() {
             $('#AdPager').pagination({
                 total: AdTotal,
                 pageSize: AdPageSize,
@@ -27,14 +42,37 @@
                     //alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
                     AdPage = pageNumber;
                     AdPageSize = pageSize;
-                    GetAllAdDetails();
+                    if ($("#SearchBox").val() == "")
+                        GetAllAdDetails();
+                    else if(SearchbyCat != "")
+                        AdbyCategory(SearchbyCat)
+                    else
+                        SearchAdsByKeyword();
                     $(this).pagination('loaded');
                 }
 
             });
-        }
-        );
 
+        }
+
+        function AdbyCategory(catId) {
+            Type = "GET";
+            Url = sServicePath + "/SearchAdsByCategory/" + catId;
+            ContentType = "application/json;charset=utf-8";
+            DataType = "json"; ProcessData = false;
+            method = "SearchAdsByCategory";
+            CallService();
+            SearchbyCat = catId;
+            PagingAd();
+        }
+        function SearchAdsByKeyword() {
+            Type = "GET";
+            Url = sServicePath + "/SearchAdsByKeyword/" + $("#SearchBox").val();
+            ContentType = "application/json;charset=utf-8";
+            DataType = "json"; ProcessData = false;
+            method = "SearchAdsByKeyword";
+            CallService();
+        }
         function GetAllAdDetails() {
             Type = "GET";
             Url = sServicePath + "/GetAllAdDetails";
@@ -95,9 +133,83 @@
                     $("<strong>Category</strong>").appendTo("#MainCategory");
                     for (var i = 0; i < obj.length; i++) {
 
-                        $("<br><a href='index.aspx'>" + obj[i].CategoryName + "</a>").appendTo("#MainCategory");
+                        var str = obj[i].CategoryName;
+                        str = str.toLowerCase().replace(/\b[a-z]/g, function (letter) {
+                            return letter.toUpperCase();
+                        });
+
+                        $("<br><a href='#' onclick='AdbyCategory(" + obj[i].CategoryId + ");'>" + str + "</a>").appendTo("#MainCategory");
                     }
                 }
+                else if (method == "SearchAdsByKeyword") {
+                    resultObject = result;
+                    var obj = jQuery.parseJSON(result);
+                    //debugger;
+                    var tempStart;
+                    var tempEnd;
+                    AdTotal = obj.length;
+                    if (AdPage == 1) {
+                        tempStart = 0;
+                        tempEnd = AdPage * AdPageSize;
+                    }
+                    else {
+                        tempStart = (AdPage - 1) * AdPageSize;
+                        tempEnd = AdPage * AdPageSize;
+                    }
+
+                    $("#HighlightItemHeading").empty();
+
+                    for (var i = tempStart; i < obj.length && i < tempEnd; i++) {
+
+                        var strImgPath = obj[i].ImagePath.split(':');
+                        var strAdStatus = obj[i].AdStatus;
+                        $("<div id='HighlightItem2'>" +
+                            "<div><strong>" + obj[i].AdPostTitle + "</strong></div>" +
+                            "<div><img src=" + strImgPath[0] + " style='height:125px;' ></div>" +
+                            "<div style='font-size:12px'>" + obj[i].CategoryName + "</div>" +
+                            "<div><strong> $ " + parseFloat(obj[i].Price) + "</strong></div>" +
+                            "<div>" + strAdStatus + "</div>" +
+                            "<div><a href='ViewPostAd.aspx?uid=" + obj[i].UserId + "&aid=" + obj[i].AdPostId + "'>View Details</a> </div>"
+                        ).attr("style", "padding:3px").appendTo("#HighlightItemHeading");
+
+                    }
+
+                }
+                else if (method == "SearchAdsByCategory") {
+                    resultObject = result;
+                    var obj = jQuery.parseJSON(result);
+                    //debugger;
+                    var tempStart;
+                    var tempEnd;
+                    AdTotal = obj.length;
+                    if (AdPage == 1) {
+                        tempStart = 0;
+                        tempEnd = AdPage * AdPageSize;
+                    }
+                    else {
+                        tempStart = (AdPage - 1) * AdPageSize;
+                        tempEnd = AdPage * AdPageSize;
+                    }
+
+                    $("#HighlightItemHeading").empty();
+
+                    for (var i = tempStart; i < obj.length && i < tempEnd; i++) {
+
+                        var strImgPath = obj[i].ImagePath.split(':');
+                        var strAdStatus = obj[i].AdStatus;
+                        $("<div id='HighlightItem2'>" +
+                            "<div><strong>" + obj[i].AdPostTitle + "</strong></div>" +
+                            "<div><img src=" + strImgPath[0] + " style='height:125px;' ></div>" +
+                            "<div style='font-size:12px'>" + obj[i].CategoryName + "</div>" +
+                            "<div><strong> $ " + parseFloat(obj[i].Price) + "</strong></div>" +
+                            "<div>" + strAdStatus + "</div>" +
+                            "<div><a href='ViewPostAd.aspx?uid=" + obj[i].UserId + "&aid=" + obj[i].AdPostId + "'>View Details</a> </div>"
+                        ).attr("style", "padding:3px").appendTo("#HighlightItemHeading");
+
+                    }
+
+                }
+
             }
         }
 
@@ -121,10 +233,10 @@
                 <div id="AdPager" class="easyui-pagination" style="border:1px solid #ccc;">
                 </div>
                 </div>
-              <div id="HighlightItem">
-                <div id="HighlightItemHeading"></div>
+                  <div id="HighlightItem">
+                    <div id="HighlightItemHeading"></div>
         
-              </div>
+                  </div>
                 
 
             </div>

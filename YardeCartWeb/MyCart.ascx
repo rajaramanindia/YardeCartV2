@@ -163,7 +163,7 @@
                 "AdPostId": AdBuyArray[i].AdPostId, "UserId": UserId
             };
             var objectAsJsonUP = JSON.stringify(msg2);
-            debugger;
+            //debugger;
             Type = "PUT";
             Url = sServicePath + "/UpdateCartStatus";
             ContentType = "application/json;charset=utf-8";

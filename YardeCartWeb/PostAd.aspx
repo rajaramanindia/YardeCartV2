@@ -333,7 +333,7 @@
         });
         function DeleteFile(file) {
             //$('#UploadStatus').html("deleting...");
-            debugger;
+            //debugger;
             var file1 = file.split('/');
             $.ajax({
                 url: "Handlers/UploadFile.ashx?file=" + file1[0],
@@ -341,7 +341,7 @@
                 cache: false,
                 async: true,
                 success: function (html) {
-                    debugger;
+                    //debugger;
                     var temp = $("#strImgPath").val();
                     if (file1[1] == "1")
                         temp = temp.replace("/Data/TS_" + UserId + "/Images/" + file1[0], "");
