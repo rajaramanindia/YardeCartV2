@@ -12,23 +12,6 @@
 
         var userId;
 
-        function LoginUsers() {
-
-            var msg2 = { "UserName": $("#txtUsername").val(), "UserPassword": $("#txtUserpassword").val() };
-            var objectAsJson = JSON.stringify(msg2);
-            //debugger;
-            Type = "POST";
-            if ($("#txtUsername").val() == "admin")
-                Url = sServicePath + "/LoginAdmin";
-            else
-                Url = sServicePath + "/LoginUser";
-            Data = objectAsJson;
-            ContentType = "application/json;charset=utf-8";
-            DataType = "json"; ProcessData = false;
-            method = "LoginUser";
-            CallService();
-        }
-
         function ServiceSucceeded(result) {
             if (DataType == "json") {
                 if (method == "LoginUser") {
@@ -55,16 +38,98 @@
 
                     }
                 }
+                if (method == "GetAllAdDetails") {
+                    resultObject = result;
+                    var obj = jQuery.parseJSON(result);
+                    //debugger;
+                    var tempStart;
+                    var tempEnd;
+                    AdTotal = obj.length;
+                    if (AdPage == 1) {
+                        tempStart = 0;
+                        tempEnd = AdPage * AdPageSize;
+                    }
+                    else {
+                        tempStart = (AdPage - 1) * AdPageSize;
+                        tempEnd = AdPage * AdPageSize;
+                    }
+
+                    $("#HighlightItemHeading").empty();
+                    $("#SortItem").show();
+                    $("#HighlightItemHeading").removeAttr("style", "height: 500px; width: 100%;padding-top:100px;padding-left:300px;");
+
+                    for (var i = tempStart; i < obj.length && i < tempEnd; i++) {
+
+
+                        var strImgPath = obj[i].ImagePath.split(':');
+                        var strAdStatus = obj[i].AdStatus;
+                        var sViewLink = "";
+                        if (strAdStatus == "NEW")
+                            sViewLink = "ViewPostAd.aspx?uid=" + obj[i].UserId + "&aid=" + obj[i].AdPostId;
+                        else
+                            sViewLink = "ViewPurAd.aspx?uid=" + obj[i].UserId + "&aid=" + obj[i].AdPostId;
+
+                        $("<div id='HighlightItem2'>" +
+                            "<div><strong>" + obj[i].AdPostTitle + "</strong></div>" +
+                            "<div><img src=" + strImgPath[0] + " style='height:125px;' ></div>" +
+                            "<div style='font-size:12px'>" + obj[i].CategoryName + "</div>" +
+                            "<div><strong> $ " + parseFloat(obj[i].Price) + "</strong></div>" +
+                            "<div>" + strAdStatus + "</div>" +
+                            "<div><a href='" + sViewLink + "'>View Details</a> </div>"
+                        ).attr("style", "padding:3px").appendTo("#HighlightItemHeading");
+
+                    }
+
+                }
+                else if (method == "SearchAdsByKeyword") {
+                    resultObject = result;
+                    var obj = jQuery.parseJSON(result);
+                    //debugger;
+                    var tempStart;
+                    var tempEnd;
+                    AdTotal = obj.length;
+                    if (AdPage == 1) {
+                        tempStart = 0;
+                        tempEnd = AdPage * AdPageSize;
+                    }
+                    else {
+                        tempStart = (AdPage - 1) * AdPageSize;
+                        tempEnd = AdPage * AdPageSize;
+                    }
+
+                    $("#HighlightItemHeading").empty();
+
+                    for (var i = tempStart; i < obj.length && i < tempEnd; i++) {
+
+                        var strImgPath = obj[i].ImagePath.split(':');
+                        var strAdStatus = obj[i].AdStatus;
+                        $("<div id='HighlightItem2'>" +
+                            "<div><strong>" + obj[i].AdPostTitle + "</strong></div>" +
+                            "<div><img src=" + strImgPath[0] + " style='height:125px;' ></div>" +
+                            "<div style='font-size:12px'>" + obj[i].CategoryName + "</div>" +
+                            "<div><strong> $ " + parseFloat(obj[i].Price) + "</strong></div>" +
+                            "<div>" + strAdStatus + "</div>" +
+                            "<div><a href='ViewPostAd.aspx?uid=" + obj[i].UserId + "&aid=" + obj[i].AdPostId + "'>View Details</a> </div>"
+                        ).attr("style", "padding:3px").appendTo("#HighlightItemHeading");
+
+                    }
+
+                }
+
             }
         }
 
         $(document).ready(
         function () {
+            $("#SortItem").hide();
+            $("#HighlightItemHeading").attr("style", "height: 500px; width: 100%;padding-top:100px;padding-left:300px;");
+
             $("#butLogin").click(function () {
             LoginUsers();
-            //debugger;
-            //alert("hi");
+            });
 
+            $("#SearchButton").click(function () {
+                window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
             });
         });
 
@@ -80,7 +145,14 @@
             </div>
             --%>
             <div id="MainItem">
-                <div id="HighlightItem" style="height: 500px; width: 100%;padding-top:100px;padding-left:300px;">
+                    <div id="SortItem">
+                    <input name="TimePostedButton" id="SortButton" type="button" value="Time Posted">&nbsp;<input name="SearchButton" id="Button1" type="button" value="Sale Date">
+                <div id="AdPager" class="easyui-pagination" style="border:1px solid #ccc;">
+                </div>
+                </div>
+                
+                <div id="HighlightItem">
+                    <div id="HighlightItemHeading">
                     
                     <div style="border: thin solid #800080;width: 400px; height: 250px; border-radius:10px 10px 10px 10px;">
                     <table style="width: 400px; height: 237px;">
@@ -129,6 +201,7 @@
                 </div>
             </div>
         </div>
+            </div>
             
     <p></p>
     <p></p>

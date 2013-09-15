@@ -23,7 +23,7 @@
                                     <label>Old Password</label>
                                 </td>
                                 <td class="auto-style1">
-                                    <input type="password" id="txtOldpwd" style="width:200px;" class="easyui-validatebox" data-options="required:true,validType:'minLength[6]'"/>
+                                    <input type="password" id="txtOldpwd" style="width:200px;" class="easyui-validatebox" data-options="required:true" validType="equalsOld['#hdnOldpwd']"/>
                                 </td>
                             </tr>
                             <tr style="height:40px;">
@@ -55,7 +55,7 @@
                         </div>
                     </td>
                 </tr>
-                
+                <input id="hdnOldpwd" type="hidden" />
             </table>
         </div>
     </div>
@@ -84,6 +84,7 @@
                 var obj = jQuery.parseJSON(result);
                 sUsername = obj[0].UserName;
                 sUserpassword = obj[0].UserPassword;
+                $("#hdnOldpwd").val(sUserpassword);
             }
             else if (method == "UpdateUserPassword") {
                 resultObject = result;
@@ -173,6 +174,14 @@
                 return value == $(param[0]).val();
             },
             message: 'Field do not match.'
+        }
+    });
+    $.extend($.fn.validatebox.defaults.rules, {
+        equalsOld: {
+            validator: function (value, param) {
+                return value == $(param[0]).val();
+            },
+            message: 'Old password do not match.'
         }
     });
 

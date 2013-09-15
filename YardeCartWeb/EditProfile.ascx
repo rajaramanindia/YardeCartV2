@@ -1,4 +1,13 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EditProfile.ascx.cs" Inherits="YardeCartV2.EditProfile" %>
+
+
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <%--<link rel="stylesheet" type="text/css" href="easyui/demo/demo.css">--%>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+
 <div style="vertical-align:central;padding-left:100px;padding-top:50px">
         <div >
             <h3 >Profile Information</h3><br />
@@ -42,7 +51,7 @@
                                     <label>E mail</label>
                                 </td>
                                 <td>
-                    <input type="text" id="txtEmail" style="width:200px;" />
+                    <input type="text" id="txtEmail" style="width:200px;" class="easyui-validatebox" data-options="required:true,validType:'email'"/>
                                 </td>
                                 <td>
                                 </td>
@@ -52,7 +61,7 @@
                                     <label>Mobile</label>
                                 </td>
                                 <td>
-                    <input type="text" id="txtMobilePhone" style="width:200px;" />
+                    <input type="text" id="txtMobilePhone" style="width:200px;"  class="easyui-validatebox" data-options="required:true"/>
                                 </td>
                             </tr>
                             <tr style="height:40px;">

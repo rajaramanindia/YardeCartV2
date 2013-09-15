@@ -1,5 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ChargeList.ascx.cs" Inherits="YardeCartV2.ChargeList" %>
- <div style="text-align:center; width:800px;" >
+ <div style="text-align:center; width:800px;padding-top:50px;padding-left:10px;" >
+     <div><strong>List of Delivery charge details</strong></div>
+     <br />
         <table id="JQCharge" style="width:500px;">
         </table>
         <div id="JQChargePager">

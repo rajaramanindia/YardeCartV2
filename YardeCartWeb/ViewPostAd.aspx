@@ -111,6 +111,11 @@
             else if (mon == 12) return "December";
         }
         function AddCart() {
+
+            if (UserId == "") {
+                window.location = "login.aspx";
+            }
+            else {
             //debugger;
             var msg = { "CartId": 0, "AdPostId": adid, "UserId": UserId };
             var objectAsJson = JSON.stringify(msg);
@@ -122,7 +127,7 @@
             DataType = "json"; ProcessData = false;
             method = "CreateUserCart";
             CallService();
-
+            }
         }
 
     </script>

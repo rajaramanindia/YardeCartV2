@@ -14,14 +14,10 @@ using System.Web.Script.Serialization;
 
 namespace YardeCartV2
 {
-    public partial class index : System.Web.UI.Page
+    public partial class Help : System.Web.UI.Page
     {
-        public string strSearchKey = string.Empty;
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Request.QueryString["searchstr"] != null)
-                strSearchKey = Request.QueryString["searchstr"].ToString();
             //// To find IP address of a machine behind LAN you can use this code
             //string strHostName = Dns.GetHostName();
             //IPHostEntry ipEntry = Dns.GetHostEntry(strHostName);

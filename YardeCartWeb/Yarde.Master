@@ -23,8 +23,6 @@
     <script src="JQGridReq/jquery.jqGrid.js" type="text/javascript"></script>
     <link href="JQGridReq/ui.jqgrid.css" rel="stylesheet" type="text/css" />
     <script src="JQGridReq/grid.locale-en.js" type="text/javascript"></script>
-
-    
     <script type="text/javascript">
 
         var sServicePath;
@@ -103,8 +101,7 @@
                 }
             });
             SelectProfile();
-            $("#PostButton").click(function ()
-            {
+    $("#PostButton").click(function () {
                 if(UserId=="")
                     window.location = "Login.aspx";
                 else
@@ -112,7 +109,10 @@
             }
             );
             
-            
+    $("#SearchBox").focus(function () {
+        if ($("#SearchBox").val() == "Search String")
+            $("#SearchBox").val("");
+    });
         });
 
         function SelectProfile() {

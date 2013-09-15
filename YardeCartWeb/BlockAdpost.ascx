@@ -1,8 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlockAdpost.ascx.cs" Inherits="YardeCartV2.BlockAdpost" %>
-<div style="text-align:center;">
+<div style="text-align:center;padding-top:50px;padding-left:10px;">
         <input id="soption1" name="soption" type="radio" value="1" />Users
         <input id="soption2" name="soption" type="radio" value="2"/>Ads
-        <input id="txtSearch" type="text" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="txtSearch" type="text" class="YardTextbox" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
         <input id="btnSearch" type="button" value="Search" />
     </div>
     <div style="text-align:center; width:800px;" >
@@ -10,7 +12,7 @@
         </table>
         <div id="jQAdpostPager">
         </div>
-        <input id="btnBlock" type="button" value="Block" onclick="DoAction();"/>
+        <input id="btnBlock" type="button" value="Block" onclick="DoAction();" class="YardButton"/>
         <%--<input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>--%>
         <%--<input id="btnBlock1" type="button" value="Uncheck All" onclick="CheckAll();"/>--%>
 

@@ -4,7 +4,7 @@
         </table>
         <div id="jQUserPager">
         </div>
-        <input id="btnBlock" type="button" value="Block" onclick="GetUsers();"/>
+        <input id="btnBlock" type="button" value="Block" onclick="GetUsers();" class="YardButton" style="width: 120px;" />
         <%--<input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>--%>
         <%--<input id="btnBlock1" type="button" value="Block" onclick="GetUsers();"/>--%></div>
     <script type="text/javascript">

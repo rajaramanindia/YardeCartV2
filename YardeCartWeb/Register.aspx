@@ -22,8 +22,11 @@
                 <h3><strong>Register Details</strong></h3>
 
             </div>
-            <div>
+            <div style="background-color: aliceblue;">
                 (<span style="color: red;">*</span>) indiates mandatory fields.
+            </div>
+            <div id="divErrorMsg" style="color:red;background-color: aliceblue;">
+
             </div>
             <table id="tblRegister" style="width: 100%; background-color: aliceblue;">
                 <tr style="height: 50px; background-color: aliceblue;">
@@ -175,7 +178,7 @@
                 </tr>
                 <tr>
                     <td style="width: 175px">&nbsp;</td>
-                    <td>&nbsp;<input id="Checkbox1" type="checkbox" />I agree to the Yard e-Cart Terms of Service and Privacy policy.</td>
+                    <td>&nbsp;<input id="chkAgree" type="checkbox" />I agree to the Yard e-Cart Terms of Service and Privacy policy.</td>
                 </tr>
                 <tr>
                     <td style="width: 175px">&nbsp;</td>
@@ -204,6 +207,7 @@
     <script type="text/javascript">
 
         var intUserid;
+        var boolValid=false;
 
         function ServiceSucceeded(result) {
             if (DataType == "json") {
@@ -407,14 +411,56 @@
             });
 
             $("#btnRegister").click(function () {
+                CheckValidation();
+                if (boolValid) {
+                    $("#divErrorMsg").hide();
+
                 AddRegister();
                 alert("Added");
 
                 $("#tblRegister").attr("style", "visibility:collapse;");
                 $("#tblSuccess").attr("style", "visibility:visible;");
+                }
+                else {
+                    $("#divErrorMsg").show();
+
+                }
             });
+
+            $("#SearchButton").click(function () {
+                window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+            });
+
+            });
+
+        function CheckValidation() {
+            $("#divErrorMsg").empty();
+            boolValid = true;
+            if ($("#txtUsername").val() == "") {
+                $("<strong>- Username should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#txtUserPassword").val() == "") {
+                $("<strong>- Password should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#txtFirstName").val() == "") {
+                $("<strong>- First name should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#txtEmail").val() == "") {
+                $("<strong>- Email Address should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#txtMobilePhone").val() == "") {
+                $("<strong>- Mobile Number  should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if($("#chkAgree").prop("checked") == false){
+                $("<strong>- Please agree terms and conditions.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            } 
         }
-        );
 
         // extend the 'equals' rule
         $.extend($.fn.validatebox.defaults.rules, {
