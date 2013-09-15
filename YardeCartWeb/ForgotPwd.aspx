@@ -51,7 +51,6 @@
                     };
                     var objectAsJson = JSON.stringify(msg2);
                     MailToUser(objectAsJson);
-                    debugger;
                     $("#divErrMsg").empty();
                     $("<strong>User Name and Password are sending to " + $("#txtEmail").val() + ". Check your mail..</strong><br/>").appendTo("#divErrMsg");
 
