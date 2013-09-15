@@ -118,7 +118,22 @@
 
             }
         }
+        function LoginUsers() {
 
+            var msg2 = { "UserName": $("#txtUsername").val(), "UserPassword": $("#txtUserpassword").val() };
+            var objectAsJson = JSON.stringify(msg2);
+
+            Type = "POST";
+            if ($("#txtUsername").val() == "admin")
+                Url = "http://localhost:1098/LoginAdmin";
+            else
+                Url = "http://localhost:1098/LoginUser";
+            Data = objectAsJson;
+            ContentType = "application/json;charset=utf-8";
+            DataType = "json"; ProcessData = false;
+            method = "LoginUser";
+            CallService();
+        }
         $(document).ready(
         function () {
             $("#SortItem").hide();
