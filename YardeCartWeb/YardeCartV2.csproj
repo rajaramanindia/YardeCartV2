@@ -83,6 +83,7 @@
     <Content Include="Content\images\del_no.png" />
     <Content Include="Content\images\YardeCartLogo.jpg" />
     <Content Include="Content\images\yes_avai.jpg" />
+    <Content Include="ForgotPwd.aspx" />
     <Content Include="Help.aspx" />
     <Content Include="html\About.html" />
     <Content Include="ActivateUser.aspx" />
@@ -279,6 +280,13 @@
     </Compile>
     <Compile Include="EditProfile.ascx.designer.cs">
       <DependentUpon>EditProfile.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPwd.aspx.cs">
+      <DependentUpon>ForgotPwd.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPwd.aspx.designer.cs">
+      <DependentUpon>ForgotPwd.aspx</DependentUpon>
     </Compile>
     <Compile Include="Handlers\GetSession.ashx.cs">
       <DependentUpon>GetSession.ashx</DependentUpon>

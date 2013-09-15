@@ -194,7 +194,7 @@
                             <td class="auto-style3">&nbsp;</td>
                             <td class="auto-style2">
                                 <a href="Register.aspx">Create an account</a> <br />
-                                <a href="Register.aspx">Forget password</a> 
+                                    <a href="ForgotPwd.aspx">Forgot password</a> 
                             </td>
                         </tr>
                     </table>

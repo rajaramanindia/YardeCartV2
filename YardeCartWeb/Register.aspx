@@ -416,7 +416,7 @@
                     $("#divErrorMsg").hide();
 
                 AddRegister();
-                alert("Added");
+                    alert("Successfuully registered");
 
                 $("#tblRegister").attr("style", "visibility:collapse;");
                 $("#tblSuccess").attr("style", "visibility:visible;");

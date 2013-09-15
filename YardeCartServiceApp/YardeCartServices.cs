@@ -492,13 +492,13 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable SelectUserByEmail(string strEmail)
+        public string SelectUserByEmail(string strEmail)
         {
             try
             {
                 objDALComponent.SetParameters("@email", SqlDbType.VarChar, 100, strEmail);
                 objDALComponent.SqlCommandText = "[SelectUserByEmail]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
@@ -1390,6 +1390,35 @@ namespace YardeCartServiceApp
                 "<br /><br />To complete your registration, please visit this URL:<br />" +
                 "<a href='" + serverPath + "' runat='server' >" + serverPath + "</a>" +
                 "<br /><br /><br /><br />All the best,<br />YardeCart.</div></form></body></html>";
+
+                UtilityClass.SendMail(mUname, mPwd, mFrom, mTo, mCC, mSubject, mMsg, true);
+
+                return "true";
+            }
+            catch (SystemException ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
+
+        public string SendMailForgot(UserDetails userDetails)
+        {
+            try
+            {
+                string mUname = ConfigurationManager.AppSettings["mailUsername"].ToString();
+                string mPwd = ConfigurationManager.AppSettings["mailPassword"].ToString();
+                string mFrom = "";
+                string mTo = userDetails.Email;
+                string mCC = "";
+
+                string mSubject = "YardeCart User password mail";
+                string serverPath = ConfigurationManager.AppSettings["ApplicationPath"].ToString() + "/Login.aspx";
+                string mMsg = "<html><body><form id='form1' runat='server'><div>" +
+                    "Dear " + userDetails.UserName + ",<br /><br />As you request, your username and password is given below:<br><br>" +
+                    "<b>UserName : " + userDetails.UserName + "<br>Password : " + userDetails.UserPassword + "</b>" +
+                    "<br /><br />Now you can login with Yard E-Cart<br />" +
+                    "<a href='" + serverPath + "' runat='server' >" + serverPath + "</a>" +
+                    "<br /><br /><br /><br />All the best,<br />Yard E-Cart.</div></form></body></html>";
 
                 UtilityClass.SendMail(mUname, mPwd, mFrom, mTo, mCC, mSubject, mMsg, true);
 

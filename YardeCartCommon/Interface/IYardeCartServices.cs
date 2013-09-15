@@ -89,8 +89,8 @@ namespace YardeCartCommon.Interface
         DataTable SearchUsers(string strKeyword);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserByEmail")]
-        DataTable SelectUserByEmail(string strEmail);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserByEmail/{strEmail}")]
+        string SelectUserByEmail(string strEmail);
 
         [OperationContract]
         [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectUserPurchases/{strUserid}")]
@@ -295,6 +295,10 @@ namespace YardeCartCommon.Interface
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SendMailtoUser")]
         string SendMailtoUser(UserDetails userDetails);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SendMailForgot")]
+        string SendMailForgot(UserDetails userDetails);
 
         #endregion
  
