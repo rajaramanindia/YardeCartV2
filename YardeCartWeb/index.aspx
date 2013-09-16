@@ -49,7 +49,7 @@
                     //alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
                     AdPage = pageNumber;
                     AdPageSize = pageSize;
-                    if ($("#SearchBox").val() == "")
+                    if ($("#SearchBox").val() == "" || $("#SearchBox").val() == "Search String")
                         GetAllAdDetails();
                     else if (SearchbyCat != "")
                         AdbyCategory(SearchbyCat)
