@@ -11,6 +11,18 @@
         var adusrid = "<%=AdUserId%>";
         $(document).ready(function () {
             //debugger;
+            $("#SearchButton").click(function () {
+                window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+            });
+
+            $("#btnBack").click(function(){
+                if (UserType == "1") {
+                    window.location = "MyHome.aspx?page=purchase";
+                }
+                else if (UserType == "2") {
+                    window.location = "MyAdminHome.aspx?page=purchase";
+                }
+            });
 
             GetAdDetails(adid, adusrid);
             InitializeImageSlider();
@@ -129,6 +141,9 @@
 
     <div style="padding-top:100px;padding-left:150px;">
         <p><strong><h2>Posted Ad Information</h2></strong> </p><br />
+        <div>
+            <input type="button" class="YardButton" id="btnBack" value="Back" style="width:80px;"/>
+        </div>
         <table style="border:2px solid gray; width: 750px;">
             <tr>
                 <td colspan="3">

@@ -12,6 +12,9 @@
         $(document).ready(function () {
             //debugger;
             
+            $("#SearchButton").click(function () {
+                window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+            });
             GetAdDetails(adid, adusrid);
             InitializeImageSlider();
         });

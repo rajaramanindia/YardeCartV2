@@ -19,8 +19,9 @@
 
     <div>
         <p></p>
-        <strong><label id="cartItem"></label></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <input id="btnShop" type="button" value="Keep Shopping" class="" style="width:180px;" />
+        <strong><label id="cartItem"></label></strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="btnShop" type="button" value="Keep Shopping" class="YardButton"/>
     </div>
     <p>&nbsp;</p>
     <div id="divAdContent">
@@ -33,15 +34,15 @@
         <select id="ddlCharge" style="width: 200px;" class="easyui-validatebox" data-options="required:true" onchange="DeliAmount();" />
     </div>--%>
     
-    <div id="divAmtDetail" style="visibility:collapse;">
+    <div id="divAmtDetail" style="visibility:collapse; text-align:center; vertical-align:middle;">
         <table>
             <tr>
                 <td>
                         Select Delivery charge
                 </td>
                 <td>
-        <select id="ddlCharge" style="width: 200px;" class="easyui-validatebox" data-options="required:true" onchange="DeliveryAmountDet();" /><br />
-
+        <select id="ddlCharge" style="width: 200px;" class="easyui-validatebox" data-options="required:true" onchange="DeliveryAmountDet();" />
+                    <label id="lblErr"></label>
                 </td>
             </tr>
             </table>
@@ -75,8 +76,10 @@
             </tr>
             </table>
         <br />
-                        <input id="btnRegister" type="button" value="BUY" class="YardButton" style="width: 120px;" onclick="AddBuyDet();" />
+    <div id="div1" style="text-align:center; vertical-align:middle;">
+                        <input id="btnBuy" type="button" value="BUY" class="YardButton" style="width: 120px;" onclick="AddBuyDet();" />
         
+    </div>
     </div>
 <br />
 <br />
@@ -100,9 +103,18 @@
     var abspath = "<%= strAbsPath %>";
     var delact = "<%= sDel %>";
     var cid = "<%= sCartid %>";
+    var boolValid = true;
 
     $(document).ready(
     function () {
+
+        $("#SearchButton").click(function () {
+            window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+        });
+
+        $("#btnShop").click(function () {
+            window.location = "index.aspx";
+        });
         if (delact == "del") {
             CartDetailDelete(cid);
             alert("Adpost Removed from your Cart successfully");
@@ -129,58 +141,67 @@
     });
     
     function AddBuyDet() {
+        boolValid = true;
 
-        GetHistoryId();
-        if (HistroyId == null)
-            HistroyId = 0;
-        HistroyId++;
-        //debugger;
-        for (var i = 0; i < AdBuyArray.length; i++) {
+        if ($("#ddlCharge").val() == "0" || $("#ddlCharge").val() == "") {
+            alert("Please select Delivery Charges");
 
-            var chgname = $('#ddlCharge option:selected').text();
-            var delitype = 0;
-            delitype = parseInt($("#ddlCharge").val());
-
-            var msg = {
-                "AdPostId": AdBuyArray[i].AdPostId, "HistroyId": HistroyId, "UserId_Buyer": UserId,
-                "TotalPrice": DeliTotAmount.toFixed(2), "DeliveryType": delitype,
-                "SaleLocationId": intLocationId,
-                "CurrentStatus": "BOUGHT", "ViewersCount": 1, "ChargeName": chgname,
-                "ChargeType": strChgType, "ChargeAmount": strChgAmount
-            };
-            var objectAsJson = JSON.stringify(msg);
-            //debugger;
-            Type = "POST";
-            Url = sServicePath + "/CreateBuyDetails";
-            ContentType = "application/json;charset=utf-8";
-            Data = objectAsJson;
-            DataType = "json"; ProcessData = false;
-            method = "CreateBuyDetails";
-            CallService();
-
-            //Card Status
-            var msg2 = {
-                "AdPostId": AdBuyArray[i].AdPostId, "UserId": UserId
-            };
-            var objectAsJsonUP = JSON.stringify(msg2);
-            //debugger;
-            Type = "PUT";
-            Url = sServicePath + "/UpdateCartStatus";
-            ContentType = "application/json;charset=utf-8";
-            Data = objectAsJsonUP;
-            DataType = "json"; ProcessData = false;
-            method = "UpdateCartStatus";
-            CallService();
-
+            boolValid = false;
         }
 
+        if (boolValid) {
+            GetHistoryId();
+            if (HistroyId == null)
+                HistroyId = 0;
+            HistroyId++;
+            //debugger;
+            for (var i = 0; i < AdBuyArray.length; i++) {
 
-        alert("Purchases are done successfully.");
+                var chgname = $('#ddlCharge option:selected').text();
+                var delitype = 0;
+                delitype = parseInt($("#ddlCharge").val());
 
-        if(UserType == "1")
-        window.location = "MyHome.aspx?page=purchase";
-        else if (UserType == "2")
-        window.location = "MyAdminHome.aspx?page=purchase";
+                var msg = {
+                    "AdPostId": AdBuyArray[i].AdPostId, "HistroyId": HistroyId, "UserId_Buyer": UserId,
+                    "TotalPrice": DeliTotAmount.toFixed(2), "DeliveryType": delitype,
+                    "SaleLocationId": intLocationId,
+                    "CurrentStatus": "BOUGHT", "ViewersCount": 1, "ChargeName": chgname,
+                    "ChargeType": strChgType, "ChargeAmount": strChgAmount
+                };
+                var objectAsJson = JSON.stringify(msg);
+                //debugger;
+                Type = "POST";
+                Url = sServicePath + "/CreateBuyDetails";
+                ContentType = "application/json;charset=utf-8";
+                Data = objectAsJson;
+                DataType = "json"; ProcessData = false;
+                method = "CreateBuyDetails";
+                CallService();
+
+                //Card Status
+                var msg2 = {
+                    "AdPostId": AdBuyArray[i].AdPostId, "UserId": UserId
+                };
+                var objectAsJsonUP = JSON.stringify(msg2);
+                //debugger;
+                Type = "PUT";
+                Url = sServicePath + "/UpdateCartStatus";
+                ContentType = "application/json;charset=utf-8";
+                Data = objectAsJsonUP;
+                DataType = "json"; ProcessData = false;
+                method = "UpdateCartStatus";
+                CallService();
+
+            }
+
+
+            alert("Purchases are done successfully.");
+
+            if (UserType == "1")
+                window.location = "MyHome.aspx?page=purchase";
+            else if (UserType == "2")
+                window.location = "MyAdminHome.aspx?page=purchase";
+        }
     }
     function GetHistoryId() {
         Type = "GET";
@@ -275,12 +296,12 @@
                     //var strAdStatus = obj[i].AdStatus;
 
                     //For Date Format 
-                    //var MyDate_String_Value = obj[0].PostedDate;//"/Date(1224043200000)/"
-                    //var value = new Date
-                    //            (
-                    //                 parseInt(MyDate_String_Value.replace(/(^.*\()|([+-].*$)/g, ''))
-                    //            );
-                    //var dat = MonthName(value.getMonth()) + " " + value.getDate() + ", " + value.getFullYear();
+                    var MyDate_String_Value = obj[i].PostedDate;
+                    var valueDat = new Date
+                                (
+                                     parseInt(MyDate_String_Value.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                    var dat = MonthName(valueDat.getMonth()) + " " + valueDat.getDate() + ", " + valueDat.getFullYear();
 
                     //For Price value
                     var p = obj[i].Price;
@@ -295,7 +316,7 @@
                         "<div style='height:150px;width:300px;margin-left:10px;margin-top:10px;float:left;'>" +
                         "<img src=" + strImgPath[0] + " style='height:150px;width:250px;'></div>" +
                         "<div  style='height:35px;margin-top:10px;'>Category - " + obj[i].CategoryName + "</div>" +
-                        "<div style='height:35px;'>Posted Date - </div>" +
+                        "<div style='height:35px;'>Posted Date - " + dat + "</div>" +
                         "<div style='height:35px;'>Price - " + sPrice + "</div></div><br>"
 
                     ).appendTo("#divAdContent");

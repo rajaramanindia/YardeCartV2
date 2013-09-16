@@ -69,8 +69,8 @@ namespace YardeCartCommon.Interface
         string AvailableUser(UserDetails userDetails);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "AvailableMail")]
-        string AvailableMail(UserDetails userDetails);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "AvailableMail/{strEmail}")]
+        string AvailableMail(string strEmail);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetUserName")]

@@ -15,9 +15,9 @@ namespace YardeCartV2
         protected void Page_Load(object sender, EventArgs e)
         {
             strAbsPath = Request.Url.AbsolutePath.ToString();
-            if (Request.QueryString["act"] != null)
+            if (Request.QueryString["actad"] != null)
             {
-                sDel = Request.QueryString["act"].ToString();
+                sDel = Request.QueryString["actad"].ToString();
             }
             if (Request.QueryString["aid"] != null)
             {

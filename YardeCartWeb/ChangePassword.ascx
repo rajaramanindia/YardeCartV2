@@ -13,6 +13,7 @@
             <h3 >Change Password</h3><br />
         </div>
         <div>
+            <div id="divErrMsg" style="color:red;font-weight:bold;"></div>
             <table style="width:571px; border-bottom-left-radius:4px;border-width:thin; border-style:groove">
                 <tr>
                     <td style="vertical-align:central;">
@@ -47,8 +48,7 @@
                                 <td class="auto-style2">
                                 </td>
                                 <td class="auto-style1">
-                    <input id="btnUpdate" type="button" value="Update" />
-                    <input id="btnReset" type="button" value="Reset" />
+                    <input id="btnUpdate" type="button" value="Update" class="YardButton" style="width:125px;"/>
                                 </td>
                             </tr>
                         </table>
@@ -156,13 +156,40 @@
         CallService();
     }
 
+    var boolValid = true;
+
     $(document).ready(
     function () {
         //GetSession();
         SelectProfile();
+
+        $("#SearchButton").click(function () {
+            window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+        });
         $("#btnUpdate").click(function () {
+
+            $("#divErrMsg").empty();
+            boolValid = true;
+            if ($("#hdnOldpwd").val() != $("#txtOldpwd").val()) {
+                $("<strong>- Old Password is not correct.</strong><br/>").appendTo("#divErrMsg");
+                boolValid = false;
+            }
+            if ($("#txtOldpwd").val() == "") {
+                boolValid = false;
+                $("<strong>- Old Password should not be empty.</strong><br/>").appendTo("#divErrMsg");
+            }
+            if ($("#txtNewpwd").val() == "") {
+                $("<strong>- New Password should not be empty.</strong><br/>").appendTo("#divErrMsg");
+                boolValid = false;
+            }
+            if ($("#txtConpwd").val() != $("#txtNewpwd").val()) {
+                $("<strong>- Confirm Password should be equal to New password .</strong><br/>").appendTo("#divErrMsg");
+                boolValid = false;
+            }
+            if (boolValid) {
             UpdatePassword();
             alert("Password Updated Successfully");
+            }
         });
     }
     );

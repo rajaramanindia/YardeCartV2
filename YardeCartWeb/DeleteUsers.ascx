@@ -1,9 +1,12 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DeleteUsers.ascx.cs" Inherits="YardeCartV2.DeleteUsers" %>
-<div style="text-align:center; width:800px;" >
+<div style="text-align:center; width:800px;padding-top:50px;padding-left:10px;" >
+     <div><strong>List of User details</strong></div>
+<br />
         <table id="jQUser" style="width:500px;">
         </table>
         <div id="jQUserPager">
         </div>
+<br />
         <input id="btnBlock" type="button" value="Delete" onclick="GetUsers();"/>
         <%--<input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>--%>
         <%--<input id="btnBlock1" type="button" value="Uncheck All" onclick="CheckAll();"/>--%></div>
@@ -57,7 +60,7 @@
                        edit: false,
                        add: false,
                        del: false,
-                       search: true,
+                       search: false,
                        searchtext: "Search",
                        checkalltext: "Check all"
                    },

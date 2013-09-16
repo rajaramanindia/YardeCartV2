@@ -16,6 +16,7 @@ namespace YardeCartV2
         public void ProcessRequest(HttpContext context)
         {
             string s = context.Request.QueryString["uid"].ToString();
+            string sRem = context.Request.QueryString["rem"].ToString();
             //if (context.Session["UserId"] == null)
             context.Session.RemoveAll();
             context.Session.Add("UserId", s);
@@ -41,7 +42,7 @@ namespace YardeCartV2
             context.Response.Cookies.Add(cUserId);
             context.Response.Cookies.Add(cUsertype);
 
-           // if (RememberMe.Checked == true)
+            if (sRem == "true")
             {
                 //Response.Cookies.Clear();
                 HttpCookie cUsername = new HttpCookie("UserName", UserName.ToString().Trim());
@@ -51,6 +52,11 @@ namespace YardeCartV2
 
                 context.Response.Cookies.Add(cUsername);
                 context.Response.Cookies.Add(cPassword);
+            }
+            else
+            {
+                context.Request.Cookies.Remove("UserName");
+                context.Request.Cookies.Remove("Password");
             }
         }
 

@@ -61,7 +61,8 @@
         var UserId;
         var adpostid;
         var strimagePath;
-        
+        var boolValid = true;
+
         function ServiceSucceeded(result) {
             if (DataType == "json") {
                 if (method == "SelectAllCategory") {
@@ -100,35 +101,70 @@
             CallService();
         }
         function AddPostAd() {
-            var tilldate = $("#txtShowDate").datebox('getValue');
-            var msg2 = {
-                "AdPostId": "0",
-                "AdPostTitle": $("#txtTitle").val(),
-                "Description": $("#txtDesc").val(),
-                "Keywords": $("#txtKeywords").val(),
-                "UserId": UserId,
-                "CategoryId": $("#ddlCategory").val(),
-                "Price": $("#txtPrice").val(),
-                "StateId": intStateId,
-                "CityId": intCityId,
-                "ZipCode": strZipcode,
-                "CountryId": intCountryId,
-                "AdTillDate": tilldate,
-                "AdStatus": "NEW",
-                "PaidStatus": "0"
-            };
-            var objectAsJson = JSON.stringify(msg2);
+            boolValid = true;
+            $("#divErrorMsg").empty();
 
-            Type = "POST";
-            Url = sServicePath + "/AddAdPost";
-            ContentType = "application/json;charset=utf-8";
-            Data = objectAsJson;
-            DataType = "json"; ProcessData = false;
-            method = "AddAdPost";
-            CallService();
-            alert("Ad posted successfully");
-            window.location = "ViewPostAd.aspx?aid=" + adpostid + "&uid=" + UserId;
+            if ($("#txtTitle").val() == "") {
+                $("<strong>- Adpost Title should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
 
+            if ($("#txtKeywords").val() == "") {
+                $("<strong>- Adpost Keywords should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+
+            if ($("#ddlCategory").val() == "") {
+                $("<strong>- Adpost Category should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+
+            if ($("#txtShowDate").datebox('getValue') == "") {
+                $("<strong>- Adpost Till date should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+
+            if ($("#strImgPath").val() == ""){
+                $("<strong>- Please upload atleast one adpost image.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#txtPrice").val() == "") {
+                $("<strong>- Adpost Price should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+
+            if (boolValid == true) {
+                var tilldate = $("#txtShowDate").datebox('getValue');
+                var msg2 = {
+                    "AdPostId": "0",
+                    "AdPostTitle": $("#txtTitle").val(),
+                    "Description": $("#txtDesc").val(),
+                    "Keywords": $("#txtKeywords").val(),
+                    "UserId": UserId,
+                    "CategoryId": $("#ddlCategory").val(),
+                    "Price": $("#txtPrice").val(),
+                    "StateId": intStateId,
+                    "CityId": intCityId,
+                    "ZipCode": strZipcode,
+                    "CountryId": intCountryId,
+                    "AdTillDate": tilldate,
+                    "AdStatus": "NEW",
+                    "PaidStatus": "0"
+                };
+                var objectAsJson = JSON.stringify(msg2);
+                debugger;
+                Type = "POST";
+                Url = sServicePath + "/AddAdPost";
+                ContentType = "application/json;charset=utf-8";
+                Data = objectAsJson;
+                DataType = "json"; ProcessData = false;
+                method = "AddAdPost";
+                CallService();
+                alert("Ad posted successfully");
+                window.location = "ViewPostAd.aspx?aid=" + adpostid + "&uid=" + UserId;
+            }
+            else {
+            }
         }
         function AddPostAdImage(aid) {
             //debugger;
@@ -198,27 +234,8 @@
 
         $(document).ready(
         function () {
-            //$.ajax({
-            //    url: 'Handlers/GetSession.ashx',
-            //    processData: false,
-            //    contentType: false,
-            //    type: 'GET',
-            //    async: false,
-            //    success: function (data) {
-            //        var temp = data.split('/');
-            //        UserId = temp[1];
-            //        if (UserId == "")
-            //            window.location = "Login.aspx";
-            //    },
-            //    error: function (errorData) {
-            //        alert("ERR ON  " + errorData);
-            //        $('.result-message').html("there was a problem uploading the file.").show();
-            //    }
-            //});
-
             SelectAllCategory();
             SelectUserProfile();
-
         });
 
         $(function () {
@@ -226,16 +243,22 @@
             new AjaxUpload('#UploadButton1', {
                 action: 'Handlers/UploadFile.ashx',
                 onComplete: function (file, response) {
-                    //debugger;
-                    if ($("#strImgPath").val() == "")
-                        $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
-                    else {
-                        var temp = $("#strImgPath").val();
-                        $("#strImgPath").val(temp + ":" + "/Data/TS_" + UserId + "/Images/" + response);
+                    if (response.indexOf("cannot exceeded 1 MB") != -1)
+                    {
+                        alert(response);
                     }
-                    $("<div><img src='image/btndelete.png' onclick=\"DeleteFile('" + response + "/1" + "')\"  class='delete'/>" + response + "</div>").appendTo('#UploadedFile1');
-                    //$('#UploadStatus').html("file has been uploaded sucessfully");
-                    $("#UploadButton1").hide();
+                    else
+                    {
+                        if ($("#strImgPath").val() == "")
+                            $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
+                        else {
+                            var temp = $("#strImgPath").val();
+                            $("#strImgPath").val(temp + ":" + "/Data/TS_" + UserId + "/Images/" + response);
+                        }
+                        $("<div><img src='image/btndelete.png' onclick=\"DeleteFile('" + response + "/1" + "')\"  class='delete'/>" + response + "</div>").appendTo('#UploadedFile1');
+                        //$('#UploadStatus').html("file has been uploaded sucessfully");
+                        $("#UploadButton1").hide();
+                    }
                 },
                 onSubmit: function (file, ext) {
                     if (!(ext && /^(png|jpg)$/i.test(ext))) {
@@ -248,17 +271,22 @@
             new AjaxUpload('#UploadButton2', {
                 action: 'Handlers/UploadFile.ashx',
                 onComplete: function (file, response) {
-                    if ($("#strImgPath").val() == "")
-                        $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
-                    else {
-                        var temp = $("#strImgPath").val();
-                        $("#strImgPath").val(temp + ":" + "/Data/TS_" + UserId + "/Images/" + response);
+                    if (response.indexOf("cannot exceeded 1 MB") != -1) {
+                        alert(response);
                     }
-                    $("<div><img src='image/btndelete.png' onclick=\"DeleteFile('" + response + "/2" + "')\"  class='delete'/>" + response + "</div>").appendTo('#UploadedFile2');
-                    //$('#UploadStatus').html("file has been uploaded sucessfully");
-                    $("#UploadButton2").hide();
+                    else {
+                        if ($("#strImgPath").val() == "")
+                            $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
+                        else {
+                            var temp = $("#strImgPath").val();
+                            $("#strImgPath").val(temp + ":" + "/Data/TS_" + UserId + "/Images/" + response);
+                        }
+                        $("<div><img src='image/btndelete.png' onclick=\"DeleteFile('" + response + "/2" + "')\"  class='delete'/>" + response + "</div>").appendTo('#UploadedFile2');
+                        //$('#UploadStatus').html("file has been uploaded sucessfully");
+                        $("#UploadButton2").hide();
+                    }
                 },
-                onSubmit: function (file, ext) {
+                onSubmit: function (file, ext, size) {
                     if (!(ext && /^(png|jpg)$/i.test(ext))) {
                         alert('Invalid File Format.');
                         return false;
@@ -269,15 +297,20 @@
             new AjaxUpload('#UploadButton3', {
                 action: 'Handlers/UploadFile.ashx',
                 onComplete: function (file, response) {
-                    if ($("#strImgPath").val() == "")
-                        $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
-                    else {
-                        var temp = $("#strImgPath").val();
-                        $("#strImgPath").val(temp + ":" + "/Data/TS_" + UserId + "/Images/" + response);
+                    if (response.indexOf("cannot exceeded 1 MB") != -1) {
+                        alert(response);
                     }
-                    $("<div><img src='image/btndelete.png' onclick=\"DeleteFile('" + response + "/3" + "')\"  class='delete'/>" + response + "</div>").appendTo('#UploadedFile3');
-                    //$('#UploadStatus').html("file has been uploaded sucessfully");
-                    $("#UploadButton3").hide();
+                    else {
+                        if ($("#strImgPath").val() == "")
+                            $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
+                        else {
+                            var temp = $("#strImgPath").val();
+                            $("#strImgPath").val(temp + ":" + "/Data/TS_" + UserId + "/Images/" + response);
+                        }
+                        $("<div><img src='image/btndelete.png' onclick=\"DeleteFile('" + response + "/3" + "')\"  class='delete'/>" + response + "</div>").appendTo('#UploadedFile3');
+                        //$('#UploadStatus').html("file has been uploaded sucessfully");
+                        $("#UploadButton3").hide();
+                    }
                 },
                 onSubmit: function (file, ext) {
                     if (!(ext && /^(png|jpg)$/i.test(ext))) {
@@ -290,15 +323,20 @@
             new AjaxUpload('#UploadButton4', {
                 action: 'Handlers/UploadFile.ashx',
                 onComplete: function (file, response) {
-                    if ($("#strImgPath").val() == "")
-                        $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
-                    else {
-                        var temp = $("#strImgPath").val();
-                        $("#strImgPath").val(temp + ":" + "/Data/TS_" + UserId + "/Images/" + response);
+                    if (response.indexOf("cannot exceeded 1 MB") != -1) {
+                        alert(response);
                     }
-                    $("<div><img src='image/btndelete.png' onclick=\"DeleteFile('" + response + "/4" + "')\"  class='delete'/>" + response + "</div>").appendTo('#UploadedFile4');
-                    //$('#UploadStatus').html("file has been uploaded sucessfully");
-                    $("#UploadButton4").hide();
+                    else {
+                        if ($("#strImgPath").val() == "")
+                            $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
+                        else {
+                            var temp = $("#strImgPath").val();
+                            $("#strImgPath").val(temp + ":" + "/Data/TS_" + UserId + "/Images/" + response);
+                        }
+                        $("<div><img src='image/btndelete.png' onclick=\"DeleteFile('" + response + "/4" + "')\"  class='delete'/>" + response + "</div>").appendTo('#UploadedFile4');
+                        //$('#UploadStatus').html("file has been uploaded sucessfully");
+                        $("#UploadButton4").hide();
+                    }
                 },
                 onSubmit: function (file, ext) {
                     if (!(ext && /^(png|jpg)$/i.test(ext))) {
@@ -311,15 +349,20 @@
             new AjaxUpload('#UploadButton5', {
                 action: 'Handlers/UploadFile.ashx',
                 onComplete: function (file, response) {
-                    if ($("#strImgPath").val() == "")
-                        $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
-                    else {
-                        var temp = $("#strImgPath").val();
-                        $("#strImgPath").val(temp + ":" + "/Data/TS_" + UserId + "/Images/" + response);
+                    if (response.indexOf("cannot exceeded 1 MB") != -1) {
+                        alert(response);
                     }
-                    $("<div><img src='image/btndelete.png' onclick=\"DeleteFile('" + response + "/5" + "')\"  class='delete'/>" + response + "</div>").appendTo('#UploadedFile5');
-                    //$('#UploadStatus').html("file has been uploaded sucessfully");
-                    $("#UploadButton5").hide();
+                    else {
+                        if ($("#strImgPath").val() == "")
+                            $("#strImgPath").val("/Data/TS_" + UserId + "/Images/" + response);
+                        else {
+                            var temp = $("#strImgPath").val();
+                            $("#strImgPath").val(temp + ":" + "/Data/TS_" + UserId + "/Images/" + response);
+                        }
+                        $("<div><img src='image/btndelete.png' onclick=\"DeleteFile('" + response + "/5" + "')\"  class='delete'/>" + response + "</div>").appendTo('#UploadedFile5');
+                        //$('#UploadStatus').html("file has been uploaded sucessfully");
+                        $("#UploadButton5").hide();
+                    }
                 },
                 onSubmit: function (file, ext) {
                     if (!(ext && /^(png|jpg)$/i.test(ext))) {
@@ -368,6 +411,14 @@
                         <h3>Post An Ad in 30 Secs</h3>
                         <p>&nbsp;</p>
                     </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="auto-style21">
+                    <div id="divErrorMsg" style="color:red;text-align: left;">
+                    </div>
+                        <p>&nbsp;</p>
+
                 </td>
             </tr>
             <tr>

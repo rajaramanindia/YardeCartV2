@@ -191,7 +191,7 @@ namespace YardeCartServiceApp
                 objDAL.SetParameters("@keywords", SqlDbType.VarChar, 1000,adpostDetails.Keywords);
                 objDAL.SetParameters("@userId", SqlDbType.Int, 4, adpostDetails.UserId);
                 objDAL.SetParameters("@categoryId", SqlDbType.Int, 4, adpostDetails.CategoryId);
-                objDAL.SetParameters("@price", SqlDbType.Decimal, 9, adpostDetails.Price);
+                objDAL.SetParameters("@price", SqlDbType.Decimal, 9, Convert.ToDecimal(adpostDetails.Price));
                 objDAL.SetParameters("@stateId", SqlDbType.Int, 4, adpostDetails.StateId);
                 objDAL.SetParameters("@cityId", SqlDbType.Int, 4, adpostDetails.CityId);
                 objDAL.SetParameters("@countryId", SqlDbType.Int, 4, adpostDetails.CountryId);
@@ -401,12 +401,12 @@ namespace YardeCartServiceApp
             }
         }
 
-        public string AvailableMail(UserDetails userDetails)
+        public string AvailableMail(string strEmail)
         {
             try
             {
                 DALComponent objDAL = new DALComponent();
-                objDAL.SetParameters("@email", SqlDbType.VarChar, 50, userDetails.Email);
+                objDAL.SetParameters("@email", SqlDbType.VarChar, 50, strEmail);
                 objDAL.SqlCommandText = "[AvailableMail]";
                 return GetJson(objDAL.SelectRecord());
             }

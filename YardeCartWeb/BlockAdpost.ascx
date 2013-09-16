@@ -5,22 +5,31 @@
     &nbsp;&nbsp;&nbsp;&nbsp;
         <input id="txtSearch" type="text" class="YardTextbox" />
     &nbsp;&nbsp;&nbsp;&nbsp;
-        <input id="btnSearch" type="button" value="Search" />
+        <input id="btnSearch" type="button" value="Search" class="YardButton" />
     </div>
+<br />
     <div style="text-align:center; width:800px;" >
         <table id="jQAdpost" style="width:500px;">
         </table>
         <div id="jQAdpostPager">
         </div>
-        <input id="btnBlock" type="button" value="Block" onclick="DoAction();" class="YardButton"/>
+<br />
+        <input id="btnBlock" type="button" value="Block" onclick="DoAction();" class="YardButton" style="visibility:collapse;"/>
         <%--<input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>--%>
         <%--<input id="btnBlock1" type="button" value="Uncheck All" onclick="CheckAll();"/>--%>
 
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
+
+            $("#SearchButton").click(function () {
+                window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+            });
+
             $('#btnSearch').click(function () {
                 //debugger;
+                $('#btnBlock').attr("style", "visibility:visible;");
+
                 $('#jQAdpost').jqGrid('GridUnload');  //this does the work of clearing out the table content and loading fresh data
 
                 var valop = $('input:radio[name=soption]:checked').val();
@@ -73,7 +82,7 @@
                                edit: false,
                                add: false,
                                del: false,
-                               search: true,
+                               search: false,
                                searchtext: "Search",
                                checkalltext: "Check all"
                            },
@@ -129,38 +138,6 @@
             CallService();
         }
 
-        var Type;
-        var Url;
-        var Data;
-        var ContentType;
-        var DataType;
-        var ProcessData;
-        var method;
-        var catGroup;
-        //Generic function to call AXMX/WCF  Service
-        function CallService() {
-            $.ajax({
-                type: Type, //GET or POST or PUT or DELETE verb
-                url: Url, // Location of the service
-                data: Data, //Data sent to server
-                contentType: ContentType, // content type sent to server
-                dataType: DataType, //Expected data format from server
-                processdata: ProcessData, //True or False
-                async: false,
-                dataFilter: function (data, type) {
-                    // convert from "\/Date(nnnn)\/" to "new Date(nnnn)"
-                    return data.replace(/"\\\/(Date\([0-9-]+\))\\\/"/gi, 'new $1');
-                },
-
-                success: function (msg) {//On Successfull service call
-                    ServiceSucceeded(msg);
-                }
-            });
-        }
-        function ServiceFailed(result) {
-            alert('Service call failed: ' + result.status + '' + result.statusText);
-            Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
-        }
         function ServiceSucceeded(result) {
             if (DataType == "json") {
                 if (method == "UpdateAdBlockStatus") {

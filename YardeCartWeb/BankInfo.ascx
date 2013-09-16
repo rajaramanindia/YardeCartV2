@@ -7,6 +7,16 @@
         width: 305px;
     }
 </style>
+<script type="text/javascript">
+    $(document).ready(
+        function () {
+
+            $("#SearchButton").click(function () {
+                window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+            });
+        });
+
+</script>
 <div style="vertical-align:central;padding-left:100px;padding-top:50px">
         <div >
             <h3 >Bank Information</h3><br />

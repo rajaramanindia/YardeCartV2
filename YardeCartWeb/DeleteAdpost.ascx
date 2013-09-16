@@ -1,17 +1,22 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="DeleteAdpost.ascx.cs" Inherits="YardeCartV2.DeleteAdpost" %>
 
-    <div style="text-align:center;">
+    <div style="text-align:center;padding-top:50px;padding-left:10px;">
         <input id="soption1" name="soption" type="radio" value="1" />Users
         <input id="soption2" name="soption" type="radio" value="2"/>Ads
-        <input id="txtSearch" type="text" />
-        <input id="btnSearch" type="button" value="Search" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="txtSearch" type="text" class="YardTextbox"/>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="btnSearch" type="button" value="Search"  class="YardButton" />
     </div>
+<br />
     <div style="text-align:center; width:800px;" >
         <table id="jQAdpost" style="width:500px;">
         </table>
         <div id="jQAdpostPager">
         </div>
-        <input id="btnBlock" type="button" value="Delete" onclick="DoAction();"/>
+<br />
+
+        <input id="btnBlock" type="button" value="Delete" onclick="DoAction();" class="YardButton" style="visibility:collapse;"/>
         <%--<input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>--%>
         <%--<input id="btnBlock1" type="button" value="Uncheck All" onclick="CheckAll();"/>--%>
 
@@ -20,6 +25,8 @@
         $(document).ready(function () {
             $('#btnSearch').click(function () {
                 //debugger;
+                $('#btnBlock').attr("style", "visibility:visible;");
+
                 $('#jQAdpost').jqGrid('GridUnload');  //this does the work of clearing out the table content and loading fresh data
 
                 var valop = $('input:radio[name=soption]:checked').val();

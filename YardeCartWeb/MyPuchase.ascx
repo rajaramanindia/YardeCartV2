@@ -1,54 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="MyPuchase.ascx.cs" Inherits="YardeCartV2.MyPuchase" %>
 
-<%--<style type="text/css">
-        .auto-style4 {
-            width: 865px;
-        }
-        .auto-style6 {
-            height: 20px;
-        }
-        .auto-style7 {
-            width: 214px;
-        }
-    </style>
-<div>
-           <table style="width:900px;" id="tblAdpost" runat="server">
-            <tr style="height:40px;">
-                <td style="text-align:left;vertical-align:central; font-size:large;font-weight:600;" class="auto-style4">&nbsp;
-                <asp:Label ID="lblCart" runat="server" Text="Shopping"/>
-                </td>
-                <td style="text-align:right;vertical-align:central;">&nbsp;
-                <asp:Button ID="btnKeep" runat="server" Text="Keep Shopping" BorderStyle="Groove" BorderWidth="1px" Width="150px" OnClick="btnKeep_Click" Height="30px"/>
-                </td>
-            </tr>
-            <tr><td colspan="2">
-            <asp:GridView ID="GridView1" runat="server" Width="800px" AllowPaging="true" DataKeyNames="AdPostId"
-                    AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound" RowStyle-BorderColor="Tan" RowStyle-BorderWidth="1px"
-                    ShowHeader="False" OnPageIndexChanging="GridView1_PageIndexChanging" BorderColor="Black" BorderWidth="2px" PageSize="10"
-                    >
-                    <Columns>
-                        <asp:BoundField DataField="AdPostId" Visible="false" InsertVisible="false"/>
-                        <asp:TemplateField >
-                            <ItemTemplate>
-                                <table style="width:600px;">
-                                    <tr><td>
-                                    <span id="spnHtml0" runat="server"></span>
-                                    </td></tr>
-                                </table>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-
-                    </Columns>
-                    <PagerStyle BorderStyle="Solid" HorizontalAlign="Center" VerticalAlign="Bottom" Wrap="True" />
-                </asp:GridView>
-            </td></tr>
-               <tr><td class="auto-style4" style="text-align: center" colspan="2">
-                    &nbsp;</td>
-               </tr>
-           </table>
-    </div>--%>
-
-
     <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
 	<%--<link rel="stylesheet" type="text/css" href="easyui/demo/demo.css">--%>
@@ -81,6 +32,10 @@
     var AdTotal = 0;
     $(document).ready(
     function () {
+
+        $("#SearchButton").click(function () {
+            window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+        });
         UserAdPurchaseDetails();
         $('#Adpaging').pagination({
             total: AdTotal,
@@ -133,13 +88,13 @@
                     var strAdStatus = obj[i].AdStatus;
 
                     //For Date Format 
-                    var MyDate_String_Value = obj[0].PostedDate;//"/Date(1224043200000)/"
+                    var MyDate_String_Value = obj[i].PostedDate;//"/Date(1224043200000)/"
                     var value = new Date
                                 (
                                      parseInt(MyDate_String_Value.replace(/(^.*\()|([+-].*$)/g, ''))
                                 );
                     var dat = MonthName(value.getMonth()) + " " + value.getDate() + ", " + value.getFullYear();
-                    var MyDate_String_Value1 = obj[0].SaleDate;//"/Date(1224043200000)/"
+                    var MyDate_String_Value1 = obj[i].SaleDate;//"/Date(1224043200000)/"
                     var value1 = new Date
                                 (
                                      parseInt(MyDate_String_Value1.replace(/(^.*\()|([+-].*$)/g, ''))
@@ -147,16 +102,16 @@
                     var datpur = MonthName(value1.getMonth()) + " " + value1.getDate() + ", " + value1.getFullYear();
 
                     //For Price value
-                    var p = obj[0].Price;
+                    var p = obj[i].Price;
                     var sPrice = "$ " + p.toFixed(2);
 
                     //Charge Details
-                    var chgname = obj[0].ChargeName;
+                    var chgname = obj[i].ChargeName;
                     var delamt;
-                    var chgamt = obj[0].ChargeAmount;
-                    if (obj[0].ChargeType == "0")
+                    var chgamt = obj[i].ChargeAmount;
+                    if (obj[i].ChargeType == "0")
                         delamt = chgamt;
-                    else if (obj[0].ChargeType == "1")
+                    else if (obj[i].ChargeType == "1")
                         delamt = p * (chgamt / 100);
 
 

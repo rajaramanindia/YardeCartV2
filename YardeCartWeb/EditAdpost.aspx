@@ -24,14 +24,18 @@
 
             })
         });
-        //$(document).ready(function () {
+        $(document).ready(function () {
+            $("#SearchButton").click(function () {
+                window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+            });
+
         //    $('#MainContent_remove1').click(function () {
 
         //       alert("hi " + '"<=this.remove1.Attributes["imgpath"].ToString() %>"');
         //       var fso = ActiveXObject("Scripting");
 
         //  });
-        //});
+        });
     </script>
     
     <div id="form-content" style="vertical-align:central; padding-left:100px;padding-top:50px;">
@@ -95,7 +99,7 @@
             <tr>
                 <td class="auto-style22" ></td>
                 <td colspan="5" class="auto-style11" >&nbsp;
-                    <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick="btnUpload_Click" BorderStyle="Groove" BorderWidth="1px" Height="25px" style="font-weight: 700" Width="105px" TabIndex="9" />
+                    <asp:Button ID="btnUpload" runat="server" Text="Upload" CssClass="YardButton" OnClick="btnUpload_Click" TabIndex="9" />
                     &nbsp;&nbsp;<asp:Label ID="errFile1" ForeColor="Red" runat="server" ></asp:Label>
                 </td>
             </tr>
@@ -123,7 +127,7 @@
                 <td style="vertical-align:central; text-align:center;">
                     <br />
                     <br />
-                    <asp:Button ID="btnSaveAd" runat="server" Text="Save Post " OnClick="btnSaveAd_Click" BorderStyle="Groove" BorderWidth="1px" Height="28px" style="font-weight: 700" Width="105px" TabIndex="15" />
+                    <asp:Button ID="btnSaveAd" runat="server" CssClass="YardButton" Text="Save Ad Post " OnClick="btnSaveAd_Click" TabIndex="15" />
                     </td>
             </tr>
 

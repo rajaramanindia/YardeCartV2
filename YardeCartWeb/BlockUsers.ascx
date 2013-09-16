@@ -1,9 +1,12 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlockUsers.ascx.cs" Inherits="YardeCartV2.BlockUsers" %>
-   <div style="text-align:center; width:800px;" >
+<div style="text-align:center; width:800px;padding-top:50px;padding-left:10px;" >
+     <div><strong>List of User details</strong></div>
+<br />
         <table id="jQUser" style="width:500px;">
         </table>
         <div id="jQUserPager">
         </div>
+<br />
         <input id="btnBlock" type="button" value="Block" onclick="GetUsers();" class="YardButton" style="width: 120px;" />
         <%--<input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>--%>
         <%--<input id="btnBlock1" type="button" value="Block" onclick="GetUsers();"/>--%></div>
@@ -57,7 +60,7 @@
                        edit: false,
                        add: false,
                        del: false,
-                       search: true,
+                       search: false,
                        searchtext: "Search",
                        checkalltext: "Check all"
                    },

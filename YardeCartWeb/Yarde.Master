@@ -159,7 +159,7 @@
 
             </ul>
         </div>
-        <div id="HeaderLogo"><a href="index.aspx"><img src="Content/images/YardeCartLogo.jpg" alt="Logo" style="height:35px;"></a></div>
+        <div id="HeaderLogo"><a href="index.aspx"><img src="Content/images/YardeCartLogo.jpg" alt="Logo" ></a></div>
         <div id="HeaderSearch">
         <input name="SearchString" id="SearchBox" type="text" value="Search String" size="25">&nbsp;&nbsp;&nbsp;
         <input name="SearchPlace" id="SearchBoxPlace" type="text" value="Place"  size="12">&nbsp;&nbsp;&nbsp;

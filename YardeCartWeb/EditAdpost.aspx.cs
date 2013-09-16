@@ -215,7 +215,7 @@ namespace YardeCartV2
 
                 if (dt.Rows[0]["UserStatus"].ToString()=="1")
                     Response.Redirect("MyHome.aspx?page=adpost");
-                else if (dt.Rows[0]["UserStatus"].ToString() == "1")
+                else if (dt.Rows[0]["UserStatus"].ToString() == "2")
                     Response.Redirect("MyAdminHome.aspx?page=adpost");
 
             }

@@ -38,7 +38,7 @@
                          edit: true,
                          add: true,
                          del: true,
-                         search: true,
+                         search: false,
                          searchtext: "Search",
                          addtext: "Add",
                          edittext: "Edit",

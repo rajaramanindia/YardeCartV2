@@ -52,16 +52,5 @@ namespace YardeCartV2
             }
         }
 
-        protected void lnkEditProfile_Click(object sender, EventArgs e)
-        {
-            PlaceHolder ht = (PlaceHolder)Page.FindControl("PlaceHolder1");
-
-            ht.Controls.Clear();
-            MyAdposts homeHead = (MyAdposts)Page.LoadControl("MyAdposts.ascx");
-            ht.Controls.Add(homeHead);
-
-            //Response.Redirect("EditProfile.aspx");
-        }
-
     }
 }

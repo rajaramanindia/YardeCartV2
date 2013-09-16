@@ -24,7 +24,7 @@
                     }
                     else {
                         $.ajax({
-                            url: 'Handlers/SetSession.ashx?uid=' + resultObject,
+                            url: 'Handlers/SetSession.ashx?uid=' + resultObject + '&rem=' + $("#chkAgree").prop("checked"),
                             processData: false,
                             contentType: false,
                             type: 'POST',
@@ -202,6 +202,8 @@
                         <tr>
                             <td class="auto-style3">&nbsp;</td>
                             <td class="auto-style2">
+                                    <input id="chkAgree" type="checkbox" />Remember me
+                                    <br />
                                 <input id="butLogin" type="button" value="Login" class="YardButton" style="width:120px;" /><br />
                             </td>
                         </tr>

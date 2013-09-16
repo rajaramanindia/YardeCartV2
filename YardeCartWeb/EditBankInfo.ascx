@@ -45,8 +45,7 @@
                                 <td>
                                 </td>
                                 <td>
-                    <input id="btnUpdate" type="button" value="Update" />
-                    <input id="btnReset" type="button" value="Reset" />
+                    <input id="btnUpdate" type="button" value="Update" class="YardButton" style="width:150px;"/>
 
                                 </td>
                             </tr>
@@ -112,10 +111,18 @@
 
     $(document).ready(
     function () {
+
+        $("#SearchButton").click(function () {
+            window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+        });
         SelectUserProfile();
         $("#btnUpdate").click(function () {
             AddBankinfo();
             alert("Updated Successfully");
+            if(UserType=="1")
+                window.location="MyHome.aspx?page=bank";
+            else if(UserType=="2")
+                window.location = "MyAdminHome.aspx?page=bank";
         });
     }
     );

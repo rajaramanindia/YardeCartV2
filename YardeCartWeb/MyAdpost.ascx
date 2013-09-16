@@ -37,6 +37,11 @@
 
     $(document).ready(
     function () {
+
+        $("#SearchButton").click(function () {
+            window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+        });
+
         if (delact == "del") {
             DeleteAdpost(adid);
             alert("Adpost deleted successfully");
@@ -118,16 +123,18 @@
                     //For Price value
                     var p = obj[0].Price;
                     var sPrice = "$ " + p.toFixed(2);
+                    var sViewlink;
                     var sEditlink;
                     var sDeletelink;
 
+                    sViewlink = "ViewPostAd.aspx?uid=" + obj[i].UserId + "&aid=" + obj[i].AdPostId;
                     sEditlink = "EditAdpost.aspx?aid=" + obj[i].AdPostId + "&uid=" + UserId;
-                    sDeletelink = abspath + "?page=adpost&act=del&aid=" + obj[i].AdPostId + "&uid=" + UserId;
+                    sDeletelink = abspath + "?page=adpost&actad=del&aid=" + obj[i].AdPostId + "&uid=" + UserId;
 
                     $("<div id='AdShow' style='height:200px;width:700px;border-radius:10px 10px 10px 10px;border:thin solid #800080;'>" +
                         "<div style='height:30px;width:700px;border-radius:10px 10px 0px 0px;background-color:lightgray;vertical-align:middle;'>" +
                         "<strong>&nbsp;&nbsp;" + obj[i].AdPostTitle + "</strong>&nbsp;&nbsp;&nbsp;&nbsp;" +
-                        "<a href='" + sEditlink + "'>Edit</a>&nbsp;&nbsp;&nbsp;<a href='" + sDeletelink + "'>Delete</a></div>" +
+                        "<a href='" + sEditlink + "'>View</a>&nbsp;&nbsp;&nbsp;<a href='" + sEditlink + "'>Edit</a>&nbsp;&nbsp;&nbsp;<a href='" + sDeletelink + "'>Delete</a></div>" +
                         "<div style='height:150px;width:300px;margin-left:10px;margin-top:10px;float:left;'>" +
                         "<img src=" + strImgPath[0] + " style='height:150px;width:250px;'></div>" +
                         "<div  style='height:35px;margin-top:10px;'>Category - " + obj[i].CategoryName + "</div>" +

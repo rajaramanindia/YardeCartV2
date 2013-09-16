@@ -13,6 +13,9 @@
             <h3 >Profile Information</h3><br />
         </div>
         <div>
+            
+            <div id="divErrorMsg" style="color:red;font-weight:bold;"></div>
+
             <table style="width:700px;border-bottom-left-radius:4px;border-width:thin; border-style:groove">
                 <tr>
                     <td style="vertical-align:central;">
@@ -116,8 +119,7 @@
                                 <td>
                                 </td>
                                 <td>
-                    <input id="btnUpdate" type="button" value="Update" />
-                    <input id="btnReset" type="button" value="Reset" />
+                    <input id="btnUpdate" type="button" value="Update" class="YardButton" style="width:150px;"/>
 
                                 </td>
                             </tr>
@@ -135,6 +137,9 @@
 
     var sUsername;
     var sUserpassword;
+    var sUserEmail;
+    var boolValid = false;
+    var intMailAvailable = 0;
 
     //Generic function to call AXMX/WCF  Service
     function ServiceSucceeded(result) {
@@ -180,6 +185,7 @@
                 var obj = jQuery.parseJSON(result);
                 sUsername=obj[0].UserName;
                 sUserpassword=obj[0].UserPassword;
+                sUserEmail = obj[0].Email;
                 $("#txtFirstName").val(obj[0].FirstName);
                 $("#txtLastName").val(obj[0].LastName);
                 //$("input:radio[name=rdoGender]").val(obj[0].Gender);
@@ -282,11 +288,35 @@
 
     $(document).ready(
     function () {
+        $("#SearchButton").click(function () {
+            window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+        });
+
         loadCountry();
         SelectUserProfile();
         $("#btnUpdate").click(function () {
+            $("#divErrorMsg").empty();
+            boolValid = true;
+            if ($("#txtFirstName").val() == "") {
+                $("<strong>- First name should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#txtEmail").val() == "") {
+                $("<strong>- Email Address should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if (intMailAvailable == 1) {
+                $("<strong>- Email address already exists.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#txtMobilePhone").val() == "") {
+                $("<strong>- Mobile Number should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if (boolValid) {
             AddRegister();
-            alert("Updated Successfully");
+                alert("User details updated successfully");
+            }
         });
     }
     );

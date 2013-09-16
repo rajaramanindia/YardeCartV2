@@ -95,6 +95,8 @@
                     </td>
                     <td>
                         <input type="text" id="txtEmail" style="width: 200px;" class="easyui-validatebox" data-options="required:true,validType:'email'" />
+                        <img id="mYesImg" alt="" src="Content/images/yes_avai.jpg" style="visibility: collapse" height="20px" width="15px" />
+                        <img id="mNoImg" alt="" src="Content/images/del_no.png" style="visibility: collapse" height="20px" width="15px" />
                     </td>
                 </tr>
                 <tr style="height: 30px; border-bottom-width: 3px; border-bottom-color: black;">
@@ -208,6 +210,8 @@
 
         var intUserid;
         var boolValid=false;
+        var intUserAvailable = 0;
+        var intMailAvailable = 0;
 
         function ServiceSucceeded(result) {
             if (DataType == "json") {
@@ -245,10 +249,12 @@
                     resultObject = result;
                     var obj = jQuery.parseJSON(result);
                     if (obj.length == 0) {
+                        intUserAvailable = 0;
                         $("#noImg").attr("style", "visibility:collapse;");
                         $("#yesImg").attr("style", "visibility:visible;");
                         $("#txtUsername").attr("style", "width:200px;border-color:green");
                     } else {
+                        intUserAvailable = 1;
                         $("#noImg").attr("style", "visibility:visible;");
                         $("#yesImg").attr("style", "visibility:collapse;");
                         $("#txtUsername").attr("style", "width:200px;border-color:red");
@@ -259,12 +265,15 @@
                     resultObject = result;
                     var obj = jQuery.parseJSON(result);
                     if (obj.length == 0) {
-                        //$("#noImg").attr("style", "visibility:collapse;");
-                        //$("#yesImg").attr("style", "visibility:visible;");
+                        intMailAvailable = 0;
+                        $("#mNoImg").attr("style", "visibility:collapse;");
+                        $("#mYesImg").attr("style", "visibility:visible;");
                         $("#txtEmail").attr("style", "width:200px;border-color:green");
                     } else {
-                        //$("#noImg").attr("style", "visibility:visible;");
-                        //$("#yesImg").attr("style", "visibility:collapse;");
+                        intMailAvailable = 1;
+
+                        $("#mNoImg").attr("style", "visibility:visible;");
+                        $("#mYesImg").attr("style", "visibility:collapse;");
                         $("#txtEmail").attr("style", "width:200px;border-color:red");
                     }
                 }
@@ -354,14 +363,9 @@
             CallService();
         }
         function CheckAvailableMail() {
-            var msg2 = {
-                "Email": $("#txtEmail").val()
-            };
-            var objectAsJson = JSON.stringify(msg2);
-            Type = "POST";
-            Url = sServicePath + "/AvailableMail";
+            Type = "GET";
+            Url = sServicePath + "/AvailableMail/" + $("#txtEmail").val();
             ContentType = "application/json;charset=utf-8";
-            Data = objectAsJson;
             DataType = "json"; ProcessData = false;
             method = "AvailableMail";
             CallService();
@@ -418,6 +422,11 @@
                 AddRegister();
                     alert("Successfuully registered");
 
+                    $("#noImg").attr("style", "visibility:collapse;");
+                    $("#yesImg").attr("style", "visibility:collapse;");
+                    $("#mNoImg").attr("style", "visibility:collapse;");
+                    $("#mYesImg").attr("style", "visibility:collapse;");
+
                 $("#tblRegister").attr("style", "visibility:collapse;");
                 $("#tblSuccess").attr("style", "visibility:visible;");
                 }
@@ -440,6 +449,10 @@
                 $("<strong>- Username should not be empty.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
             }
+            if (intUserAvailable == 1) {
+                $("<strong>- Username already exists.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
             if ($("#txtUserPassword").val() == "") {
                 $("<strong>- Password should not be empty.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
@@ -448,8 +461,16 @@
                 $("<strong>- First name should not be empty.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
             }
+            if ($("input[name=rdoGender]:checked").val() == null) {
+                $("<strong>- Gender should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
             if ($("#txtEmail").val() == "") {
                 $("<strong>- Email Address should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if (intMailAvailable == 1) {
+                $("<strong>- Email address already exists.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
             }
             if ($("#txtMobilePhone").val() == "") {

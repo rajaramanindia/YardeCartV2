@@ -29,6 +29,9 @@ namespace YardeCartV2
                 }
                 else
                 {// Upload file
+
+                    if (context.Request.Files[0].ContentLength < 1048576)
+                    {
                     var ext = System.IO.Path.GetExtension(context.Request.Files[0].FileName);
                     var fileName = Path.GetFileName(context.Request.Files[0].FileName);
 
@@ -49,7 +52,11 @@ namespace YardeCartV2
                     string location = HttpContext.Current.Server.MapPath("../Data/TS_" + strUserid + "/Images/") + fileName + ext;
                     context.Request.Files[0].SaveAs(location);
                     context.Response.Write(fileName + ext);
-
+                    }
+                    else
+                    {
+                        context.Response.Write("Image size cannot exceeded 1 MB");
+                    }
                     //string sUserid = context.Session["UserId"].ToString();
                     //HttpPostedFile postedFile = context.Request.Files["file"];
                     //var sFilename = Path.GetFileName(postedFile.FileName);

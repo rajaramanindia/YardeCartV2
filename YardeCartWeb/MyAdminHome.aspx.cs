@@ -27,6 +27,11 @@ namespace YardeCartV2
                         ViewProfile objViewProfile = (ViewProfile)Page.LoadControl("ViewProfile.ascx");
                         Placeholder1.Controls.Add(objViewProfile);
                         break;
+                    case "bank":
+                        Placeholder1.Controls.Clear();
+                        BankInfo objBankInfo = (BankInfo)Page.LoadControl("BankInfo.ascx");
+                        Placeholder1.Controls.Add(objBankInfo);
+                        break;
                     case "cart":
                         Placeholder1.Controls.Clear();
                         MyCart objMyCart = (MyCart)Page.LoadControl("MyCart.ascx");
@@ -148,11 +153,12 @@ namespace YardeCartV2
         
         protected void myadpostid_Click(object sender, EventArgs e)
         {
-            PlaceHolder ht = (PlaceHolder)Page.FindControl("PlaceHolder1");
+            //PlaceHolder ht = (PlaceHolder)Page.FindControl("PlaceHolder1");
 
-            Placeholder1.Controls.Clear();
-            MyAdpost homeHead = (MyAdpost)Page.LoadControl("MyAdpost.ascx");
-            Placeholder1.Controls.Add(homeHead);
+            //Placeholder1.Controls.Clear();
+            //MyAdpost homeHead = (MyAdpost)Page.LoadControl("MyAdpost.ascx");
+            //Placeholder1.Controls.Add(homeHead);
+            Response.Redirect("MyAdminHome.aspx?page=adpost");
 
         }
 
@@ -245,12 +251,13 @@ namespace YardeCartV2
 
         protected void mycartid_Click(object sender, EventArgs e)
         {
+            Response.Redirect("MyAdminHome.aspx?page=cart");
 
-            PlaceHolder ht = (PlaceHolder)Page.FindControl("PlaceHolder1");
+            //PlaceHolder ht = (PlaceHolder)Page.FindControl("PlaceHolder1");
 
-            Placeholder1.Controls.Clear();
-            MyCart homeHead = (MyCart)Page.LoadControl("MyCart.ascx");
-            Placeholder1.Controls.Add(homeHead);
+            //Placeholder1.Controls.Clear();
+            //MyCart homeHead = (MyCart)Page.LoadControl("MyCart.ascx");
+            //Placeholder1.Controls.Add(homeHead);
 
         }
 

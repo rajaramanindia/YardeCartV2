@@ -27,6 +27,11 @@
         var queryObj = {};
         $(document).ready(
         function () {
+
+            $("#SearchButton").click(function () {
+                window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+            });
+
            // debugger;
             //this goes on the global scope
             // get querystring as an array split on "&"
