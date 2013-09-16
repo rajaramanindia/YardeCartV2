@@ -1,5 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlockAdpost.ascx.cs" Inherits="YardeCartV2.BlockAdpost" %>
-<div style="text-align:center;padding-top:50px;padding-left:10px;">
+<div style="text-align:center;padding-top:20px;padding-left:10px;">
+     <div><strong>Adpost Block details</strong></div>
+<br />
+<br />
         <input id="soption1" name="soption" type="radio" value="1" />Users
         <input id="soption2" name="soption" type="radio" value="2"/>Ads
     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -9,18 +12,23 @@
     </div>
 <br />
     <div style="text-align:center; width:800px;" >
+       <br />
+    <div id="divCheck" style="text-align:left;" >
+        <input id="btnChkAll" type="button" value="Check All" onclick="CheckAll();" class="YardButton" style="width: 100px;" />
+        <input id="btnUnchkAll" type="button" value="Uncheck All " onclick="UnCheckAll();" class="YardButton" style="width: 120px;"/>
+    </div>
+<br />
         <table id="jQAdpost" style="width:500px;">
         </table>
         <div id="jQAdpostPager">
         </div>
 <br />
         <input id="btnBlock" type="button" value="Block" onclick="DoAction();" class="YardButton" style="visibility:collapse;"/>
-        <%--<input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>--%>
-        <%--<input id="btnBlock1" type="button" value="Uncheck All" onclick="CheckAll();"/>--%>
 
     </div>
     <script type="text/javascript">
         $(document).ready(function () {
+            $("#divCheck").hide();
 
             $("#SearchButton").click(function () {
                 window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
@@ -29,6 +37,7 @@
             $('#btnSearch').click(function () {
                 //debugger;
                 $('#btnBlock').attr("style", "visibility:visible;");
+                $("#divCheck").show();
 
                 $('#jQAdpost').jqGrid('GridUnload');  //this does the work of clearing out the table content and loading fresh data
 
@@ -119,11 +128,20 @@
 
         }
         function CheckAll() {
-            //debugger;
-
-            $('#jQAdpost.cbox').trigger('click').attr('checked', true);
-            alert("Users are deleted successfully.");
-
+            var lista = jQuery("#jQAdpost").getDataIDs();
+            for (i = 0; i < lista.length; i++) {
+                var rowData = $("#jQAdpost").jqGrid('getRowData', lista[i]);
+                rowData.AdBlocked = '1';
+                $("#jQAdpost").jqGrid('setRowData', lista[i], rowData);
+            }
+        }
+        function UnCheckAll() {
+            var lista = jQuery("#jQAdpost").getDataIDs();
+            for (i = 0; i < lista.length; i++) {
+                var rowData = $("#jQAdpost").jqGrid('getRowData', lista[i]);
+                rowData.AdBlocked = '0';
+                $("#jQAdpost").jqGrid('setRowData', lista[i], rowData);
+            }
         }
         function DoBlockAdpost(adpostid, Blockstatus) {
             //debugger;

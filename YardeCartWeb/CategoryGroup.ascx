@@ -60,8 +60,8 @@
                              var parentHeight = parentDiv.height();
                              // TODO: change parentWidth and parentHeight in case of the grid
                              //       is larger as the browser window
-                             dlgDiv[0].style.top = Math.round((parentHeight - dlgHeight) / 2) + "px";
-                             dlgDiv[0].style.left = Math.round((parentWidth - dlgWidth) / 2) + "px";
+                             dlgDiv[0].style.top = Math.round((parentHeight - dlgHeight) / 2 + 230) + "px";
+                             dlgDiv[0].style.left = Math.round((parentWidth - dlgWidth) / 2 + 270) + "px";
                          },
                          closeOnEscape: true,//Closes the popup on pressing escape key
                          reloadAfterSubmit: true,
@@ -87,6 +87,19 @@
                          }
                      },
                      {
+                         beforeShowForm: function (form) {
+                             // "editmodlist"
+                             var dlgDiv = $("#editmod" + $('#JQCategoryGroup')[0].id);
+                             var parentDiv = dlgDiv.parent(); // div#gbox_list
+                             var dlgWidth = dlgDiv.width();
+                             var parentWidth = parentDiv.width();
+                             var dlgHeight = dlgDiv.height();
+                             var parentHeight = parentDiv.height();
+                             // TODO: change parentWidth and parentHeight in case of the grid
+                             //       is larger as the browser window
+                             dlgDiv[0].style.top = Math.round((parentHeight - dlgHeight) / 2 + 230) + "px";
+                             dlgDiv[0].style.left = Math.round((parentWidth - dlgWidth) / 2 + 270) + "px";
+                         },
                          closeAfterAdd: true,//Closes the add window after add
                          afterSubmit: function (response, postdata) {
                              //debugger;
@@ -102,6 +115,19 @@
                          }
                      },
                      {   //DELETE
+                         beforeShowForm: function (form) {
+                             // "editmodlist"
+                             var dlgDiv = $("#delmod" + $('#JQCategoryGroup')[0].id);
+                             var parentDiv = dlgDiv.parent(); // div#gbox_list
+                             var dlgWidth = dlgDiv.width();
+                             var parentWidth = parentDiv.width();
+                             var dlgHeight = dlgDiv.height();
+                             var parentHeight = parentDiv.height();
+                             // TODO: change parentWidth and parentHeight in case of the grid
+                             //       is larger as the browser window
+                             dlgDiv[0].style.top = Math.round((parentHeight - dlgHeight) / 2 + 230) + "px";
+                             dlgDiv[0].style.left = Math.round((parentWidth - dlgWidth) / 2 + 270) + "px";
+                         },
                          closeOnEscape: true,
                          closeAfterDelete: true,
                          reloadAfterSubmit: true,

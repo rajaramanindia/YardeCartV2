@@ -1,6 +1,11 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlockUsers.ascx.cs" Inherits="YardeCartV2.BlockUsers" %>
-<div style="text-align:center; width:800px;padding-top:50px;padding-left:10px;" >
+<div style="text-align:center; width:800px;padding-top:20px;padding-left:10px;" >
      <div><strong>List of User details</strong></div>
+<br />
+    <div style="text-align:left;" >
+        <input id="btnChkAll" type="button" value="Check All" onclick="CheckAll();" class="YardButton" style="width: 100px;" />
+        <input id="btnUnchkAll" type="button" value="Uncheck All " onclick="UnCheckAll();" class="YardButton" style="width: 120px;"/>
+    </div>
 <br />
         <table id="jQUser" style="width:500px;">
         </table>
@@ -8,8 +13,7 @@
         </div>
 <br />
         <input id="btnBlock" type="button" value="Block" onclick="GetUsers();" class="YardButton" style="width: 120px;" />
-        <%--<input id="btnBlock0" type="button" value="Check All" onclick="CheckAll();"/>--%>
-        <%--<input id="btnBlock1" type="button" value="Block" onclick="GetUsers();"/>--%></div>
+    </div>
     <script type="text/javascript">
 
         jQuery("#jQUser").jqGrid({
@@ -86,18 +90,26 @@
             //debugger;
             var lista = jQuery("#jQUser").getDataIDs();
             for (i = 0; i < lista.length; i++) {
-                rowData = jQuery("#jQUser").getRowData(lista[i]);
+                var rowData = jQuery("#jQUser").getRowData(lista[i]);
                 DoBlockUsers(rowData.UserID, rowData.UserBlocked);
             }
             alert("Users are blocked successfully.");
-
         }
         function CheckAll() {
-            //debugger;
-
-            $('#jQUser.cbox').trigger('click').attr('checked', true);
-            alert("Users are blocked successfully.");
-
+            var lista = jQuery("#jQUser").getDataIDs();
+            for (i = 0; i < lista.length; i++) {
+                var rowData = $("#jQUser").jqGrid('getRowData', lista[i]);
+                rowData.UserBlocked = '1';
+                $("#jQUser").jqGrid('setRowData', lista[i], rowData);
+            }
+        }
+        function UnCheckAll() {
+            var lista = jQuery("#jQUser").getDataIDs();
+            for (i = 0; i < lista.length; i++) {
+                var rowData = $("#jQUser").jqGrid('getRowData', lista[i]);
+                rowData.UserBlocked = '0';
+                $("#jQUser").jqGrid('setRowData', lista[i], rowData);
+            }
         }
         function DoBlockUsers(userid, blockstatus) {
             var msg = { "UserId": userid, "UserBlocked": blockstatus };

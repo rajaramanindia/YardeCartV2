@@ -22,6 +22,9 @@
                 else if (UserType == "2") {
                     window.location = "MyAdminHome.aspx?page=purchase";
                 }
+                else {
+                    window.location = "index.aspx";
+                }
             });
 
             GetAdDetails(adid, adusrid);
@@ -142,7 +145,7 @@
     <div style="padding-top:100px;padding-left:150px;">
         <p><strong><h2>Posted Ad Information</h2></strong> </p><br />
         <div>
-            <input type="button" class="YardButton" id="btnBack" value="Back" style="width:80px;"/>
+            <%--<input type="button" class="YardButton" id="btnBack" value="Back" style="width:80px;"/>--%>
         </div>
         <table style="border:2px solid gray; width: 750px;">
             <tr>

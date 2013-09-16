@@ -11,7 +11,7 @@
         var adusrid = "<%=AdUserId%>";
         $(document).ready(function () {
             //debugger;
-            
+
             $("#SearchButton").click(function () {
                 window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
             });
@@ -25,7 +25,7 @@
                 directionNav: true,
                 itemWidth: "100%",
                 itemHeight: 400,
-                width: 500
+                width: "500px"
             });
         }
         function ServiceFailed(result) {
@@ -68,7 +68,10 @@
                     var dat = MonthName(value.getMonth()) + " " + value.getDate() + ", " + value.getFullYear();
 
                     $("#divAdTitle").text(obj[0].AdPostTitle);
-                    $("#divDate").text("Posted on - "+dat);
+                    $("#divDate").text("Posted on - " + dat);
+                    $("<span>Posted By:&nbsp;&nbsp;&nbsp;" + obj[0].FirstName + " " + obj[0].LastName + "</span><br/>"+
+                        " Email - " + obj[0].Email + " Mobile - " + obj[0].Mobile + "<br/><hr>").appendTo("#divPostedBy");
+
                     $("<span>Description:<br/><hr>" + obj[0].Description + "</span>").appendTo("#divDesc");
                     $("<span>Category:&nbsp;&nbsp;&nbsp;" + obj[0].CategoryName + "</span><br/><hr>").appendTo("#divCategory");
                     //debugger;
@@ -119,17 +122,17 @@
                 window.location = "login.aspx";
             }
             else {
-            //debugger;
-            var msg = { "CartId": 0, "AdPostId": adid, "UserId": UserId };
-            var objectAsJson = JSON.stringify(msg);
+                //debugger;
+                var msg = { "CartId": 0, "AdPostId": adid, "UserId": UserId };
+                var objectAsJson = JSON.stringify(msg);
 
-            Type = "POST";
-            Data = objectAsJson;
-            Url = sServicePath + "/CreateUserCart";
-            ContentType = "application/json;charset=utf-8";
-            DataType = "json"; ProcessData = false;
-            method = "CreateUserCart";
-            CallService();
+                Type = "POST";
+                Data = objectAsJson;
+                Url = sServicePath + "/CreateUserCart";
+                ContentType = "application/json;charset=utf-8";
+                DataType = "json"; ProcessData = false;
+                method = "CreateUserCart";
+                CallService();
             }
         }
 
@@ -137,7 +140,7 @@
 
     <div style="padding-top:100px;padding-left:150px;">
         <p><strong><h2>Posted Ad Information</h2></strong> </p><br />
-        <table style="border:2px solid gray; width: 750px;">
+        <table style="border:2px solid gray; width: 800px;">
             <tr>
                 <td colspan="3">
                 </td>
@@ -152,7 +155,7 @@
             </tr>
             <tr>
                 <td style="text-align:center;" colspan="3">
-                    <table style="width:600px;"><tr><td>
+                    <table style="width:600px;"><tr><td  style="padding-left:50px;">
                          <div id="divImageSlider" class="flexslider">
                         </div>
                                </td></tr></table>
@@ -161,6 +164,11 @@
             </tr>
             <tr style="background-color:#669999;text-align:left; height:30px;vertical-align:middle;font-weight:700;">
                 <td colspan="3">Ad Details</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div id="divPostedBy"></div>
+                    &nbsp;</td>
             </tr>
             <tr>
                 <td colspan="3">
