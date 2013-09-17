@@ -646,14 +646,36 @@ namespace YardeCartServiceApp
             }
         }
 
-        public string GetAdDetails(AdPostDetails adpostDetails)
+        public string GetAdDetails(string sAdPostID, string sAdUserID)
         {
             try
             {
-                objDALComponent.SetParameters("@adpostId", SqlDbType.Int, 4, adpostDetails.AdPostId);
-                objDALComponent.SetParameters("@userId", SqlDbType.Int, 4, adpostDetails.UserId);
-                objDALComponent.SqlCommandText = "[GetAdDetails]";
-                string s= GetJson(objDALComponent.SelectRecord());
+                DALComponent objDAL = new DALComponent();
+                objDAL.SetParameters("@adpostId", SqlDbType.Int, 4, Convert.ToInt32(sAdPostID));
+                objDAL.SetParameters("@userId", SqlDbType.Int, 4, Convert.ToInt32(sAdUserID));
+                objDAL.SqlCommandText = "[GetAdDetails]";
+                string s = GetJson(objDAL.SelectRecord());
+                return s;
+            }
+            catch (SqlException sqlEx)
+            {
+                return sqlEx.Message.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
+
+        public string GetAdPurcDetails(string sAdPostID, string sAdUserID)
+        {
+            try
+            {
+                DALComponent objDAL = new DALComponent();
+                objDAL.SetParameters("@adpostId", SqlDbType.Int, 4, Convert.ToInt32(sAdPostID));
+                objDAL.SetParameters("@userId", SqlDbType.Int, 4, Convert.ToInt32(sAdUserID));
+                objDAL.SqlCommandText = "[GetAdPurcDetails]";
+                string s = GetJson(objDAL.SelectRecord());
                 return s;
             }
             catch (SqlException sqlEx)
@@ -797,14 +819,14 @@ namespace YardeCartServiceApp
 
         }
 
-        public DataTable SelectReportsByDate(ReportDetails reportDetails)
+        public string SelectReportsByDate(string strFromDate, string strToDate)
         {
             try
             {
-                objDALComponent.SetParameters("@fromdate", SqlDbType.SmallDateTime, 4, reportDetails.FromDate);
-                objDALComponent.SetParameters("@todate", SqlDbType.SmallDateTime, 4, reportDetails.ToDate);
+                objDALComponent.SetParameters("@fromdate", SqlDbType.SmallDateTime, 4, Convert.ToDateTime(strFromDate));
+                objDALComponent.SetParameters("@todate", SqlDbType.SmallDateTime, 4, Convert.ToDateTime(strToDate));
                 objDALComponent.SqlCommandText = "[SelectReportsByDate]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
@@ -817,13 +839,13 @@ namespace YardeCartServiceApp
 
         }
 
-        public DataTable SelectReportsByCity(string strRegionName)
+        public string SelectReportsByCity(string strRegionName)
         {
             try
             {
                 objDALComponent.SetParameters("@cityname", SqlDbType.VarChar, 50, strRegionName);
                 objDALComponent.SqlCommandText = "[SelectReportsByCity]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {
@@ -948,13 +970,13 @@ namespace YardeCartServiceApp
             }
         }
 
-        public DataTable SelectCityByName(string strCityname)
+        public string SelectCityByName(string strCityname)
         {
             try
             {
                 objDALComponent.SetParameters("@cityname", SqlDbType.VarChar, 50, strCityname);
                 objDALComponent.SqlCommandText = "[SelectCityByName]";
-                return objDALComponent.SelectRecord();
+                return GetJson(objDALComponent.SelectRecord());
             }
             catch (SqlException sqlEx)
             {

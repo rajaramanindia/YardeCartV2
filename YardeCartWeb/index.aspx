@@ -44,6 +44,20 @@
                 total: AdTotal,
                 pageSize: AdPageSize,
                 showPageList: false,
+                pageNumber: 1,
+                onRefresh: function (pageNumber, pageSize) {
+                    $(this).pagination('loading');
+                    //alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
+                    AdPage = pageNumber;
+                    AdPageSize = pageSize;
+                    if ($("#SearchBox").val() == "" || $("#SearchBox").val() == "Search String")
+                        GetAllAdDetails();
+                    else if (SearchbyCat != "")
+                        AdbyCategory(SearchbyCat)
+                    else
+                        SearchAdsByKeyword();
+                    $(this).pagination('loaded');
+                },
                 onSelectPage: function (pageNumber, pageSize) {
                     $(this).pagination('loading');
                     //alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
@@ -62,6 +76,7 @@
 
         }
         function AdbyCategory(catId) {
+            AdPage = 1;
             Type = "GET";
             Url = sServicePath + "/SearchAdsByCategory/" + catId;
             ContentType = "application/json;charset=utf-8";
@@ -70,6 +85,8 @@
             CallService();
             SearchbyCat = catId;
             PagingAd();
+            $('#AdPager').pagination('refresh');
+
         }
         function SearchAdsByKeyword() {
             Type = "GET";

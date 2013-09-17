@@ -94,15 +94,6 @@ namespace YardeCartV2 {
         protected global::System.Web.UI.WebControls.LinkButton mycartid;
         
         /// <summary>
-        /// mypendingid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton mypendingid;
-        
-        /// <summary>
         /// categoryid control.
         /// </summary>
         /// <remarks>
@@ -164,6 +155,15 @@ namespace YardeCartV2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton deleteadsid;
+        
+        /// <summary>
+        /// reportadsid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton reportadsid;
         
         /// <summary>
         /// myadpostid1 control.

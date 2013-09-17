@@ -33,12 +33,8 @@
             Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
         }
         function GetAdDetails(adId, userId) {
-            var msg = { "AdPostId": adId, "UserId": userId };
-            var objectAsJson = JSON.stringify(msg);
-
-            Type = "POST";
-            Data = objectAsJson;
-            Url = sServicePath + "/GetAdDetails";
+            Type = "GET";
+            Url = sServicePath + "/GetAdDetails/" + adId + "/" + userId;
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "GetAdDetails";
@@ -60,17 +56,20 @@
                     $("<ul class='slides'>" + s + "</ul>").appendTo("#divImageSlider");
 
                     //For Date Format 
-                    var MyDate_String_Value = obj[0].AdTillDate;//"/Date(1224043200000)/"
+                    var MyDate_String_Value = obj[0].PostedDate;//"/Date(1224043200000)/"
                     var value = new Date
                                 (
                                      parseInt(MyDate_String_Value.replace(/(^.*\()|([+-].*$)/g, ''))
                                 );
                     var dat = MonthName(value.getMonth()) + " " + value.getDate() + ", " + value.getFullYear();
-
+                    var sName = obj[0].FirstName + " " + obj[0].LastName;
+                    sName = sName.toLowerCase().replace(/\b[a-z]/g, function (letter) {
+                        return letter.toUpperCase();
+                    });
                     $("#divAdTitle").text(obj[0].AdPostTitle);
                     $("#divDate").text("Posted on - " + dat);
-                    $("<span>Posted By:&nbsp;&nbsp;&nbsp;" + obj[0].FirstName + " " + obj[0].LastName + "</span><br/>"+
-                        " Email - " + obj[0].Email + " Mobile - " + obj[0].Mobile + "<br/><hr>").appendTo("#divPostedBy");
+                    $("<span>Posted By:</span><br/><span>Name - " + sName + "</span><br/>" +
+                        "</span>Email - " + obj[0].Email + "</span><br/><span>Mobile - " + obj[0].Mobile + "</span><br/><hr>").appendTo("#divPostedBy");
 
                     $("<span>Description:<br/><hr>" + obj[0].Description + "</span>").appendTo("#divDesc");
                     $("<span>Category:&nbsp;&nbsp;&nbsp;" + obj[0].CategoryName + "</span><br/><hr>").appendTo("#divCategory");

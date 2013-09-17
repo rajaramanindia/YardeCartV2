@@ -10,6 +10,8 @@
 	<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript">
 
+        var boolValid = true;
+
         $(document).ready(
         function () {
             $("#HighlightItemHeading").attr("style", "height: 500px; width: 100%;padding-top:100px;padding-left:300px;");
@@ -31,6 +33,12 @@
             CallService();
         }
         function SelectUserByEmail() {
+            boolValid = true;
+            if($("#txtEmail").val() == "" || validateEmailAddr($("#txtEmail").val()) == false){
+                boolValid = false;
+                alert("Invalid Email address");
+            }
+            if (boolValid) {
             method = "SelectUserByEmail";
             Type = "GET";
             Url = sServicePath + "/SelectUserByEmail/" + $("#txtEmail").val();
@@ -38,12 +46,21 @@
             DataType = "json"; ProcessData = false;
             CallService();
         }
+        }
+        function validateEmailAddr(sEmail) {
+            var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            if (filter.test(sEmail)) 
+                return true;
+            else 
+                return false;
+        }
+
         function ServiceSucceeded(result) {
             if (DataType == "json") {
                 if (method == "SelectUserByEmail") {
                     resultObject = result;
                     var obj = jQuery.parseJSON(result);
-
+                    if (obj.length > 0) {
                     var msg2 = {
                         "UserId": obj[0].UserID, "UserName": obj[0].UserName, "UserPassword": obj[0].UserPassword, "FirstName": obj[0].FirstName
         , "LastName": obj[0].LastName, "Gender": obj[0].Gender, "Address": obj[0].Address, "StreetName": obj[0].StreetName
@@ -55,6 +72,11 @@
                     $("<strong>User Name and Password are sending to " + $("#txtEmail").val() + ". Check your mail..</strong><br/>").appendTo("#divErrMsg");
 
                     $("#txtEmail").val("");
+                }
+                    else {
+                        $("#divErrMsg").empty();
+                        $("<strong>User is not available on " + $("#txtEmail").val() + ".</strong><br/>").appendTo("#divErrMsg");
+                    }
                 }
             }
         }
@@ -87,11 +109,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="text-align:right;padding-right:10px;padding-top:15px;" class="auto-style3">
+                                <td style="text-align:right;padding-right:10px;padding-top:5px;" class="auto-style3">
                                     <strong><span class="auto-style2">E Mail Address</span></strong>
                                 </td>
                                 <td class="auto-style2">
-                                    <input id="txtEmail" class="YardTextbox" type="text" class="easyui-validatebox" data-options="required:true,validType:'email'" />
+                                    <input id="txtEmail" type="text" class="easyui-validatebox" data-options="required:true,validType:'email'" 
+                                        style="padding:5px 5px 5px 5px;border:1px solid #1c1c1c;border-radius: 3px;" />
                                 </td>
                             </tr>
                             <tr>

@@ -78,7 +78,7 @@
                     </td>
                 </tr>
                 <tr style="height: 30px; border-bottom-width: 3px; border-bottom-color: black;">
-                    <td style="width: 175px">Gender
+                    <td style="width: 175px">Gender<span style="color: red;">*</span>
                     </td>
                     <td>
                         <input type="radio" value="1" name="rdoGender" />Male
@@ -308,6 +308,14 @@
 
 
         }
+        function validateEmailAddr(sEmail) {
+            var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            if (filter.test(sEmail))
+                return true;
+            else
+                return false;
+        }
+
         function MailToUser() {
             var valop = $('input:radio[name=rdoGender]:checked').val();
             var msg2 = {
@@ -457,6 +465,14 @@
                 $("<strong>- Password should not be empty.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
             }
+            if ($("#txtUserPassword").val() != "" && $("#txtUserPassword").val().length < 6) {
+                $("<strong>- Password should be minimum 6 characters.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#txtUserPassword").val() != "" && $("#txtUserPassword").val() != $("#txtUserPasswordCon").val()) {
+                $("<strong>- Confirm Password should be match with User Password.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
             if ($("#txtFirstName").val() == "") {
                 $("<strong>- First name should not be empty.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
@@ -465,8 +481,8 @@
                 $("<strong>- Gender should not be empty.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
             }
-            if ($("#txtEmail").val() == "") {
-                $("<strong>- Email Address should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+            if ($("#txtEmail").val() == "" || validateEmailAddr($("#txtEmail").val()) == false) {
+                $("<strong>- Invalid Email Address.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
             }
             if (intMailAvailable == 1) {
@@ -475,6 +491,18 @@
             }
             if ($("#txtMobilePhone").val() == "") {
                 $("<strong>- Mobile Number  should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#ddlCountry").val() == "") {
+                $("<strong>- please Select Country.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#ddlState").val() == "") {
+                $("<strong>- please Select State.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#ddlCity").val() == "") {
+                $("<strong>- please Select City.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
             }
             if($("#chkAgree").prop("checked") == false){

@@ -125,8 +125,12 @@ namespace YardeCartCommon.Interface
         string SelectUserAds(string strUserid);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAdDetails")]
-        string GetAdDetails(AdPostDetails adpostDetails);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAdDetails/{sAdPostID}/{sAdUserID}")]
+        string GetAdDetails(string sAdPostID, string sAdUserID);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAdPurcDetails/{sAdPostID}/{sAdUserID}")]
+        string GetAdPurcDetails(string sAdPostID, string sAdUserID);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "GetAdDetailsDT")]
@@ -157,12 +161,12 @@ namespace YardeCartCommon.Interface
         string SearchAdsByCategory(string strCategoryId);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectReportsByDate")]
-        DataTable SelectReportsByDate(ReportDetails reportDetails);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectReportsByDate/{strFromDate}/{strToDate}")]
+        string SelectReportsByDate(string strFromDate, string strToDate);
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectReportsByCity")]
-        DataTable SelectReportsByCity(string strRegionName);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectReportsByCity/{strRegionName}")]
+        string SelectReportsByCity(string strRegionName);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "UpdateAdImagePath")]
@@ -193,8 +197,8 @@ namespace YardeCartCommon.Interface
         string SelectAllCountry();
 
         [OperationContract]
-        [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectCityByName")]
-        DataTable SelectCityByName(string strCityname);
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectCityByName/{strCityname}")]
+        string SelectCityByName(string strCityname);
 
         [OperationContract]
         [WebInvoke(Method = "POST", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SelectCityByID")]

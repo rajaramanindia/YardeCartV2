@@ -45,12 +45,8 @@
             Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
         }
         function GetAdDetails(adId, userId) {
-            var msg = { "AdPostId": adId, "UserId": userId };
-            var objectAsJson = JSON.stringify(msg);
-
-            Type = "POST";
-            Data = objectAsJson;
-            Url = sServicePath + "/GetAdDetails";
+            Type = "GET";
+            Url = sServicePath + "/GetAdPurcDetails/" + adId + "/" + userId;
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "GetAdDetails";
@@ -72,15 +68,22 @@
                     $("<ul class='slides'>" + s + "</ul>").appendTo("#divImageSlider");
 
                     //For Date Format 
-                    var MyDate_String_Value = obj[0].AdTillDate;//"/Date(1224043200000)/"
+                    var MyDate_String_Value = obj[0].PostedDate;//"/Date(1224043200000)/"
                     var value = new Date
                                 (
                                      parseInt(MyDate_String_Value.replace(/(^.*\()|([+-].*$)/g, ''))
                                 );
                     var dat = MonthName(value.getMonth()) + " " + value.getDate() + ", " + value.getFullYear();
+                    var pMyDate_String_Value = obj[0].SaleDate;//"/Date(1224043200000)/"
+                    var pvalue = new Date
+                                (
+                                     parseInt(pMyDate_String_Value.replace(/(^.*\()|([+-].*$)/g, ''))
+                                );
+                    var Purdat = MonthName(pvalue.getMonth()) + " " + pvalue.getDate() + ", " + pvalue.getFullYear();
 
                     $("#divAdTitle").text(obj[0].AdPostTitle);
                     $("#divDate").text("Posted on - " + dat);
+                    $("#divPurDate").text("Purchased on - " + Purdat);
                     $("<span>Description:<br/><hr>" + obj[0].Description + "</span>").appendTo("#divDesc");
                     $("<span>Category:&nbsp;&nbsp;&nbsp;" + obj[0].CategoryName + "</span><br/><hr>").appendTo("#divCategory");
                     //debugger;
@@ -157,7 +160,8 @@
                     <label id="divAdTitle" style="font-family:sans-serif;font-size:x-large;font-weight:bolder;width:400px;" ></label>
                     &nbsp;</td>
                 <td style="background-color:#669999;height:60px;vertical-align:middle;text-align:right;">
-                    <label id="divDate" style="font-family:sans-serif;font-size:larger;font-weight:bolder;" ></label>
+                    <label id="divDate" style="font-family:sans-serif;font-size:larger;font-weight:bolder;" ></label><br />
+                    <label id="divPurDate" style="font-family:sans-serif;font-size:larger;font-weight:bolder;" ></label>
                     &nbsp;</td>
             </tr>
             <tr>

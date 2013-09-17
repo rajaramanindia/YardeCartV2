@@ -17,11 +17,14 @@ namespace YardeCartV2
     public partial class MyCart : System.Web.UI.UserControl
     {
 
+        public string strLocationName = string.Empty;
         public string strAbsPath = string.Empty;
         public string sDel = string.Empty;
         public string sCartid = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Location"] != null)
+                strLocationName = Session["Location"].ToString();
             strAbsPath = Request.Url.AbsolutePath.ToString();
             if (Request.QueryString["act"] != null)
             {

@@ -23,7 +23,7 @@
                         <table>
                             <tr style="height:40px;">
                                 <td style="width:150px;">
-                                    <label>First Name</label>
+                                    <label>First Name</label><span style="color: red;">*</span>
                                 </td>
                                 <td style="width:250px;">
                                     <input type="text" id="txtFirstName" style="width:200px;" />
@@ -39,7 +39,7 @@
                             </tr>
                             <tr style="height:40px;">
                                 <td>
-                                    <label>Gender</label>
+                                    <label>Gender</label><span style="color: red;">*</span>
                                 </td>
                                 <td>
                                     <div >
@@ -51,7 +51,7 @@
                             </tr>
                             <tr style="height:40px;">
                                 <td>
-                                    <label>E mail</label>
+                                    <label>E mail</label><span style="color: red;">*</span>
                                 </td>
                                 <td>
                     <input type="text" id="txtEmail" style="width:200px;" class="easyui-validatebox" data-options="required:true,validType:'email'"/>
@@ -61,7 +61,7 @@
                             </tr>
                             <tr style="height:40px;">
                                 <td>
-                                    <label>Mobile</label>
+                                    <label>Mobile</label><span style="color: red;">*</span>
                                 </td>
                                 <td>
                     <input type="text" id="txtMobilePhone" style="width:200px;"  class="easyui-validatebox" data-options="required:true"/>
@@ -85,7 +85,7 @@
                             </tr>
                             <tr style="height:40px;">
                                 <td>
-                                    Country
+                                    Country<span style="color: red;">*</span>
                                 </td>
                                 <td>
                     <select id="ddlCountry" style="width:200px;" />
@@ -93,7 +93,7 @@
                             </tr>
                             <tr style="height:40px;">
                                 <td>
-                                    <label>State</label>
+                                    <label>State</label><span style="color: red;">*</span>
                                 </td>
                                 <td>
                     <select id="ddlState" style="width:200px;" />
@@ -101,7 +101,7 @@
                             </tr>
                             <tr style="height:40px;">
                                 <td>
-                                    City
+                                    City<span style="color: red;">*</span>
                                 </td>
                                 <td>
                     <select id="ddlCity" style="width:200px;" />
@@ -170,21 +170,12 @@
                     $("<option value=" + obj[i].CityId + ">" + obj[i].CityName + "</option>").appendTo("#ddlCity");
                 }
             }
-            else if (method == "AvailableUser") {
-                //debugger;
-                resultObject = result;
-                var obj = jQuery.parseJSON(result);
-                if (obj.length == 0)
-                    $("#txtUsername").attr("style", "border-color:green");
-                else
-                    $("#txtUsername").attr("style", "border-color:red");
-            }
             else if (method == "SelectUserProfile") {
 
                 resultObject = result;
                 var obj = jQuery.parseJSON(result);
                 sUsername=obj[0].UserName;
-                sUserpassword=obj[0].UserPassword;
+                sUserpassword = obj[0].UserPassword;
                 sUserEmail = obj[0].Email;
                 $("#txtFirstName").val(obj[0].FirstName);
                 $("#txtLastName").val(obj[0].LastName);
@@ -212,6 +203,17 @@
                     window.location = "MyHome.aspx?page=profile";
                 else if (UserType == "2")
                     window.location = "MyAdminHome.aspx?page=profile";
+            }
+            else if (method == "AvailableMail") {
+                resultObject = result;
+                var obj = jQuery.parseJSON(result);
+                if (obj.length == 0) {
+                    $("#txtEmail").attr("style", "width:200px;border-color:green");
+                    intMailAvailable = 0;
+                } else {
+                    $("#txtEmail").attr("style", "width:200px;border-color:red");
+                    intMailAvailable = 1;
+                }
             }
         }
     }
@@ -285,7 +287,22 @@
         method = "SelectUserProfile";
         CallService();
     }
+    function CheckAvailableMail() {
+        Type = "GET";
+        Url = sServicePath + "/AvailableMail/" + $("#txtEmail").val();
+        ContentType = "application/json;charset=utf-8";
+        DataType = "json"; ProcessData = false;
+        method = "AvailableMail";
+        CallService();
+    }
 
+    function validateEmailAddr(sEmail) {
+        var filter = /^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (filter.test(sEmail))
+            return true;
+        else
+            return false;
+    }
     $(document).ready(
     function () {
         $("#SearchButton").click(function () {
@@ -301,8 +318,12 @@
                 $("<strong>- First name should not be empty.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
             }
-            if ($("#txtEmail").val() == "") {
-                $("<strong>- Email Address should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+            if ($("input[name=rdoGender]:checked").val() == null) {
+                $("<strong>- Gender should not be empty.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#txtEmail").val() == "" || validateEmailAddr($("#txtEmail").val()) == false) {
+                $("<strong>- Invalid Email Address.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
             }
             if (intMailAvailable == 1) {
@@ -313,11 +334,32 @@
                 $("<strong>- Mobile Number should not be empty.</strong><br/>").appendTo("#divErrorMsg");
                 boolValid = false;
             }
+            if ($("#ddlCountry").val() == "") {
+                $("<strong>- please Select Country.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#ddlState").val() == "") {
+                $("<strong>- please Select State.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+            if ($("#ddlCity").val() == "") {
+                $("<strong>- please Select City.</strong><br/>").appendTo("#divErrorMsg");
+                boolValid = false;
+            }
+
             if (boolValid) {
-            AddRegister();
+                AddRegister();
                 alert("User details updated successfully");
             }
         });
+
+        $("#txtEmail").keyup(function () {
+            
+            if ($('#txtEmail').val() != sUserEmail) {
+                CheckAvailableMail();
+            }
+        });
+
     }
     );
 

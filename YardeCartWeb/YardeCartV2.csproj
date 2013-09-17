@@ -78,6 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AdsReport.ascx" />
     <Content Include="CartDetails.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\images\del_no.png" />
@@ -150,6 +151,7 @@
     <Content Include="Handlers\JQBlockUsers.ashx" />
     <Content Include="Handlers\JQCharge.ashx" />
     <Content Include="Handlers\JQBlockAdpost.ashx" />
+    <Content Include="Handlers\JQAdsReport.ashx" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="html\PostAd.html" />
     <Content Include="html\Register.html" />
@@ -181,6 +183,13 @@
     </Compile>
     <Compile Include="ActivateUser.aspx.designer.cs">
       <DependentUpon>ActivateUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdsReport.ascx.cs">
+      <DependentUpon>AdsReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdsReport.ascx.designer.cs">
+      <DependentUpon>AdsReport.ascx</DependentUpon>
     </Compile>
     <Compile Include="BankInfo.ascx.cs">
       <DependentUpon>BankInfo.ascx</DependentUpon>
@@ -292,6 +301,9 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\JQAdsReport.ashx.cs">
+      <DependentUpon>JQAdsReport.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handlers\JQBlockAdpost.ashx.cs">
       <DependentUpon>JQBlockAdpost.ashx</DependentUpon>

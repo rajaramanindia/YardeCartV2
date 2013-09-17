@@ -47,6 +47,11 @@ namespace YardeCartV2
                         MyAdpost objMyAdpost = (MyAdpost)Page.LoadControl("MyAdpost.ascx");
                         Placeholder1.Controls.Add(objMyAdpost);
                         break;
+                    case "report":
+                        Placeholder1.Controls.Clear();
+                        AdsReport objAdsReport = (AdsReport)Page.LoadControl("AdsReport.ascx");
+                        Placeholder1.Controls.Add(objAdsReport);
+                        break;
                 }
             }
             //// To find IP address of a machine behind LAN you can use this code
@@ -237,6 +242,18 @@ namespace YardeCartV2
             Placeholder1.Controls.Add(homeHead);
         
         }
+        protected void reportadsid_Click(object sender, EventArgs e)
+        {
+
+            PlaceHolder ht = (PlaceHolder)Page.FindControl("PlaceHolder1");
+
+            Placeholder1.Controls.Clear();
+            AdsReport homeHead = (AdsReport)Page.LoadControl("AdsReport.ascx");
+            Placeholder1.Controls.Add(homeHead);
+        
+        }
+
+        
                 
         protected void mypurchaseid_Click(object sender, EventArgs e)
         {

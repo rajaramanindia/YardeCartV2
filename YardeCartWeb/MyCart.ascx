@@ -100,6 +100,7 @@
     var AdBuyArray;
     var intLocationId = 0;
     var HistroyId = 0;
+    var sLocationName = "<%= strLocationName %>";
     var abspath = "<%= strAbsPath %>";
     var delact = "<%= sDel %>";
     var cid = "<%= sCartid %>";
@@ -138,7 +139,16 @@
 
         });
 
+        GetLocationID();
     });
+    function GetLocationID() {
+        Type = "GET";
+        Url = sServicePath + "/SelectCityByName/" + sLocationName;
+        ContentType = "application/json;charset=utf-8";
+        DataType = "json"; ProcessData = false;
+        method = "SelectCityByName";
+        CallService();
+    }
     
     function AddBuyDet() {
         boolValid = true;
@@ -264,6 +274,15 @@
                 resultObject = result; 
                 var obj = jQuery.parseJSON(result);
                 HistroyId = obj[0].HistroyId;
+            }
+            else if (method == "SelectCityByName") {
+                //debugger;
+                resultObject = result;
+                var obj = jQuery.parseJSON(result);
+                if (obj.length == 0)
+                    intLocationId = 0;
+                else
+                    intLocationId = obj[0].CityId;
             }
             else if (method == "SelectUserCart") {
                 //debugger;
