@@ -1,6 +1,17 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Yarde.Master" CodeBehind="MyHome.aspx.cs" Inherits="YardeCartV2.MyHome" Title="Yard e-Cart My Home" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <script type="text/javascript">
+
+        $(document).ready(
+        function () {
+            $("#SearchButton").click(function () {
+                window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+            });
+        }
+        );
+
+    </script>
     
     <div id="MainSection">
             <div id="MainCategory">

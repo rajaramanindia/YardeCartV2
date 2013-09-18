@@ -157,6 +157,10 @@ namespace YardeCartCommon.Interface
         string SearchAdsByKeyword(string strKeyword);
 
         [OperationContract]
+        [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByPlace/{strPlace}")]
+        string SearchAdsByPlace(string strPlace);
+
+        [OperationContract]
         [WebInvoke(Method = "GET", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, UriTemplate = "SearchAdsByCategory/{strCategoryId}")]
         string SearchAdsByCategory(string strCategoryId);
 

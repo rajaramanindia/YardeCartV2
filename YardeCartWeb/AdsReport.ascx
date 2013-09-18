@@ -4,38 +4,37 @@
     <%--<script type="text/javascript" src="easyUI/jquery.min.js"></script>--%>
     <script type="text/javascript" src="easyUI/jquery.easyui.min.js"></script>
     
-<div style="padding-top:20px;padding-left:10px;">
-     <div style="text-align:center;"><strong>Adpost Report details</strong></div>
+<div style="padding-top:20px;padding-left:10px;width:100%;">
+     <div style="text-align:center;width:100%;"><strong>Adpost Report details</strong></div>
 <br />
-<br 
-    <table style="width:700px;">
-        <tr>
-            <td style="width:200px;">
+<br />
+        <div style="width:750px;padding-left:50px;">
+                <div id="divOpt" style="width:20%;">
                 <input id="soption1" name="soption" type="radio" value="1" />Region
                 <input id="soption2" name="soption" type="radio" value="2" checked="checked"/>Date
-            </td>
-            <td style="width:350px;">
-                <div id="divDate" style="width: 400px">
+                </div>
+
+                <div id="divDate" style="width:50%;margin-left:20%;margin-top:-20px;">
                 From 
                 <input id="dtFrom" type="text" class="easyui-datebox"  />
                 To
                 <input id="dtTo" type="text" class="easyui-datebox" />
                 </div>
-                <div id="divReg"  style="width: 150px">
-                <input id="txtRegion" type="text" class="YardTextbox" />
+
+                <div id="divReg"  style="width:50%;margin-left:20%;margin-top:-30px;">
+                <input id="txtRegion" type="text" class="YardTextbox" style="width:250px;" />
                 </div>
-            </td>
-            <td style="width:150px;">
+                
+                <div id="divSearch" style="width:50%;margin-left:70%;margin-top:-35px;">
                 <input id="btnSearch" type="button" value="Search" class="YardButton" />
-            </td>
-        </tr>
-    </table>
-    </div>
+                </div>
+         </div>
+
 <br />
     <div style="text-align:center; width:800px;" >
        <br />
 <br />
-         <table id="jQAdpost" style="width:500px;">
+         <table id="jQAdpost" style="width:600px;">
         </table>
         <div id="jQAdpostPager">
         </div>
@@ -48,6 +47,8 @@
             if ($("input[name=soption]:checked").val() == "1") {
                 $("#divReg").show();
                 $("#divDate").hide();
+                $("#divSearch").attr("style", "width:50%;margin-left:70%;margin-top:-45px;");
+
 
             }
             else if ($("input[name=soption]:checked").val() == "2") {
@@ -59,7 +60,7 @@
             //$(('input:radio[name=soption]').val() == '2').click(function () {
             //    alert("hello");
             //});
-            onchange();
+            $("#divReg").hide();
 
             $('input[name="soption"]:radio').change(function () {
                 onchange();
@@ -103,7 +104,7 @@
                                 { name: 'CurrentStatus', index: 'CurrentStatus', width: 100, stype: 'text', sortable: true, editable: true },
                                 { name: 'BuyerName', index: 'BuyerName', width: 150, stype: 'text', sortable: true, editable: true },
                                 { name: 'BuyerAddress', index: 'BuyerAddress', width: 300, stype: 'text', sortable: true, editable: true },
-                                { name: 'DeliveryDate', index: 'DeliveryDate', width: 100, stype: 'text', sortable: true, editable: true }
+                                { name: 'DeliveryDate', index: 'DeliveryDate', width: 120, stype: 'text', sortable: true, editable: true }
 
                     ],
                     rowNum: 20,

@@ -800,6 +800,24 @@ namespace YardeCartServiceApp
             }
         }
 
+        public string SearchAdsByPlace(string strPlace)
+        {
+            try
+            {
+                objDALComponent.SetParameters("@place", SqlDbType.VarChar, 50, strPlace);
+                objDALComponent.SqlCommandText = "[SearchAdsByPlace]";
+                return GetJson(objDALComponent.SelectRecord());
+            }
+            catch (SqlException sqlEx)
+            {
+                return sqlEx.Message.ToString();
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
+
         public string SearchAdsByCategory(string strCategoryId)
         {
             try

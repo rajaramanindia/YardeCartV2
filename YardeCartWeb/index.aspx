@@ -28,16 +28,20 @@
             PagingAd();
 
             $("#SearchButton").click(function () {
-                if ($("#SearchBox").val() == "" || $("#SearchBox").val() == "Search String")
-                    GetAllAdDetails();
+                AdPage = 1;
+
+                if ($("#SearchBox").val() == "" || $("#SearchBox").val() == "Search String") {
+                    if ($("#SearchBoxPlace").val() != "" && $("#SearchBoxPlace").val() != "Place")
+                        SearchAdsByPlace();
                 else
+                        GetAllAdDetails();
+                }
+                else if ($("#SearchBox").val() != "" && $("#SearchBox").val() != "Search String")
                     SearchAdsByKeyword();
                 PagingAd();
-            }
-            );
+            });
 
-        }
-        );
+        });
 
         function PagingAd() {
             $('#AdPager').pagination({
@@ -50,8 +54,12 @@
                     //alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
                     AdPage = pageNumber;
                     AdPageSize = pageSize;
-                    if ($("#SearchBox").val() == "" || $("#SearchBox").val() == "Search String")
+                    if ($("#SearchBox").val() == "" || $("#SearchBox").val() == "Search String") {
+                        if ($("#SearchBoxPlace").val() != "" && $("#SearchBoxPlace").val() != "Place")
+                            SearchAdsByPlace();
+                        else
                         GetAllAdDetails();
+                    }
                     else if (SearchbyCat != "")
                         AdbyCategory(SearchbyCat)
                     else
@@ -63,8 +71,12 @@
                     //alert('pageNumber:' + pageNumber + ',pageSize:' + pageSize);
                     AdPage = pageNumber;
                     AdPageSize = pageSize;
-                    if ($("#SearchBox").val() == "" || $("#SearchBox").val() == "Search String")
+                    if ($("#SearchBox").val() == "" || $("#SearchBox").val() == "Search String") {
+                        if ($("#SearchBoxPlace").val() != "" && $("#SearchBoxPlace").val() != "Place")
+                            SearchAdsByPlace();
+                        else
                         GetAllAdDetails();
+                    }
                     else if (SearchbyCat != "")
                         AdbyCategory(SearchbyCat)
                     else
@@ -94,6 +106,14 @@
             ContentType = "application/json;charset=utf-8";
             DataType = "json"; ProcessData = false;
             method = "SearchAdsByKeyword";
+            CallService();
+        }
+        function SearchAdsByPlace() {
+            Type = "GET";
+            Url = sServicePath + "/SearchAdsByPlace/" + $("#SearchBoxPlace").val();
+            ContentType = "application/json;charset=utf-8";
+            DataType = "json"; ProcessData = false;
+            method = "SearchAdsByPlace";
             CallService();
         }
         function GetAllAdDetails() {
@@ -247,10 +267,48 @@
                     }
 
                 }
+                else if (method == "SearchAdsByPlace") {
+                    resultObject = result;
+                    var obj = jQuery.parseJSON(result);
+                    //debugger;
+                    var tempStart;
+                    var tempEnd;
+                    AdTotal = obj.length;
+                    if (AdPage == 1) {
+                        tempStart = 0;
+                        tempEnd = AdPage * AdPageSize;
+                    }
+                    else {
+                        tempStart = (AdPage - 1) * AdPageSize;
+                        tempEnd = AdPage * AdPageSize;
+                    }
+
+                    $("#HighlightItemHeading").empty();
+
+                    for (var i = tempStart; i < obj.length && i < tempEnd; i++) {
+
+                        var strImgPath = obj[i].ImagePath.split(':');
+                        var strAdStatus = obj[i].AdStatus;
+                        var sViewLink = "";
+                        if (strAdStatus == "NEW")
+                            sViewLink = "ViewPostAd.aspx?uid=" + obj[i].UserId + "&aid=" + obj[i].AdPostId;
+                        else
+                            sViewLink = "ViewPurAd.aspx?uid=" + obj[i].UserId + "&aid=" + obj[i].AdPostId;
+                        $("<div id='HighlightItem2'>" +
+                            "<div><strong>" + obj[i].AdPostTitle + "</strong></div>" +
+                            "<div><img src=" + strImgPath[0] + " style='height:125px;' ></div>" +
+                            "<div style='font-size:12px'>" + obj[i].CategoryName + "</div>" +
+                            "<div><strong> $ " + parseFloat(obj[i].Price) + "</strong></div>" +
+                            "<div>" + strAdStatus + "</div>" +
+                            "<div><a href='" + sViewLink + "'>View Details</a> </div>"
+                         ).attr("style", "padding:3px").appendTo("#HighlightItemHeading");
+
+            }
+
+        }
 
             }
         }
-
 
     </script>
 

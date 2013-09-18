@@ -40,10 +40,6 @@
                 width: 500
             });
         }
-        function ServiceFailed(result) {
-            alert('Service call failed: ' + result.status + '' + result.statusText);
-            Type = null; Url = null; Data = null; ContentType = null; DataType = null; ProcessData = null;
-        }
         function GetAdDetails(adId, userId) {
             Type = "GET";
             Url = sServicePath + "/GetAdPurcDetails/" + adId + "/" + userId;
@@ -81,9 +77,23 @@
                                 );
                     var Purdat = MonthName(pvalue.getMonth()) + " " + pvalue.getDate() + ", " + pvalue.getFullYear();
 
+                    var sName = obj[0].FirstName + " " + obj[0].LastName;
+                    sName = sName.toLowerCase().replace(/\b[a-z]/g, function (letter) {
+                        return letter.toUpperCase();
+                    });
+
+                    var pName = obj[0].BuyFirstName + " " + obj[0].BuyLastName;
+                    pName = pName.toLowerCase().replace(/\b[a-z]/g, function (letter) {
+                        return letter.toUpperCase();
+                    });
+
                     $("#divAdTitle").text(obj[0].AdPostTitle);
                     $("#divDate").text("Posted on - " + dat);
                     $("#divPurDate").text("Purchased on - " + Purdat);
+                    $("<span>Posted By:</span><br/><span>Name - " + sName + "</span><br/>" +
+                        "</span>Email - " + obj[0].Email + "</span><br/><span>Mobile - " + obj[0].Mobile + "</span><br/><hr>").appendTo("#divPostedBy");
+                    $("<span>Purchased By:</span><br/><span>Name - " + pName + "</span><br/>" +
+                        "</span>Email - " + obj[0].BuyEmail + "</span><br/><span>Mobile - " + obj[0].BuyMobile + "</span><br/><hr>").appendTo("#divPurchasedBy");
                     $("<span>Description:<br/><hr>" + obj[0].Description + "</span>").appendTo("#divDesc");
                     $("<span>Category:&nbsp;&nbsp;&nbsp;" + obj[0].CategoryName + "</span><br/><hr>").appendTo("#divCategory");
                     //debugger;
@@ -105,13 +115,6 @@
             "</object>").appendTo("#videoLink");
 
                 }
-                else if (method == "CreateUserCart") {
-                    alert("Added Successfully and then keep shopping");
-                    if (UserType == "1")
-                        window.location = "MyHome.aspx?page=cart";
-                    if (UserType == "2")
-                        window.location = "MyAdminHome.aspx?page=cart";
-                }
             }
         }
         function MonthName(mon) {
@@ -127,20 +130,6 @@
             else if (mon == 10) return "October";
             else if (mon == 11) return "November";
             else if (mon == 12) return "December";
-        }
-        function AddCart() {
-            //debugger;
-            var msg = { "CartId": 0, "AdPostId": adid, "UserId": UserId };
-            var objectAsJson = JSON.stringify(msg);
-
-            Type = "POST";
-            Data = objectAsJson;
-            Url = sServicePath + "/CreateUserCart";
-            ContentType = "application/json;charset=utf-8";
-            DataType = "json"; ProcessData = false;
-            method = "CreateUserCart";
-            CallService();
-
         }
 
     </script>
@@ -160,7 +149,7 @@
                     <label id="divAdTitle" style="font-family:sans-serif;font-size:x-large;font-weight:bolder;width:400px;" ></label>
                     &nbsp;</td>
                 <td style="background-color:#669999;height:60px;vertical-align:middle;text-align:right;">
-                    <label id="divDate" style="font-family:sans-serif;font-size:larger;font-weight:bolder;" ></label><br />
+                    <label id="divDate" style="font-family:sans-serif;font-size:larger;font-weight:bolder;" ></label>&nbsp;&nbsp;<br />
                     <label id="divPurDate" style="font-family:sans-serif;font-size:larger;font-weight:bolder;" ></label>
                     &nbsp;</td>
             </tr>
@@ -175,6 +164,16 @@
             </tr>
             <tr style="background-color:#669999;text-align:left; height:30px;vertical-align:middle;font-weight:700;">
                 <td colspan="3">Ad Details</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div id="divPostedBy"></div>
+                    &nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <div id="divPurchasedBy"></div>
+                    &nbsp;</td>
             </tr>
             <tr>
                 <td colspan="3">
@@ -202,7 +201,6 @@
             </tr>
             <tr>
                 <td colspan="3" style="text-align:center;">
-                    <%--<input type="button" style="width:150px;" class="YardButton" id="btnAddCart" value="Add to Cart" onclick="AddCart();" />--%>
                     &nbsp;</td>
             </tr>
         </table>

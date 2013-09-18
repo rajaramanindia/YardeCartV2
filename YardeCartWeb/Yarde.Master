@@ -113,6 +113,10 @@
         if ($("#SearchBox").val() == "Search String")
             $("#SearchBox").val("");
     });
+    $("#SearchBoxPlace").focus(function () {
+        if ($("#SearchBoxPlace").val() == "Place")
+            $("#SearchBoxPlace").val("");
+    });
         });
 
         function SelectProfile() {

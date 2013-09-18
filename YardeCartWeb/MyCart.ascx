@@ -35,7 +35,7 @@
     </div>--%>
     
     <div id="divAmtDetail" style="visibility:collapse; text-align:center; vertical-align:middle;">
-        <table>
+        <table style="" >
             <tr>
                 <td>
                         Select Delivery charge
@@ -45,41 +45,49 @@
                     <label id="lblErr"></label>
                 </td>
             </tr>
+        <tr>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+            </tr>
+        <tr>
+                <td>
+                    <label id="lblTotalAdAmont1" style="visibility:collapse;">Total Ads amount</label>
+                </td>
+                <td>
+                    <strong><label id="lblTotalAdAmont"> </label></strong>
+                    <br />
+
+                </td>
+            </tr>
+        <tr>
+                <td>
+                    <label id="lblDeliCharge1" style="visibility:collapse;">Delivery Charges</label>
+                </td>
+                <td>
+        <strong><label id="lblDeliCharge"></label></strong><br />
+
+                </td>
+            </tr>
+        <tr>
+                <td>
+                    <label id="lblDeliTotAmount1"  style="visibility:collapse;">Total Amount to paid</label>
+                </td>
+                <td>
+        <strong><label id="lblDeliTotAmount"></label></strong><br /><br />
+
+                </td>
+            </tr>
             </table>
-        <table>
-        <tr>
-                <td>
+    </div>
 
-                </td>
-                <td>
-                    <label id="lblTotalAdAmont"> </label><br />
-
-                </td>
-            </tr>
-        <tr>
-                <td>
-
-                </td>
-                <td>
-        <label id="lblDeliCharge"></label><br />
-
-                </td>
-            </tr>
-        <tr>
-                <td>
-
-                </td>
-                <td>
-        <label id="lblDeliTotAmount"></label><br /><br />
-
-                </td>
-            </tr>
-            </table>
         <br />
-    <div id="div1" style="text-align:center; vertical-align:middle;">
+    <div id="divBuybtn" style="text-align:center; vertical-align:middle;visibility:collapse;">
                         <input id="btnBuy" type="button" value="BUY" class="YardButton" style="width: 120px;" onclick="AddBuyDet();" />
         
-    </div>
     </div>
 <br />
 <br />
@@ -149,7 +157,7 @@
         method = "SelectCityByName";
         CallService();
     }
-    
+
     function AddBuyDet() {
         boolValid = true;
 
@@ -271,7 +279,7 @@
             }
             else if (method == "SelectMaxID") {
                 //debugger;
-                resultObject = result; 
+                resultObject = result;
                 var obj = jQuery.parseJSON(result);
                 HistroyId = obj[0].HistroyId;
             }
@@ -304,8 +312,14 @@
                 }
 
                 $("#divAdContent").empty();
-                if (AdTotal > 0)
-                    $("#divAmtDetail").attr("style","visibility:visible");
+                if (AdTotal > 0) {
+                    $("#divAmtDetail").attr("style", "visibility:visible;vertical-align:middle;padding-left:200px;");
+                    $("#divBuybtn").attr("style", "text-align:center; vertical-align:middle;visibility:visible;");
+                }
+                else {
+                    $("#divAmtDetail").attr("style", "visibility:collapse;vertical-align:middle;padding-left:200px;");
+                    $("#divBuybtn").attr("style", "text-align:center; vertical-align:middle;visibility:collapse;");
+                }
                 AdTotalPrice = 0;
                 for (var i = tempStart; i < obj.length && i < tempEnd; i++) {
 
@@ -366,11 +380,13 @@
                             DeliAmount = (AdTotalPrice * (strChgAmount / 100));
                             DeliTotAmount = DeliAmount + AdTotalPrice;
                         }
-                        // $("#lblTotAmount").text("Welcome " + obj[0].UserName);
-                        //debugger;
-                        $("#lblTotalAdAmont").text("Total Ads Amount - $ " + AdTotalPrice.toFixed(2));
-                        $("#lblDeliCharge").text("Delivery Charges - $ " + DeliAmount.toFixed(2));
-                        $("#lblDeliTotAmount").text("Total Amount to paid- $ " + DeliTotAmount.toFixed(2));
+
+                        $("#lblTotalAdAmont1").attr("style", "visibility:visible;")
+                        $("#lblDeliCharge1").attr("style", "visibility:visible;")
+                        $("#lblDeliTotAmount1").attr("style", "visibility:visible;")
+                        $("#lblTotalAdAmont").text(" $ " + AdTotalPrice.toFixed(2));
+                        $("#lblDeliCharge").text(" $ " + DeliAmount.toFixed(2));
+                        $("#lblDeliTotAmount").text(" $ " + DeliTotAmount.toFixed(2));
 
                     }
                 }
