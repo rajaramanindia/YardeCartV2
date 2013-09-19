@@ -17,7 +17,13 @@
             $("#HighlightItemHeading").attr("style", "height: 500px; width: 100%;padding-top:100px;padding-left:300px;");
 
             $("#SearchButton").click(function () {
+                if ($("#SearchBox").val() != "" && $("#SearchBox").val() != "Search String")
                 window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+                else if ($("#SearchBoxPlace").val() != "" && $("#SearchBoxPlace").val() != "Place")
+                    window.location = "index.aspx?searchplace=" + $("#SearchBoxPlace").val();
+                else
+                    window.location = "index.aspx";
+
             });
         }
         );

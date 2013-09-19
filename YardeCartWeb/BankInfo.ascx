@@ -1,4 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BankInfo.ascx.cs" Inherits="YardeCartV2.BankInfo" %>
+<%@ Register Src="~/BankInfo.ascx" TagPrefix="uc1" TagName="BankInfo" %>
+
 <style type="text/css">
     .auto-style1 {
         width: 408px;
@@ -12,7 +14,13 @@
         function () {
 
             $("#SearchButton").click(function () {
+                if ($("#SearchBox").val() != "" && $("#SearchBox").val() != "Search String")
                 window.location = "index.aspx?searchstr=" + $("#SearchBox").val();
+                else if ($("#SearchBoxPlace").val() != "" && $("#SearchBoxPlace").val() != "Place")
+                    window.location = "index.aspx?searchplace=" + $("#SearchBoxPlace").val();
+                else
+                    window.location = "index.aspx";
+
             });
         });
 
@@ -22,6 +30,7 @@
             <h3 >Bank Information</h3><br />
         </div>
         <div>
+            <%--<uc1:BankInfo runat="server" ID="BankInfo" />--%>
             <table style="width:571px; border-bottom-left-radius:4px;border-width:thin; border-style:groove">
                 <tr>
                     <td style="vertical-align:central;">

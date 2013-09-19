@@ -11,6 +11,7 @@
     <script type="text/javascript">
 
         var strKey = "<%= strSearchKey %>";
+        var strPlace = "<%= strSearchPlace %>";
         var SearchbyCat;
         var AdPageSize = 10;
         var AdPage = 1;
@@ -18,6 +19,11 @@
         $(document).ready(
         function () {
             if (strKey == "" || strKey=="Search String") {
+                if (strPlace != "" && strPlace != "Place"){
+                    $("#SearchBoxPlace").val(strPlace);
+                    SearchAdsByPlace();
+                }
+                else
                 GetAllAdDetails();
             }
             else {

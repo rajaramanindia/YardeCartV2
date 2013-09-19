@@ -17,11 +17,14 @@ namespace YardeCartV2
     public partial class index : System.Web.UI.Page
     {
         public string strSearchKey = string.Empty;
+        public string strSearchPlace = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Request.QueryString["searchstr"] != null)
                 strSearchKey = Request.QueryString["searchstr"].ToString();
+            if (Request.QueryString["searchplace"] != null)
+                strSearchPlace = Request.QueryString["searchplace"].ToString();
             //// To find IP address of a machine behind LAN you can use this code
             //string strHostName = Dns.GetHostName();
             //IPHostEntry ipEntry = Dns.GetHostEntry(strHostName);

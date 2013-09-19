@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="easyUI/themes/icon.css">
     <script type="text/javascript" src="easyUI/jquery.min.js"></script>
     <script type="text/javascript" src="easyUI/jquery.easyui.min.js"></script>
-
+    
     <script src="js/ajaxupload.js" type="text/javascript"></script>
    <style type="text/css">
         input[type="button"].UploadButton
@@ -404,36 +404,38 @@
 
     </script>
 <div id="form-content" style="vertical-align: central; padding-left: 100px; padding-top: 50px;">
-        <table style="width: 789px">
+        <table style="width: 850px">
             <tr>
                 <td colspan="2" class="auto-style21">
                     <div class="divHeadForm" style="text-align: left;">
-                        <h3>Post An Ad in 30 Secs</h3>
+                        <h2>Post An Ad in 30 Secs</h2>
                         <p>&nbsp;</p>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td colspan="2" class="auto-style21">
+                <td colspan="2" class="auto-style21" >
                     <div id="divErrorMsg" style="color:red;text-align: left;">
                     </div>
-                        <p>&nbsp;</p>
-
                 </td>
             </tr>
             <tr>
+                <td colspan="2" class="auto-style21" style="padding-left:150px;">
+                    <div style="border:2px solid gray;border-radius:10px;padding-top:25px;padding-left:50px;">
+                    <table>
+                        <tr style="">
                 <td style="width:250px; height:35px;">
                     <label>Title</label>
                 </td>
-                <td>
-                    <input type="text" id="txtTitle" style="width: 200px;"  class="easyui-validatebox" data-options="required:true"/>
+                <td style="">
+                    <input type="text" id="txtTitle" style="width: 300px;"  class="easyui-validatebox" data-options="required:true"/>
                 </td>
             </tr>
             <tr>
                 <td style="width:250px; height:70px;">
                     <label>Description</label>
                 </td>
-                <td>
+                <td style="padding-left:0px;">
                     <textarea id="txtDesc" style="width:300px; height:50px;" maxlength="1000"></textarea>
                 </td>
             </tr>
@@ -441,40 +443,39 @@
             <tr>
                 <td style="width:250px; height:70px;">
                     <label>Keywords</label></td>
-                <td>
+                <td style="padding-left:0px;">
                     <textarea id="txtKeywords" style="width:300px; height:50px;" maxlength="1000"  class="easyui-validatebox" data-options="required:true"></textarea>
                 </td>
             </tr>
 
             <tr>
-                <td style="width:250px; height:35px;">
+                <td style="width:250px; height:50px;">
                     <label>Category</label></td>
-                <td>
-                    <select id="ddlCategory" style="width: 200px;"></select>
+                <td style="padding-left:0px;">
+                    <select id="ddlCategory" style="width: 300px;padding:5px 5px 5px 5px;"></select>
                 </td>
             </tr>
 
             <tr>
                 <td style="width:250px; height:35px;">
                     <label>Price</label></td>
-                <td>
-                    <input type="text" id="txtPrice" style="width: 200px;"  class="easyui-validatebox" data-options="required:true"/>
+                <td style="padding-left:0px;">
+                    <input type="text" id="txtPrice" style="width: 300px;"  class="easyui-validatebox" data-options="required:true"/>
                 </td>
             </tr>
 
             <tr>
                 <td style="width:250px; height:35px;">
                     <label>Show Till Date</label></td>
-                <td>
+                <td style="padding-left:0px;">
                     <input id="txtShowDate" type="text" class="easyui-datebox" data-options="required:true" />
                 </td>
             </tr>
             <tr>
-                <td style="width:250px; height:35px;">
-                    <label>Add Image for Ad</label>
-                </td>
-                <td>
-                    <div class="UploadDiv">
+                <td style="" colspan="2">
+                    <label>Add Image for Ad</label><br />
+                    <div style="color:lightgray;">(Image file size should not be exceeded 1 MB)</div>
+                    <div class="UploadDiv" style="padding-top:-50px;">
                         <input type="button" id="UploadButton1" class="UploadButton"  /><br /><div id="UploadedFile1"> </div>  
                         <input type="button" id="UploadButton2" class="UploadButton"  /><br /><div id="UploadedFile2"> </div>
                         <input type="button" id="UploadButton3" class="UploadButton"  /><br /><div id="UploadedFile3"> </div>
@@ -489,21 +490,24 @@
             <tr>
                 <td style="width:250px; height:35px;">
                     <label>Youtube Video link</label></td>
-                <td>
-                    <input type="text" id="txtVideolink" style="width: 200px;"/>
+                <td style="padding-right:25px;">
+                    <input type="text" id="txtVideolink" style="width: 300px;"/>
                 </td>
             </tr>
 
             <tr>
                 <td>&nbsp;</td>
-                <td>
+                <td style="">
                     <br />
                     <br />
-                    <br />
-                    <input id="btnAddPost" type="button" class="YardButton" value="Add Post" onclick="AddPostAd();" />
+                    <input id="btnAddPost" type="button" class="YardButton" value="Add Post" style="width:150px;" onclick="AddPostAd();" />
                 </td>
             </tr>
 
+                    </table></div>
+                </td>
+            </tr>
+            
         </table>
         <input type="hidden" id="strImgPath" />
     </div>
