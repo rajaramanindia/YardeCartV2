@@ -152,7 +152,7 @@
                     "PaidStatus": "0"
                 };
                 var objectAsJson = JSON.stringify(msg2);
-                debugger;
+                //debugger;
                 Type = "POST";
                 Url = sServicePath + "/AddAdPost";
                 ContentType = "application/json;charset=utf-8";
